@@ -1,22 +1,96 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://dong1iu.github.io</id>
-    <title>动动栋栋</title>
-    <updated>2021-06-07T04:48:32.875Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://dong1iu.github.io"/>
-    <link rel="self" href="https://dong1iu.github.io/atom.xml"/>
-    <subtitle>南风知我意 吹梦到西洲</subtitle>
-    <logo>https://dong1iu.github.io/images/avatar.png</logo>
-    <icon>https://dong1iu.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, 动动栋栋</rights>
-    <entry>
-        <title type="html"><![CDATA[Numpy]]></title>
-        <id>https://dong1iu.github.io/post/numpy/</id>
-        <link href="https://dong1iu.github.io/post/numpy/">
-        </link>
-        <updated>2021-06-07T04:04:09.000Z</updated>
-        <content type="html"><![CDATA[<p>NumPy（Numerical Python的简称）是Python数值计算最重要的基础包。⼤多数提供科学计算的包都是⽤NumPy的数组作为构建基础。</p>
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Numpy | 动动栋栋</title>
+<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623041240638">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Numpy | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="NumPy（Numerical Python的简称）是Python数值计算最重要的基础包。⼤多数提供科学计算的包都是⽤NumPy的数组作为构建基础。
+介绍
+NumPy之于数值计算特别重要的原因之⼀，是因为它可以⾼效处理⼤数组的数据。这是因为..." />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://dong1iu.github.io">
+  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623041240638" alt="">
+  </a>
+  <h1 class="site-title">
+    动动栋栋
+  </h1>
+  <p class="site-description">
+    南风知我意 吹梦到西洲
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://dong1iu.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Numpy
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-06-07
+              </span>
+              <span>
+                15 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>NumPy（Numerical Python的简称）是Python数值计算最重要的基础包。⼤多数提供科学计算的包都是⽤NumPy的数组作为构建基础。</p>
 <h1 id="介绍">介绍</h1>
 <p>NumPy之于数值计算特别重要的原因之⼀，是因为它可以⾼效处理⼤数组的数据。这是因为：</p>
 <p>NumPy是在⼀个连续的内存块中存储数据，独⽴于其他Python内置对象。NumPy的C语⾔编写的算法库可以操作内存，⽽不必进⾏类型检查或其它前期⼯作。⽐起Python的内置序列，NumPy数组使⽤的内存更少。<br>
@@ -392,98 +466,83 @@ In [246]: rng.randn(10)
 </ol>
 <figure data-type="image" tabindex="16"><img src="https://dong1iu.github.io/post-images/1623039661898.png" alt="" loading="lazy"></figure>
 <figure data-type="image" tabindex="17"><img src="https://dong1iu.github.io/post-images/1623039665949.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MAC终端代理]]></title>
-        <id>https://dong1iu.github.io/post/mac-zhong-duan-dai-li/</id>
-        <link href="https://dong1iu.github.io/post/mac-zhong-duan-dai-li/">
-        </link>
-        <updated>2021-05-28T07:00:16.000Z</updated>
-        <content type="html"><![CDATA[<p>MAC下终端走代理的有多种方法</p>
-<ol>
-<li>临时代理</li>
-</ol>
-<p><code>export http_proxy='http://localhost:8001'</code></p>
-<ol start="2">
-<li>永久代理</li>
-</ol>
-<p>修改环境变量<br>
-<code>vim ~/.zshrc</code></p>
-<pre><code class="language-bash"># 添加以下内容
-# proxy 
-export http_proxy='http://localhost:8001'
-export https_proxy='http://localhost:8001'
-</code></pre>
-<ol start="3">
-<li>灵活开启</li>
-</ol>
-<p>修改环境变量<br>
-<code>vim ~/.zshrc</code></p>
-<pre><code># proxy
-alias proxy='export all_proxy=http://127.0.0.1:8001'  # 可在网络设置中查看
-alias unproxy='unset all_proxy'
-</code></pre>
-<p>需要启用代理时，在终端输入<code>proxy</code>，关闭代理时，输入<code>unproxy</code>。</p>
-<blockquote>
-<p>检测是否成功代理</p>
-</blockquote>
-<p><code>curl cip.cc</code></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MAC下为所有人安装anaconda3]]></title>
-        <id>https://dong1iu.github.io/post/mac-xia-wei-suo-you-ren-an-zhuang-anaconda3/</id>
-        <link href="https://dong1iu.github.io/post/mac-xia-wei-suo-you-ren-an-zhuang-anaconda3/">
-        </link>
-        <updated>2021-05-28T03:10:54.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="下载安装包">下载安装包</h2>
-<ol>
-<li>在<a href="https://repo.anaconda.com/archive/">官网档案</a>下载</li>
-<li>在<a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">清华镜像源</a>下载</li>
-<li>直接下载<a href="https://repo.anaconda.com/archive/Anaconda3-2021.05-MacOSX-x86_64.pkg">2021年5月 Python3.8版本</a></li>
-</ol>
-<h2 id="安装anaconda3">安装anaconda3</h2>
-<p>安装过程中，选择为所有人安装</p>
-<h2 id="添加环境变量">添加环境变量</h2>
-<ol>
-<li>确认anaconda3的安装位置，一般在<code>/opt/anaconda3/bin</code></li>
-<li>添加环境变量</li>
-</ol>
-<p><code>vim ~/.zshrc</code></p>
-<pre><code class="language-bash"> export PATH=&quot;/opt/anaconda3/bin:$PATH&quot;
-</code></pre>
-<p><code>source ~/.zshrc</code></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Ubuntu防火墙管理]]></title>
-        <id>https://dong1iu.github.io/post/ubuntu-fang-huo-qiang-guan-li/</id>
-        <link href="https://dong1iu.github.io/post/ubuntu-fang-huo-qiang-guan-li/">
-        </link>
-        <updated>2021-05-28T02:25:01.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p>系统版本: ubuntu18.04</p>
-</blockquote>
-<h2 id="查看防火墙当前状态">查看防火墙当前状态</h2>
-<p><code>sudo ufw status</code></p>
-<h2 id="开启防火墙">开启防火墙</h2>
-<blockquote>
-<p>开启时请以前打开22端口的权限，否则无法ssh到机器</p>
-</blockquote>
-<p><code>sudo ufw enable</code></p>
-<h2 id="ufw启用关闭重载">ufw启用/关闭/重载</h2>
-<p><code>ufw enable/disable/reload</code></p>
-<h2 id="允许外部访问80端口">允许外部访问80端口</h2>
-<p><code>sudo ufw allow 80</code></p>
-<h2 id="禁止外部访问80端口">禁止外部访问80端口</h2>
-<p><code>sudo ufw delete allow 80</code></p>
-<h2 id="允许此ip访问所有的本机端口">允许此IP访问所有的本机端口</h2>
-<p><code>sudo ufw allow from 192.168.1.1</code></p>
-<h2 id="禁止外部访问smtp服务">禁止外部访问smtp服务</h2>
-<p><code>sudo ufw deny smtp</code></p>
-<h2 id="安装ufw">安装ufw</h2>
-<p><code>sudo apt-get install ufw</code></p>
-]]></content>
-    </entry>
-</feed>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E4%BB%8B%E7%BB%8D">介绍</a></li>
+<li><a href="#%E4%B8%80-ndarray">一、 ndarray</a></li>
+<li><a href="#%E4%BA%8C-%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0%E5%BF%AB%E9%80%9F%E7%9A%84%E5%85%83%E7%B4%A0%E7%BA%A7%E6%95%B0%E7%BB%84%E5%87%BD%E6%95%B0">二、<strong>通⽤函数：快速的元素级数组函数</strong></a></li>
+<li><a href="#%E4%B8%89-%E5%88%A9%E7%94%A8%E6%95%B0%E7%BB%84%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86">三、<strong>利⽤数组进⾏数据处理</strong></a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://dong1iu.github.io/post/mac-zhong-duan-dai-li/">
+              <h3 class="post-title">
+                MAC终端代理
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
