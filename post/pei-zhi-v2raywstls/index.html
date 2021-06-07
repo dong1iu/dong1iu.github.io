@@ -1,0 +1,341 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>配置V2Ray+ws+tls | 动动栋栋</title>
+<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623083941542">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="配置V2Ray+ws+tls | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="写在最前面
+关于V2Ray的文章有很多，本来不提供任何一键脚本，基于官网提供的教程一步一步手动配置，因此本文的目的在于交流和记录自己配置的过程本身。希望大家愉快的借助上网工具好好学习，不要参与政治事件，关你什么事呢？
+一、购买VPS
+作者不..." />
+    <meta name="keywords" content="Ubuntu" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://dong1iu.github.io">
+  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623083941542" alt="">
+  </a>
+  <h1 class="site-title">
+    动动栋栋
+  </h1>
+  <p class="site-description">
+    南风知我意 吹梦到西洲
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://dong1iu.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              配置V2Ray+ws+tls
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-06-07
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://dong1iu.github.io/tag/ZO7C8ie2J/" class="post-tag">
+                  # Ubuntu
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><strong>写在最前面</strong></p>
+<p><strong>关于V2Ray的文章有很多，本来不提供任何一键脚本，基于官网提供的教程一步一步手动配置，因此本文的目的在于交流和记录自己配置的过程本身。希望大家愉快的借助上网工具好好学习，不要参与政治事件，关你什么事呢？</strong></p>
+<h1 id="一-购买vps">一、购买VPS</h1>
+<p>作者不提供任何购买链接，只是提醒大家不要贪图便宜购买非常廉价的服务器。便宜的服务器容易被封IP，也容易跑路，人工客服的质量也不行，建议大家尽量选择大厂的服务，不要贪小便宜，不然后期简直式折磨自己。另外，建议大家多购置几个备用，被封了你才知道难受！！！</p>
+<h1 id="二-连接到vps">二、连接到VPS</h1>
+<p>连接的方式很多，Windows下你可以使用常见的<a href="https://www.netsarang.com/en/xshell-download/">XShell个人版</a>和<a href="https://mobaxterm.mobatek.net/download.html">mobaxterm家庭版</a>，MacOS下你可以使用<a href="https://electerm.github.io/electerm/">electerm</a>。他们的使用方法大同小异，这里我展示如何使用electerm连接到你的服务器。</p>
+<p>打开书签，添加你的连接配置</p>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623080999671.png" alt="" loading="lazy"></figure>
+<p>输入你的服务器的IP，你的登录名字（一般默认为root）和密码</p>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623081008544.png" alt="" loading="lazy"></figure>
+<p>测试连接，如果成功，点击保存并连接</p>
+<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623081016451.png" alt="" loading="lazy"></figure>
+<p>其他的客户端操作请大家移步其他博客，已经有还多帖子介绍，就不重复造轮子了。</p>
+<h1 id="三-安装v2ray">三、安装V2Ray</h1>
+<p>使用官方的安装脚本安装V2Ray</p>
+<pre><code class="language-bash">bash &lt;(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+</code></pre>
+<blockquote>
+<p>新版和旧版的文件结构是不同的<br>
+在旧版中配置文件位于：/etc/v2ray/config.json<br>
+在新版中位于：/usr/local/etc/v2ray/config.json<br>
+日志文件一般推荐在/var/log/v2ray/access.log和/var/log/v2ray/error.log</p>
+</blockquote>
+<p>V2Ray常用命令</p>
+<pre><code class="language-bash">v2ray [-version] [-test] [-config=config.json] [-format=json]
+# test可以用来测试一个config.json是否编写正确
+
+v2ctl uuid 
+# 生成新的uuid
+</code></pre>
+<p>注意V2Ray对时间有严格的要求，客户端和服务器的时差不能超过2分钟，注意矫正服务器的时间。</p>
+<p>查看时间</p>
+<pre><code class="language-bash">date -R
+</code></pre>
+<p>修改时间</p>
+<pre><code class="language-bash">date -s &quot;2000-01-01 00:00:00&quot;
+</code></pre>
+<h1 id="三-安装常用的小工具">三、安装常用的小工具</h1>
+<pre><code class="language-bash">apt-get install vim
+apt-get install curl
+apt-get install htop
+
+#  如果无法安装
+sudo apt upgrade
+</code></pre>
+<h1 id="四-安装ufw">四、安装ufw</h1>
+<pre><code class="language-bash">sudo apt-get install ufw
+</code></pre>
+<p>开放80端口和443端口</p>
+<pre><code class="language-bash">ufw allow 80
+ufw allow 443
+ufw reload
+</code></pre>
+<blockquote>
+<p>注意ubuntu默认没有开启ufw，开启时请以前打开22端口的权限，否则无法ssh到机器</p>
+</blockquote>
+<h1 id="五-安装caddy">五、安装Caddy</h1>
+<p>不同机器的安装方式不同，这里我只提供Ubuntu18.04的安装方法，其他的机器的安装请参考Caddy官网的文档</p>
+<pre><code class="language-bash"># 逐条运行
+echo &quot;deb [trusted=yes] https://apt.fury.io/caddy/ /&quot; \
+    | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
+sudo apt update
+sudo apt install caddy
+</code></pre>
+<h1 id="六-配置caddy">六、配置Caddy</h1>
+<p>配置模板</p>
+<p>修改Caddy配置文件</p>
+<pre><code class="language-bash">vim /etc/caddy/Caddyflie
+</code></pre>
+<p>修改配置为以下内容</p>
+<pre><code class="language-json">mydomain.me { 
+    log {
+        output file /var/log/caddy/caddy.log
+    }
+    tls {
+        protocols tls1.2 tls1.3
+        ciphers TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+        curves x25519
+    }
+    @v2ray_websocket {
+        path /ray 
+        header Connection *Upgrade*
+        header Upgrade websocket
+    }
+    reverse_proxy @v2ray_websocket localhost:10000
+}
+</code></pre>
+<ul>
+<li><em>mydomain.me</em> → 你的域名 需要将你的域名解析到服务器</li>
+<li><em>path /ray</em> → 路径，需要在v2ray和caddy的配置文件中保持一致</li>
+<li><em>localhost:10000</em> → 转发到端口 需要和v2ray中监听本地的端口一致</li>
+</ul>
+<h1 id="七-配置v2ray">七、配置V2Ray</h1>
+<pre><code class="language-bash">vim /usr/local/etc/v2ray/config.json
+</code></pre>
+<p>修改配置为以下，并替换关键内容（uuid和端口，和caddy中反向代理的端口保持一致）</p>
+<pre><code class="language-json">{
+  &quot;inbounds&quot;: [
+    {
+      &quot;port&quot;: 10000,
+      &quot;listen&quot;:&quot;127.0.0.1&quot;,//只监听 127.0.0.1，避免除本机外的机器探测到开放了 10000 端口
+      &quot;protocol&quot;: &quot;vmess&quot;,
+      &quot;settings&quot;: {
+        &quot;clients&quot;: [
+          {
+            &quot;id&quot;: &quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;,
+            &quot;alterId&quot;: 64
+          }
+        ]
+      },
+      &quot;streamSettings&quot;: {
+        &quot;network&quot;: &quot;ws&quot;,
+        &quot;wsSettings&quot;: {
+        &quot;path&quot;: &quot;/ray&quot;
+        }
+      }
+    }
+  ],
+  &quot;outbounds&quot;: [
+    {
+      &quot;protocol&quot;: &quot;freedom&quot;,
+      &quot;settings&quot;: {}
+    }
+  ]
+}
+</code></pre>
+<h1 id="八-将你的域名解析到服务器">八、将你的域名解析到服务器</h1>
+<p>推荐到<a href="namesilo.com">namesilo</a>（收费）和<a href="freenom.com">freenom</a>（免费）购买域名</p>
+<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623083243877.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623083484619.png" alt="" loading="lazy"></figure>
+<h1 id="九-重启v2ray和caddy">九、重启V2ray和Caddy</h1>
+<pre><code class="language-bash">systemctl restart v2ray
+systemctl restart caddy
+</code></pre>
+<h1 id="十-开起bbr加速你的网络">十、开起BBR，加速你的网络</h1>
+<p>Ubuntu 1804下启用BBR非常简单，这也是我使用该系统的原因，并且该系统的文档很容易搜到，推荐给新手使用</p>
+<pre><code class="language-bash"># 因为ubuntu18.04 的内核满足bbr的要求所以ubuntu开启bbr比较简单
+# 修改系统变量
+echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf
+echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf
+
+# 保存生效
+sysctl -p
+
+# 查看BBR是否启动 lsmod命令用于显示已经加载到内核中的模块的状态信息。
+sysctl net.ipv4.tcp_available_congestion_control
+
+lsmod | grep bbr
+</code></pre>
+<h1 id="十一-使用客户端连接">十一、使用客户端连接</h1>
+<ul>
+<li>Windows：推荐V2rayN</li>
+<li>安卓：推荐V2rayNG</li>
+<li>IOS：推荐Kitsunebi</li>
+<li>Mac：推荐V2rayX</li>
+</ul>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%80-%E8%B4%AD%E4%B9%B0vps">一、购买VPS</a></li>
+<li><a href="#%E4%BA%8C-%E8%BF%9E%E6%8E%A5%E5%88%B0vps">二、连接到VPS</a></li>
+<li><a href="#%E4%B8%89-%E5%AE%89%E8%A3%85v2ray">三、安装V2Ray</a></li>
+<li><a href="#%E4%B8%89-%E5%AE%89%E8%A3%85%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7">三、安装常用的小工具</a></li>
+<li><a href="#%E5%9B%9B-%E5%AE%89%E8%A3%85ufw">四、安装ufw</a></li>
+<li><a href="#%E4%BA%94-%E5%AE%89%E8%A3%85caddy">五、安装Caddy</a></li>
+<li><a href="#%E5%85%AD-%E9%85%8D%E7%BD%AEcaddy">六、配置Caddy</a></li>
+<li><a href="#%E4%B8%83-%E9%85%8D%E7%BD%AEv2ray">七、配置V2Ray</a></li>
+<li><a href="#%E5%85%AB-%E5%B0%86%E4%BD%A0%E7%9A%84%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8">八、将你的域名解析到服务器</a></li>
+<li><a href="#%E4%B9%9D-%E9%87%8D%E5%90%AFv2ray%E5%92%8Ccaddy">九、重启V2ray和Caddy</a></li>
+<li><a href="#%E5%8D%81-%E5%BC%80%E8%B5%B7bbr%E5%8A%A0%E9%80%9F%E4%BD%A0%E7%9A%84%E7%BD%91%E7%BB%9C">十、开起BBR，加速你的网络</a></li>
+<li><a href="#%E5%8D%81%E4%B8%80-%E4%BD%BF%E7%94%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5">十一、使用客户端连接</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://dong1iu.github.io/post/mac-an-zhuang-mysql/">
+              <h3 class="post-title">
+                mac安装MySQL
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

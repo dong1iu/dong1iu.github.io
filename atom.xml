@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://dong1iu.github.io</id>
     <title>动动栋栋</title>
-    <updated>2021-06-07T15:19:31.437Z</updated>
+    <updated>2021-06-07T16:39:04.931Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://dong1iu.github.io"/>
     <link rel="self" href="https://dong1iu.github.io/atom.xml"/>
@@ -10,6 +10,170 @@
     <logo>https://dong1iu.github.io/images/avatar.png</logo>
     <icon>https://dong1iu.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 动动栋栋</rights>
+    <entry>
+        <title type="html"><![CDATA[配置V2Ray+ws+tls]]></title>
+        <id>https://dong1iu.github.io/post/pei-zhi-v2raywstls/</id>
+        <link href="https://dong1iu.github.io/post/pei-zhi-v2raywstls/">
+        </link>
+        <updated>2021-06-07T15:33:10.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>写在最前面</strong></p>
+<p><strong>关于V2Ray的文章有很多，本来不提供任何一键脚本，基于官网提供的教程一步一步手动配置，因此本文的目的在于交流和记录自己配置的过程本身。希望大家愉快的借助上网工具好好学习，不要参与政治事件，关你什么事呢？</strong></p>
+<h1 id="一-购买vps">一、购买VPS</h1>
+<p>作者不提供任何购买链接，只是提醒大家不要贪图便宜购买非常廉价的服务器。便宜的服务器容易被封IP，也容易跑路，人工客服的质量也不行，建议大家尽量选择大厂的服务，不要贪小便宜，不然后期简直式折磨自己。另外，建议大家多购置几个备用，被封了你才知道难受！！！</p>
+<h1 id="二-连接到vps">二、连接到VPS</h1>
+<p>连接的方式很多，Windows下你可以使用常见的<a href="https://www.netsarang.com/en/xshell-download/">XShell个人版</a>和<a href="https://mobaxterm.mobatek.net/download.html">mobaxterm家庭版</a>，MacOS下你可以使用<a href="https://electerm.github.io/electerm/">electerm</a>。他们的使用方法大同小异，这里我展示如何使用electerm连接到你的服务器。</p>
+<p>打开书签，添加你的连接配置</p>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623080999671.png" alt="" loading="lazy"></figure>
+<p>输入你的服务器的IP，你的登录名字（一般默认为root）和密码</p>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623081008544.png" alt="" loading="lazy"></figure>
+<p>测试连接，如果成功，点击保存并连接</p>
+<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623081016451.png" alt="" loading="lazy"></figure>
+<p>其他的客户端操作请大家移步其他博客，已经有还多帖子介绍，就不重复造轮子了。</p>
+<h1 id="三-安装v2ray">三、安装V2Ray</h1>
+<p>使用官方的安装脚本安装V2Ray</p>
+<pre><code class="language-bash">bash &lt;(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+</code></pre>
+<blockquote>
+<p>新版和旧版的文件结构是不同的<br>
+在旧版中配置文件位于：/etc/v2ray/config.json<br>
+在新版中位于：/usr/local/etc/v2ray/config.json<br>
+日志文件一般推荐在/var/log/v2ray/access.log和/var/log/v2ray/error.log</p>
+</blockquote>
+<p>V2Ray常用命令</p>
+<pre><code class="language-bash">v2ray [-version] [-test] [-config=config.json] [-format=json]
+# test可以用来测试一个config.json是否编写正确
+
+v2ctl uuid 
+# 生成新的uuid
+</code></pre>
+<p>注意V2Ray对时间有严格的要求，客户端和服务器的时差不能超过2分钟，注意矫正服务器的时间。</p>
+<p>查看时间</p>
+<pre><code class="language-bash">date -R
+</code></pre>
+<p>修改时间</p>
+<pre><code class="language-bash">date -s &quot;2000-01-01 00:00:00&quot;
+</code></pre>
+<h1 id="三-安装常用的小工具">三、安装常用的小工具</h1>
+<pre><code class="language-bash">apt-get install vim
+apt-get install curl
+apt-get install htop
+
+#  如果无法安装
+sudo apt upgrade
+</code></pre>
+<h1 id="四-安装ufw">四、安装ufw</h1>
+<pre><code class="language-bash">sudo apt-get install ufw
+</code></pre>
+<p>开放80端口和443端口</p>
+<pre><code class="language-bash">ufw allow 80
+ufw allow 443
+ufw reload
+</code></pre>
+<blockquote>
+<p>注意ubuntu默认没有开启ufw，开启时请以前打开22端口的权限，否则无法ssh到机器</p>
+</blockquote>
+<h1 id="五-安装caddy">五、安装Caddy</h1>
+<p>不同机器的安装方式不同，这里我只提供Ubuntu18.04的安装方法，其他的机器的安装请参考Caddy官网的文档</p>
+<pre><code class="language-bash"># 逐条运行
+echo &quot;deb [trusted=yes] https://apt.fury.io/caddy/ /&quot; \
+    | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
+sudo apt update
+sudo apt install caddy
+</code></pre>
+<h1 id="六-配置caddy">六、配置Caddy</h1>
+<p>配置模板</p>
+<p>修改Caddy配置文件</p>
+<pre><code class="language-bash">vim /etc/caddy/Caddyflie
+</code></pre>
+<p>修改配置为以下内容</p>
+<pre><code class="language-json">mydomain.me { 
+    log {
+        output file /var/log/caddy/caddy.log
+    }
+    tls {
+        protocols tls1.2 tls1.3
+        ciphers TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+        curves x25519
+    }
+    @v2ray_websocket {
+        path /ray 
+        header Connection *Upgrade*
+        header Upgrade websocket
+    }
+    reverse_proxy @v2ray_websocket localhost:10000
+}
+</code></pre>
+<ul>
+<li><em>mydomain.me</em> → 你的域名 需要将你的域名解析到服务器</li>
+<li><em>path /ray</em> → 路径，需要在v2ray和caddy的配置文件中保持一致</li>
+<li><em>localhost:10000</em> → 转发到端口 需要和v2ray中监听本地的端口一致</li>
+</ul>
+<h1 id="七-配置v2ray">七、配置V2Ray</h1>
+<pre><code class="language-bash">vim /usr/local/etc/v2ray/config.json
+</code></pre>
+<p>修改配置为以下，并替换关键内容（uuid和端口，和caddy中反向代理的端口保持一致）</p>
+<pre><code class="language-json">{
+  &quot;inbounds&quot;: [
+    {
+      &quot;port&quot;: 10000,
+      &quot;listen&quot;:&quot;127.0.0.1&quot;,//只监听 127.0.0.1，避免除本机外的机器探测到开放了 10000 端口
+      &quot;protocol&quot;: &quot;vmess&quot;,
+      &quot;settings&quot;: {
+        &quot;clients&quot;: [
+          {
+            &quot;id&quot;: &quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;,
+            &quot;alterId&quot;: 64
+          }
+        ]
+      },
+      &quot;streamSettings&quot;: {
+        &quot;network&quot;: &quot;ws&quot;,
+        &quot;wsSettings&quot;: {
+        &quot;path&quot;: &quot;/ray&quot;
+        }
+      }
+    }
+  ],
+  &quot;outbounds&quot;: [
+    {
+      &quot;protocol&quot;: &quot;freedom&quot;,
+      &quot;settings&quot;: {}
+    }
+  ]
+}
+</code></pre>
+<h1 id="八-将你的域名解析到服务器">八、将你的域名解析到服务器</h1>
+<p>推荐到<a href="namesilo.com">namesilo</a>（收费）和<a href="freenom.com">freenom</a>（免费）购买域名</p>
+<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623083243877.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623083484619.png" alt="" loading="lazy"></figure>
+<h1 id="九-重启v2ray和caddy">九、重启V2ray和Caddy</h1>
+<pre><code class="language-bash">systemctl restart v2ray
+systemctl restart caddy
+</code></pre>
+<h1 id="十-开起bbr加速你的网络">十、开起BBR，加速你的网络</h1>
+<p>Ubuntu 1804下启用BBR非常简单，这也是我使用该系统的原因，并且该系统的文档很容易搜到，推荐给新手使用</p>
+<pre><code class="language-bash"># 因为ubuntu18.04 的内核满足bbr的要求所以ubuntu开启bbr比较简单
+# 修改系统变量
+echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf
+echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf
+
+# 保存生效
+sysctl -p
+
+# 查看BBR是否启动 lsmod命令用于显示已经加载到内核中的模块的状态信息。
+sysctl net.ipv4.tcp_available_congestion_control
+
+lsmod | grep bbr
+</code></pre>
+<h1 id="十一-使用客户端连接">十一、使用客户端连接</h1>
+<ul>
+<li>Windows：推荐V2rayN</li>
+<li>安卓：推荐V2rayNG</li>
+<li>IOS：推荐Kitsunebi</li>
+<li>Mac：推荐V2rayX</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[mac安装MySQL]]></title>
         <id>https://dong1iu.github.io/post/mac-an-zhuang-mysql/</id>
