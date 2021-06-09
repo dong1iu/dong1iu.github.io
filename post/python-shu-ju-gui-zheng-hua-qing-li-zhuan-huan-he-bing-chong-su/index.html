@@ -1,0 +1,389 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python数据规整化：清理、转换、合并、重塑 | 动动栋栋</title>
+<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623227951442">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Python数据规整化：清理、转换、合并、重塑 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="#合并数据集
+数据库风格的合并
+pd.merge(df1, df2, on='key')
+# 如果列的名字不同
+pd.merge(df1, df2, left_on='key1', right_on='key2')
+# how= inner..." />
+    <meta name="keywords" content="python" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://dong1iu.github.io">
+  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623227951442" alt="">
+  </a>
+  <h1 class="site-title">
+    动动栋栋
+  </h1>
+  <p class="site-description">
+    南风知我意 吹梦到西洲
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="https://dong1iu.github.io/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Python数据规整化：清理、转换、合并、重塑
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-06-09
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://dong1iu.github.io/tag/EDcNg_R0it/" class="post-tag">
+                  # python
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>#合并数据集</p>
+<h2 id="数据库风格的合并">数据库风格的合并</h2>
+<pre><code class="language-python">pd.merge(df1, df2, on='key')
+# 如果列的名字不同
+pd.merge(df1, df2, left_on='key1', right_on='key2')
+# how= inner left right outter
+pd.merge(df1, df2, on='key', how='innner')
+
+</code></pre>
+<p>多对多连接时产生的时行的笛卡尔积</p>
+<p>要根据多个键合并时，传入一个由列名组成的列表即可</p>
+<pre><code class="language-python">pd.merge(df1, df2, on=['key1', 'key2'], how='innner')
+</code></pre>
+<p>注意在进行列连接时，DataFrame对象中的索引会被丢弃</p>
+<p>对重复列名的处理</p>
+<pre><code class="language-python">pd.merge(left, right, on='key', suffixes=('_left', '_right')
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623227523966.png" alt="" loading="lazy"></figure>
+<p>完整参数<br>
+<img src="https://dong1iu.github.io/post-images/1623227533897.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623227537948.png" alt="" loading="lazy"></figure>
+<h2 id="索引上的合并">索引上的合并</h2>
+<pre><code>如果连接键位于起索引中，可传入left_index=True或right_index=True(或都传)以说明索引应该被用作连接键
+
+```python
+pd.merge(left, right, left_on='key', right_index=True)
+```
+
+对于层次化索引， 比较复杂
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623227546081.png" alt="" loading="lazy"></figure>
+<pre><code>必须以列表的形式指明用作合并键的多个列
+
+```python
+pd.merge(left, right, left_on=['key1, key2'], right_index=True)
+```
+
+join实例方法 df.join
+
+默认左连接
+
+```python
+left.join(right, on='key', how='inner')
+```
+</code></pre>
+<h1 id="轴向连接">轴向连接</h1>
+<h2 id="concat">concat</h2>
+<p>可称为连接（concatenation）、绑定（binding）或堆叠（stacking）</p>
+<p>concatenation 用于合并原始Numpy数组<br>
+<img src="https://dong1iu.github.io/post-images/1623227551979.png" alt="" loading="lazy"></p>
+<pre><code class="language-python">np.concatenate([arr, arr], axis=1)
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623227556829.png" alt="" loading="lazy"></figure>
+<p>对于pandas对象，带有标签的轴使你能够进一步推广数组的连接，所以concatenate的可用性就不高了</p>
+<p>使用CONCAT函数</p>
+<pre><code class="language-python"># 带标签
+pd.concat([s1, s2, s3])
+# 默认axis=0
+pd.concat([df1, df2, df3], axis=0)
+</code></pre>
+<p>参数join</p>
+<pre><code class="language-python"># 舍弃 两个Series中不共有的位置
+pd.concat([s1, s2], axis=0, join='inner')
+</code></pre>
+<p>参数joinaxes 指定在其他轴上使用的索引</p>
+<pre><code class="language-python">pd.concat([s1, s2], axis=0, join_axes=[['a', 'b'])
+</code></pre>
+<p>参数keyx 用于区分连接的结果</p>
+<pre><code class="language-python">In [70]: result = pd.concat([s1,s2,s3], keys=['one', 'two','three'])
+Out[70]: result
+one    a  0
+        b  1
+two    a  0
+                b  1
+three  f  5
+        g  6
+</code></pre>
+<p>如果沿着axis=1对Series进行合并，这keys会成为DataFrame的列头</p>
+<p>如果keys传入的不是列表而是字典，那么字典的键会被当做keys选项的值</p>
+<p>处理和分析工作无关的index</p>
+<pre><code class="language-python">pd.concat([df1, df2], ingore_indexx=True)
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623227564113.png" alt="" loading="lazy"></figure>
+<h2 id="合并重叠数据">合并重叠数据</h2>
+<p>使用np.where重叠</p>
+<pre><code class="language-python">np.where(pd.isnull(a), b, a)
+</code></pre>
+<p>使用combine_first</p>
+<pre><code class="language-python">b[:2].combine_first(a[:])
+</code></pre>
+<p>##重塑和轴向旋转</p>
+<p>重塑层次化索引</p>
+<p>stack和unstack方法分别将数据的列旋转为行、将数据的行旋转为列</p>
+<p>STACK方法<br>
+<img src="https://dong1iu.github.io/post-images/1623227569712.png" alt="" loading="lazy"></p>
+<pre><code class="language-python">data.stack()
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://dong1iu.github.io/post-images/1623227574396.png" alt="" loading="lazy"></figure>
+<p>UNSTACK方法<br>
+<img src="https://dong1iu.github.io/post-images/1623227579478.png" alt="" loading="lazy"></p>
+<p>默认情况unstack操作的是最内层（同stack）。可以传入级别的编号和名称</p>
+<pre><code class="language-python">result.unstack(0)
+result.unstack('state')
+</code></pre>
+<p>如果不是所有级别值都能在个分组中找到的话，这unstack操作会引入NAN，而stack()方法默认会过滤缺失值，所以两方法是可逆的</p>
+<h2 id="将长表转换为宽表">将长表转换为宽表</h2>
+<figure data-type="image" tabindex="7"><img src="https://dong1iu.github.io/post-images/1623227586212.png" alt="" loading="lazy"></figure>
+<pre><code class="language-python">df.pivot('date', 'item', 'value')
+</code></pre>
+<p>前两个参数分别作为行列索引的列名，最后一个是填充DF数据列名的。<br>
+<img src="https://dong1iu.github.io/post-images/1623227592594.png" alt="" loading="lazy"></p>
+<p>如果有两个需要参与重塑的数据列</p>
+<pre><code class="language-python">pivoted = df.pivo('date', 'item')
+# 忽略最后一个参数得到的DF就会带有层次化的列
+</code></pre>
+<figure data-type="image" tabindex="8"><img src="https://dong1iu.github.io/post-images/1623227597553.png" alt="" loading="lazy"></figure>
+<p>注意pivot其实只是一个快捷方式：实质上用set_index创建层次化soyb，再用unstack重塑。</p>
+<h1 id="移除重复数据">移除重复数据</h1>
+<p>duplicated 方法 返回一个布尔型Series</p>
+<pre><code class="language-python">data.duplicated()
+</code></pre>
+<p>drop_duplicates() 默认只保留第一行</p>
+<pre><code class="language-python">df.drop_duplicates(subset=['a', 'b'], keep='first', inplace=False, ingore_index=False)
+# - first : Drop duplicates except for the first occurrence. - last : Drop duplicates except for the last occurrence. - False : Drop all duplicates.
+# If True, the resulting axis will be labeled 0, 1, …, n - 1.
+</code></pre>
+<h1 id="使用函数或映射进行数据装换">使用函数或映射进行数据装换</h1>
+<p>Series的map方法可以接受一个函数或含有映射关系的字典型对象</p>
+<pre><code class="language-python"># meat_to_animal是一个字典
+data['animal'] = data['food'].map(str.lower).map(meat_to_animal)
+</code></pre>
+<p>也可以传入完整的数据</p>
+<pre><code class="language-python">data['animal'] = data['food'].map(lambda x: meat_to_animal[x.lower()])
+</code></pre>
+<h1 id="替换值">替换值</h1>
+<p>replace 函数</p>
+<pre><code class="language-python">data.place([-999, -1000], np.nan)
+</code></pre>
+<p>也可以传入字典</p>
+<pre><code class="language-python">data.replace({-999:np.nan, -1000:0})
+</code></pre>
+<h1 id="重命名轴索引">重命名轴索引</h1>
+<p>和Series一样，轴标签也有一个map方法</p>
+<pre><code class="language-python">data.index.map(str.upper)
+</code></pre>
+<p>rename 方法</p>
+<pre><code class="language-python">df.rename(index=str.title, columns=str.upper)
+</code></pre>
+<p>也可以传入字典修改</p>
+<h1 id="离散化和面元bin划分">离散化和面元（bin）划分</h1>
+<p>cut方法</p>
+<pre><code class="language-python">bins = [18, 25, 35, 60, 100]
+cats = pd.cut(ages, bins)
+</code></pre>
+<p>pandas会返回特殊的Categorical对象，他实际上是表示不同分类名称的levels数组以及一个为年龄数据进行标号的labels属性</p>
+<pre><code class="language-python">In [157]: cats.labels 
+Out[157]: array([o, o, o, 1, o, o, 2, 1, 3, 2, 2, 1]) 
+In (158]: cats.levels 
+Out[158]: Index([(18, 25], (25, 35], (35, 60], (60, 100]], dtype=object) 
+In [159]: pd.value_counts(cats) 
+Out[159]:
+(18, 25]    5
+(35, 60]    3
+(25, 35]    3 
+(60, 100]   1
+</code></pre>
+<p>right参数 修改区间的取向</p>
+<pre><code class="language-python"># right不取右边
+pd.cut(ages, bins, right=False)
+</code></pre>
+<p>label参数 设置自己分箱名称</p>
+<pre><code class="language-python">pd.cut(ages, labels=['Youth', 'YoungAdult', ...])
+</code></pre>
+<p>如果传入的分箱的数量而不是确切的临界值，则他会根据数据的最小值和最大值计算等距分箱</p>
+<pre><code class="language-python">pd.cut(data, 4, precision=2)
+</code></pre>
+<p>QCUT</p>
+<p>根据样本的分位数进行分箱</p>
+<pre><code class="language-python">pd.qcut(data, 4)
+# 也可以自己设置
+pd.qcut(data, [o, 0.1, o.s, 0.9, 1.))
+</code></pre>
+<h1 id="检测和过滤异常值">检测和过滤异常值</h1>
+<p>找出绝对值大小超过3的值</p>
+<pre><code class="language-python">col[np.abs(col) &gt; 3]
+</code></pre>
+<p>选出全部含有“超过3或-3的值”的行，使用any方法</p>
+<pre><code class="language-python">data[(np.abs(data) &gt; 3).any(1)]
+</code></pre>
+<p>将df中的值重新限制到-3到3之间</p>
+<pre><code class="language-python">data[np.abs(data) &gt; 3] = np.sign(data) * 3
+</code></pre>
+<h1 id="排列和随机采样">排列和随机采样</h1>
+<p>利用numpy.random.permutation函数可以轻松实现对Series或DataFrame的列的排列工作（permuting）。通过需要排列的轴长度调用permutation，可以产生一个表示新顺序的整数数组</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A3%8E%E6%A0%BC%E7%9A%84%E5%90%88%E5%B9%B6">数据库风格的合并</a></li>
+<li><a href="#%E7%B4%A2%E5%BC%95%E4%B8%8A%E7%9A%84%E5%90%88%E5%B9%B6">索引上的合并</a></li>
+</ul>
+</li>
+<li><a href="#%E8%BD%B4%E5%90%91%E8%BF%9E%E6%8E%A5">轴向连接</a>
+<ul>
+<li><a href="#concat">concat</a></li>
+<li><a href="#%E5%90%88%E5%B9%B6%E9%87%8D%E5%8F%A0%E6%95%B0%E6%8D%AE">合并重叠数据</a></li>
+<li><a href="#%E5%B0%86%E9%95%BF%E8%A1%A8%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AE%BD%E8%A1%A8">将长表转换为宽表</a></li>
+</ul>
+</li>
+<li><a href="#%E7%A7%BB%E9%99%A4%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE">移除重复数据</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0%E6%88%96%E6%98%A0%E5%B0%84%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E8%A3%85%E6%8D%A2">使用函数或映射进行数据装换</a></li>
+<li><a href="#%E6%9B%BF%E6%8D%A2%E5%80%BC">替换值</a></li>
+<li><a href="#%E9%87%8D%E5%91%BD%E5%90%8D%E8%BD%B4%E7%B4%A2%E5%BC%95">重命名轴索引</a></li>
+<li><a href="#%E7%A6%BB%E6%95%A3%E5%8C%96%E5%92%8C%E9%9D%A2%E5%85%83bin%E5%88%92%E5%88%86">离散化和面元（bin）划分</a></li>
+<li><a href="#%E6%A3%80%E6%B5%8B%E5%92%8C%E8%BF%87%E6%BB%A4%E5%BC%82%E5%B8%B8%E5%80%BC">检测和过滤异常值</a></li>
+<li><a href="#%E6%8E%92%E5%88%97%E5%92%8C%E9%9A%8F%E6%9C%BA%E9%87%87%E6%A0%B7">排列和随机采样</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://dong1iu.github.io/post/zai-pandas-dataframe-zhong-shi-yong-bi-jiao-lie-biao-de-wen-ti/">
+              <h3 class="post-title">
+                在 Pandas DataFrame 中使用比较列表的问题
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
