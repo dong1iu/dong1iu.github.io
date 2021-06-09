@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://dong1iu.github.io</id>
     <title>动动栋栋</title>
-    <updated>2021-06-09T08:50:02.548Z</updated>
+    <updated>2021-06-09T08:54:43.849Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://dong1iu.github.io"/>
     <link rel="self" href="https://dong1iu.github.io/atom.xml"/>
@@ -10,502 +10,6 @@
     <logo>https://dong1iu.github.io/images/avatar.png</logo>
     <icon>https://dong1iu.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 动动栋栋</rights>
-    <entry>
-        <title type="html"><![CDATA[Python数据规整化：清理、转换、合并、重塑]]></title>
-        <id>https://dong1iu.github.io/post/python-shu-ju-gui-zheng-hua-qing-li-zhuan-huan-he-bing-chong-su/</id>
-        <link href="https://dong1iu.github.io/post/python-shu-ju-gui-zheng-hua-qing-li-zhuan-huan-he-bing-chong-su/">
-        </link>
-        <updated>2021-06-09T08:30:45.000Z</updated>
-        <content type="html"><![CDATA[<p>#合并数据集</p>
-<h2 id="数据库风格的合并">数据库风格的合并</h2>
-<pre><code class="language-python">pd.merge(df1, df2, on='key')
-# 如果列的名字不同
-pd.merge(df1, df2, left_on='key1', right_on='key2')
-# how= inner left right outter
-pd.merge(df1, df2, on='key', how='innner')
-
-</code></pre>
-<p>多对多连接时产生的时行的笛卡尔积</p>
-<p>要根据多个键合并时，传入一个由列名组成的列表即可</p>
-<pre><code class="language-python">pd.merge(df1, df2, on=['key1', 'key2'], how='innner')
-</code></pre>
-<p>注意在进行列连接时，DataFrame对象中的索引会被丢弃</p>
-<p>对重复列名的处理</p>
-<pre><code class="language-python">pd.merge(left, right, on='key', suffixes=('_left', '_right')
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623227523966.png" alt="" loading="lazy"></figure>
-<p>完整参数<br>
-<img src="https://dong1iu.github.io/post-images/1623227533897.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623227537948.png" alt="" loading="lazy"></figure>
-<h2 id="索引上的合并">索引上的合并</h2>
-<pre><code>如果连接键位于起索引中，可传入left_index=True或right_index=True(或都传)以说明索引应该被用作连接键
-
-```python
-pd.merge(left, right, left_on='key', right_index=True)
-```
-
-对于层次化索引， 比较复杂
-</code></pre>
-<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623227546081.png" alt="" loading="lazy"></figure>
-<pre><code>必须以列表的形式指明用作合并键的多个列
-
-```python
-pd.merge(left, right, left_on=['key1, key2'], right_index=True)
-```
-
-join实例方法 df.join
-
-默认左连接
-
-```python
-left.join(right, on='key', how='inner')
-```
-</code></pre>
-<h1 id="轴向连接">轴向连接</h1>
-<h2 id="concat">concat</h2>
-<p>可称为连接（concatenation）、绑定（binding）或堆叠（stacking）</p>
-<p>concatenation 用于合并原始Numpy数组<br>
-<img src="https://dong1iu.github.io/post-images/1623227551979.png" alt="" loading="lazy"></p>
-<pre><code class="language-python">np.concatenate([arr, arr], axis=1)
-</code></pre>
-<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623227556829.png" alt="" loading="lazy"></figure>
-<p>对于pandas对象，带有标签的轴使你能够进一步推广数组的连接，所以concatenate的可用性就不高了</p>
-<p>使用CONCAT函数</p>
-<pre><code class="language-python"># 带标签
-pd.concat([s1, s2, s3])
-# 默认axis=0
-pd.concat([df1, df2, df3], axis=0)
-</code></pre>
-<p>参数join</p>
-<pre><code class="language-python"># 舍弃 两个Series中不共有的位置
-pd.concat([s1, s2], axis=0, join='inner')
-</code></pre>
-<p>参数joinaxes 指定在其他轴上使用的索引</p>
-<pre><code class="language-python">pd.concat([s1, s2], axis=0, join_axes=[['a', 'b'])
-</code></pre>
-<p>参数keyx 用于区分连接的结果</p>
-<pre><code class="language-python">In [70]: result = pd.concat([s1,s2,s3], keys=['one', 'two','three'])
-Out[70]: result
-one    a  0
-        b  1
-two    a  0
-                b  1
-three  f  5
-        g  6
-</code></pre>
-<p>如果沿着axis=1对Series进行合并，这keys会成为DataFrame的列头</p>
-<p>如果keys传入的不是列表而是字典，那么字典的键会被当做keys选项的值</p>
-<p>处理和分析工作无关的index</p>
-<pre><code class="language-python">pd.concat([df1, df2], ingore_indexx=True)
-</code></pre>
-<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623227564113.png" alt="" loading="lazy"></figure>
-<h2 id="合并重叠数据">合并重叠数据</h2>
-<p>使用np.where重叠</p>
-<pre><code class="language-python">np.where(pd.isnull(a), b, a)
-</code></pre>
-<p>使用combine_first</p>
-<pre><code class="language-python">b[:2].combine_first(a[:])
-</code></pre>
-<p>##重塑和轴向旋转</p>
-<p>重塑层次化索引</p>
-<p>stack和unstack方法分别将数据的列旋转为行、将数据的行旋转为列</p>
-<p>STACK方法<br>
-<img src="https://dong1iu.github.io/post-images/1623227569712.png" alt="" loading="lazy"></p>
-<pre><code class="language-python">data.stack()
-</code></pre>
-<figure data-type="image" tabindex="6"><img src="https://dong1iu.github.io/post-images/1623227574396.png" alt="" loading="lazy"></figure>
-<p>UNSTACK方法<br>
-<img src="https://dong1iu.github.io/post-images/1623227579478.png" alt="" loading="lazy"></p>
-<p>默认情况unstack操作的是最内层（同stack）。可以传入级别的编号和名称</p>
-<pre><code class="language-python">result.unstack(0)
-result.unstack('state')
-</code></pre>
-<p>如果不是所有级别值都能在个分组中找到的话，这unstack操作会引入NAN，而stack()方法默认会过滤缺失值，所以两方法是可逆的</p>
-<h2 id="将长表转换为宽表">将长表转换为宽表</h2>
-<figure data-type="image" tabindex="7"><img src="https://dong1iu.github.io/post-images/1623227586212.png" alt="" loading="lazy"></figure>
-<pre><code class="language-python">df.pivot('date', 'item', 'value')
-</code></pre>
-<p>前两个参数分别作为行列索引的列名，最后一个是填充DF数据列名的。<br>
-<img src="https://dong1iu.github.io/post-images/1623227592594.png" alt="" loading="lazy"></p>
-<p>如果有两个需要参与重塑的数据列</p>
-<pre><code class="language-python">pivoted = df.pivo('date', 'item')
-# 忽略最后一个参数得到的DF就会带有层次化的列
-</code></pre>
-<figure data-type="image" tabindex="8"><img src="https://dong1iu.github.io/post-images/1623227597553.png" alt="" loading="lazy"></figure>
-<p>注意pivot其实只是一个快捷方式：实质上用set_index创建层次化soyb，再用unstack重塑。</p>
-<h1 id="移除重复数据">移除重复数据</h1>
-<p>duplicated 方法 返回一个布尔型Series</p>
-<pre><code class="language-python">data.duplicated()
-</code></pre>
-<p>drop_duplicates() 默认只保留第一行</p>
-<pre><code class="language-python">df.drop_duplicates(subset=['a', 'b'], keep='first', inplace=False, ingore_index=False)
-# - first : Drop duplicates except for the first occurrence. - last : Drop duplicates except for the last occurrence. - False : Drop all duplicates.
-# If True, the resulting axis will be labeled 0, 1, …, n - 1.
-</code></pre>
-<h1 id="使用函数或映射进行数据装换">使用函数或映射进行数据装换</h1>
-<p>Series的map方法可以接受一个函数或含有映射关系的字典型对象</p>
-<pre><code class="language-python"># meat_to_animal是一个字典
-data['animal'] = data['food'].map(str.lower).map(meat_to_animal)
-</code></pre>
-<p>也可以传入完整的数据</p>
-<pre><code class="language-python">data['animal'] = data['food'].map(lambda x: meat_to_animal[x.lower()])
-</code></pre>
-<h1 id="替换值">替换值</h1>
-<p>replace 函数</p>
-<pre><code class="language-python">data.place([-999, -1000], np.nan)
-</code></pre>
-<p>也可以传入字典</p>
-<pre><code class="language-python">data.replace({-999:np.nan, -1000:0})
-</code></pre>
-<h1 id="重命名轴索引">重命名轴索引</h1>
-<p>和Series一样，轴标签也有一个map方法</p>
-<pre><code class="language-python">data.index.map(str.upper)
-</code></pre>
-<p>rename 方法</p>
-<pre><code class="language-python">df.rename(index=str.title, columns=str.upper)
-</code></pre>
-<p>也可以传入字典修改</p>
-<h1 id="离散化和面元bin划分">离散化和面元（bin）划分</h1>
-<p>cut方法</p>
-<pre><code class="language-python">bins = [18, 25, 35, 60, 100]
-cats = pd.cut(ages, bins)
-</code></pre>
-<p>pandas会返回特殊的Categorical对象，他实际上是表示不同分类名称的levels数组以及一个为年龄数据进行标号的labels属性</p>
-<pre><code class="language-python">In [157]: cats.labels 
-Out[157]: array([o, o, o, 1, o, o, 2, 1, 3, 2, 2, 1]) 
-In (158]: cats.levels 
-Out[158]: Index([(18, 25], (25, 35], (35, 60], (60, 100]], dtype=object) 
-In [159]: pd.value_counts(cats) 
-Out[159]:
-(18, 25]    5
-(35, 60]    3
-(25, 35]    3 
-(60, 100]   1
-</code></pre>
-<p>right参数 修改区间的取向</p>
-<pre><code class="language-python"># right不取右边
-pd.cut(ages, bins, right=False)
-</code></pre>
-<p>label参数 设置自己分箱名称</p>
-<pre><code class="language-python">pd.cut(ages, labels=['Youth', 'YoungAdult', ...])
-</code></pre>
-<p>如果传入的分箱的数量而不是确切的临界值，则他会根据数据的最小值和最大值计算等距分箱</p>
-<pre><code class="language-python">pd.cut(data, 4, precision=2)
-</code></pre>
-<p>QCUT</p>
-<p>根据样本的分位数进行分箱</p>
-<pre><code class="language-python">pd.qcut(data, 4)
-# 也可以自己设置
-pd.qcut(data, [o, 0.1, o.s, 0.9, 1.))
-</code></pre>
-<h1 id="检测和过滤异常值">检测和过滤异常值</h1>
-<p>找出绝对值大小超过3的值</p>
-<pre><code class="language-python">col[np.abs(col) &gt; 3]
-</code></pre>
-<p>选出全部含有“超过3或-3的值”的行，使用any方法</p>
-<pre><code class="language-python">data[(np.abs(data) &gt; 3).any(1)]
-</code></pre>
-<p>将df中的值重新限制到-3到3之间</p>
-<pre><code class="language-python">data[np.abs(data) &gt; 3] = np.sign(data) * 3
-</code></pre>
-<h1 id="排列和随机采样">排列和随机采样</h1>
-<p>利用numpy.random.permutation函数可以轻松实现对Series或DataFrame的列的排列工作（permuting）。通过需要排列的轴长度调用permutation，可以产生一个表示新顺序的整数数组</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[在 Pandas DataFrame 中使用比较列表的问题]]></title>
-        <id>https://dong1iu.github.io/post/zai-pandas-dataframe-zhong-shi-yong-bi-jiao-lie-biao-de-wen-ti/</id>
-        <link href="https://dong1iu.github.io/post/zai-pandas-dataframe-zhong-shi-yong-bi-jiao-lie-biao-de-wen-ti/">
-        </link>
-        <updated>2021-06-09T08:21:50.000Z</updated>
-        <content type="html"><![CDATA[<p>如果你经常尝试在DataFrame中存放列表并对列表进行过取等，你会发现结果这和你预想的不同</p>
-<pre><code class="language-python">df = pandas.DataFrame([[1,2,3,[4,5]],[6,7,8,[9,10]]], columns=['a','b','c','d'])
-&gt;&gt;&gt; df
-   a  b  c        d
-0  1  2  3   [4, 5]
-1  6  7  8  [9, 10]
-</code></pre>
-<p>当你用d构建过滤器的时候</p>
-<pre><code class="language-python">&gt;&gt;&gt; df['d'] == [4,5]
-0    False
-1    False
-Name: d, dtype: bool
-</code></pre>
-<p><strong>造成这种现象的原因是，DataFrame中存储的列表不可哈希（散列）</strong><br>
-如果你想正确的构建过滤器，你可以用一下方式</p>
-<pre><code class="language-python">df.loc[:, 'd'].map(lambda x:x==[4,5])
-</code></pre>
-<p>这种方式调用匿名函数逐个比较，而不是使用哈希表比较，自然不会造成之前的错误</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[pip 使用代理]]></title>
-        <id>https://dong1iu.github.io/post/pip-shi-yong-dai-li/</id>
-        <link href="https://dong1iu.github.io/post/pip-shi-yong-dai-li/">
-        </link>
-        <updated>2021-06-09T08:19:48.000Z</updated>
-        <content type="html"><![CDATA[<p><code>pip install package --proxy=http://127.0.0.1:port</code></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Pandas入门]]></title>
-        <id>https://dong1iu.github.io/post/pandas-ru-men/</id>
-        <link href="https://dong1iu.github.io/post/pandas-ru-men/">
-        </link>
-        <updated>2021-06-09T08:11:37.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="介绍">介绍</h1>
-<p>pandas是基于NumPy数组构建的，特别是基于数组的函数和不使⽤for循环的数据处理。虽然pandas采⽤了⼤量的NumPy编码⻛格，但⼆者最⼤的不同是pandas是专⻔为处理表格和混杂数据设计的。</p>
-<h1 id="pandas的数据结构介绍">pandas的数据结构介绍</h1>
-<p>两个主要数据结构：Series和DataFrame</p>
-<h2 id="series"><strong>Series</strong></h2>
-<p>Series是一种类似于一维数组的对象， 它由一组数据（各种NumPy数据类型）以及一组 与之相关的数据标签（即索引）组成。 仅由 一组数据即可产生最简单的Series</p>
-<p>Series的字符串： 索引在左边 ， 值在右边 。 由干我们没有为数据指定索引 ， 于是会自动创建 一个0到N-1 (N为数据的长度）的整数型索引。 你可以通过Series的 values和index属性获取其数组表示形式和索引对象：</p>
-<pre><code class="language-python">In [6]: obj.values 
-Out[6]: array(( 4, 7, -5, 3]) 
-In [7]: obj.index 
-Out[7]: Int641ndex((o, 1, 2, 3])
-</code></pre>
-<p>通常，我们希望所创建的Series带有一个可以对各个数据点进行标记的索引：与普通NumPy数组相比，你可以通过索引的方式选取Series中的单个或一组值：</p>
-<p>NumPy数组运算（如根据布尔型数组进行过滤、 标抵乘法、 应用数学函数等）都会保留 索引和值之间的链接</p>
-<p>还可以将Series看成是一个定长的有序字典， 因为它是索引值到数据值的一个映射。 它可以用在许多原本帣要字典参数的函数中：如果数据被存放在一个Python字典中 ， 也可以直接<strong>通过这个字典来创建Series</strong></p>
-<p>Series最重要的一个功能是：<strong>它在算术运箕中会自动对齐不同索引的数据</strong></p>
-<p><strong>Series对象本身及其索引都有一个name属性，obj和index都可以有name</strong></p>
-<h2 id="dataframe"><strong>DataFrame</strong></h2>
-<p>DataFrame是⼀个表格型的数据结构，它含有⼀组有序的列，每列可以是不同的值类型（数值、字符串、布尔值等）。DataFrame既有⾏索引也有列索引，它可以被看做由Series组成的字典（共⽤同⼀个索引）。</p>
-<p>创建DataFrame<br>
-<img src="https://dong1iu.github.io/post-images/1623226377660.png" alt="" loading="lazy"></p>
-<p>最常用的一种是直接传入一个由等长列表或NumPy数组组成的字典</p>
-<p><strong>基本功能</strong></p>
-<h1 id="reindex-重新索引">reindex 重新索引</h1>
-<pre><code class="language-python">df.reindex(['a', 'b', 'c', 'd', 'e'])
-	# 如果某个索引值当前不存在， 就引入缺失值：
-df.reindex(['a', 'b', 'c', 'd', 'e'], fill_value=0)
-</code></pre>
-<p>插值处理</p>
-<pre><code class="language-python">In [84]: obj3 = Series(['blue','purple','yellow'], index=[0, 2, 4])
-In [85): obj3.reindex(range(6), method='ffill')
-OUT[85]:
-	0     blue
-	1     blue
-	2   purple
-	3   purple
-	4   yellow
-	5   yellow
-# 解释数值或日期按大小关系向前或向后插值
-# 可带参数
-# ffill  前向填充（或搬运）值
-# bfill  后向填充（或撒运）值
-</code></pre>
-<p>对干DataFrame, re index可以修改（行）索引 、 列， 或两个都修改。默认索引行</p>
-<p>使用columns关键字即可重新索引列，不存在的为用NAN填充</p>
-<pre><code class="language-python">frame.reindex(columns=['a', 'b'])
-</code></pre>
-<p>同时对行和列进行重新索引 ， 而插值则只能桉行应用（即轴0)<br>
-<img src="https://dong1iu.github.io/post-images/1623226387709.png" alt="" loading="lazy"></p>
-<h1 id="drop-丢弃指定轴上的项">drop 丢弃指定轴上的项</h1>
-<pre><code class="language-python"># 默认丢弃行index
-df.drop(['index1', 'index2']， axis=0)
-
-# 删除列
-df.drop(['col1', 'col2'], axis=1)
-</code></pre>
-<h1 id="索引-选取和过滤">索引、选取和过滤</h1>
-<p>利用标签的切片与普通切片不同， 其末端是包含的(inclusive)，即['b':'c']是包含‘c’的</p>
-<h1 id="算术运算和数据对齐">算术运算和数据对齐</h1>
-<p>自动对齐的数据中会用Nan填补缺失值</p>
-<p>在算术方法中填充缺失值</p>
-<pre><code class="language-python">df1.add(df2, fill_value=0)
-</code></pre>
-<p>其他算术方法</p>
-<pre><code>sub div mul
-</code></pre>
-<h1 id="dataframe和series间的运算">DataFrame和Series间的运算</h1>
-<p>类似广播原则</p>
-<p>默认情况下，DataFrame和Series间的运算会将Series的索引匹配到列？？？</p>
-<h1 id="函数应用和映射">函数应用和映射</h1>
-<p>Numpy的ufuncs（元素级数组方法）设可用于pandas对象</p>
-<pre><code class="language-python">np.abs(df)
-</code></pre>
-<p>也可将函数应用到各行或各列 形成一维数组上</p>
-<pre><code class="language-python">f = lambda x: x.max() - x.min()
-df.apply(f)  # 默认沿着行
-df.apply(f, axis=1) # axis=1沿着列
-</code></pre>
-<p>可以返回由多个值组成的Series</p>
-<pre><code class="language-python">def f(x):
-	return Series([x.min(), x.max()], index=['min','max'])
-In [165]: frame.apply(f)
-OUT[165]:
-			b    d     e
-	min ... ...  ...
-	max ... ...  ...
-</code></pre>
-<p>此外元素集的Python函数也可以，如对frame中各浮点值格式化...</p>
-<pre><code class="language-python">format = lambda x:'%.2f' % x
-</code></pre>
-<h1 id="排序和排名sort_index">排序和排名(sort_index())</h1>
-<pre><code class="language-python"># 按照index排序
-df.sort_index()
-# 按列排序
-df.sort_index(axis=1)
-	# 默认升序 降序使用
-	ascending=False
- # 注意以上方法仅仅是对列名字排序，即对列的位置排序，并不涉及值计算
-</code></pre>
-<p>根据一个或多个列的值进行排序</p>
-<pre><code class="language-python">df.sort_index(by=['a', 'b'])
-</code></pre>
-<p>使用rank排序</p>
-<p>他会增加一列排名值，从1开始</p>
-<pre><code class="language-python">ser1.rank()
-</code></pre>
-<p>也可以根据原数据中出现的顺序给出排名</p>
-<pre><code class="language-python">ser1.rank(method='first')
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623226396342.png" alt="" loading="lazy"></figure>
-<h1 id="带有重复值的轴索引is_unique">带有重复值的轴索引(is_unique）</h1>
-<p>index是可以重复的 ，虽然许多pandas函数都要求index唯一，如reindex</p>
-<p>查看是否唯一</p>
-<pre><code class="language-python">df.index.is_unique()
-</code></pre>
-<h1 id="汇总和计算描述统计sum-meandiffsumsum">汇总和计算描述统计(sum, mean,diff,sumsum)</h1>
-<p>Pandas对象拥有一组常用的数学和统计方法。用于从Series中提取单个值（如sum或mean) 或从DataFrame的行或列中提取一个Series。</p>
-<p>汇总计算一般都默认对列做聚集 axis=0沿着行聚集</p>
-<pre><code class="language-python">df.sum()  # 各列加总
-df.sum(axis=1) # 各行加总
-
-# NA值会被自动忽略不参与加总，使用skipna参数可以禁用功能，使得计算结果为NAN
-df.mean(axis=1, skipna=False)
-
-# 此外，还有level参数，如果轴是层次化索引
-</code></pre>
-<p>间接统计</p>
-<pre><code class="language-python">df.idmax() #返回达到最大值得索引
-</code></pre>
-<p>累计型统计</p>
-<pre><code class="language-python">df.cumsum()  # 累加
-</code></pre>
-<p>多次汇总统计</p>
-<pre><code class="language-python">df.describe()
-</code></pre>
-<p>常用汇总统计方法<br>
-<img src="https://dong1iu.github.io/post-images/1623226403691.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623226407708.png" alt="" loading="lazy"></figure>
-<h1 id="相关系数和协方差corr-cov">相关系数和协方差(corr, cov)</h1>
-<p>数据准备</p>
-<pre><code class="language-python">import pandas.io.data as web  # 有错
-all_data = {}
-for  ticker in ['AAPL', 'IDM', 'MSFT', 'GOOG']:
-	all_data[ticker] = web.get_data_yahoo(ticker, '1/1/2000', '1/1/2010')
-price = DataFrame({tic: data['Adj Close'] for tic, data in all_data.iteritems()})
-volume = DataFrame({tic: data['Volume'] for tic, data in all_data.iteritems()})
-</code></pre>
-<p>接下来计算价格的百分数变化：</p>
-<pre><code class="language-python">returns = price.pct_change()
-</code></pre>
-<p>计算相关系数和协方差</p>
-<pre><code class="language-python"># 两列数据返回相关系数
-ser1.corr(ser2)
-# 返回完整的相关系数矩阵
-df.corr()
-# 返回完整的协方差矩阵
-df.corr()
-</code></pre>
-<p>corrwith 计算一个Series和另一个Series或DataFrame之间的相关系数</p>
-<pre><code class="language-python">df.corrwith(volume)
-</code></pre>
-<h1 id="唯一值-值计数以及成员资格unique-uniquesort-value_counts-isin">唯一值、值计数以及成员资格(unique, unique.sort(), value_counts,, isin)</h1>
-<p>得到Series中的唯一值</p>
-<pre><code class="language-python">ser1.unique()
-</code></pre>
-<p>返回的唯一值是未排序的，如果需要排序，可以对结果再次排序</p>
-<pre><code class="language-python">ser1.uniques.sort()
-</code></pre>
-<p>value_counts 计算Series中各值出现的频数</p>
-<pre><code class="language-python">ser1.value.counts
-</code></pre>
-<p>value_counts方法是顶级pandas方法</p>
-<pre><code class="language-python">pd.value_counts(ser1.values, sort=False)
-</code></pre>
-<p>isin 用于判断矢量化集合的成员资格，可以选取Series中或DataFrame列中数据的子集</p>
-<pre><code class="language-python">ser.isin(['b', ['c']])
-</code></pre>
-<h1 id="处理缺失数据dropna-fillna-isnull-notnull">处理缺失数据(dropna fillna isnull notnull)</h1>
-<p>NA处理方式<br>
-<img src="https://dong1iu.github.io/post-images/1623226413841.png" alt="" loading="lazy"></p>
-<h1 id="滤除缺失数据dropna">滤除缺失数据(dropna)</h1>
-<p>简单丢弃 默认丢弃有缺失值的行</p>
-<pre><code class="language-python">data.dropna()
-data[data.dropna()]
-</code></pre>
-<p>复杂丢弃</p>
-<pre><code class="language-python"># 只丢弃全为NA的那些行
-df.dropnna(how='all')
-# 只丢弃全为NA的那些列
-df.dropna(how='all', axis=1)
-# 保留至少有n个非NaN数据的行
-df.dropna(thresh=n)
-</code></pre>
-<h1 id="填充缺失数据fillna">填充缺失数据(fillna)</h1>
-<p>简单填充</p>
-<pre><code class="language-python">df.fillna(0)
-</code></pre>
-<p>通过一个字典调用fillna，就可以现在不同列填充不同的值</p>
-<pre><code class="language-python">In [251): df.fillna({1: 0.5, 3: -1})
-</code></pre>
-<p>fillna默认会返回新对象，使用inplace就地修改</p>
-<p>fillna可以实现和reindex插值的功能</p>
-<pre><code class="language-python"># 向前插值, limit=n
-df.fillna(method='ffill', limit=n)
-</code></pre>
-<p>填入中位数或平均数</p>
-<pre><code class="language-python">ser1.fillna(ser1.mean())
-
-</code></pre>
-<h1 id="层次化索引多个级别的索引">层次化索引(多个级别的索引)</h1>
-<p>pandas的一项重要功能， 它使你能在一个轴上拥有多个（两个以上）索引级别。</p>
-<pre><code class="language-python"># 数据准备
-data = Series(np.rankdom.randn(10), index= [['a','a','a','b','b','b','c','c','d','d'],
-	[1, 2, 3, 1, 2, 3, 1, 2, 2, 3]])
-</code></pre>
-<p>这就是带有Multilndex索引的Series的格式化输出形式。索引之间的＂间隔” 表示“直接使用上面的标签“</p>
-<pre><code class="language-python">data.iloc[['b', 'd']]
-data.iloc[['b':'d']]
-# 在内层中索引
-data[:, 2]
-</code></pre>
-<p>通过其unstack方法披重新安排到一个DataFrame中</p>
-<pre><code class="language-python">data.unstack()
-data.unstack().stack()
-</code></pre>
-<p>每个轴都可以有分层索引，columns也可以指定</p>
-<p>各层都可以有名字，如果指定了名称，他们就会显示在控制台输出</p>
-<pre><code class="language-python">df.index.names = ['key1', 'key2']
-df.columns.names = ['key3', 'key4']
-</code></pre>
-<h1 id="重新分级排序swaplevel-sortlevel">重新分级排序(swaplevel, sortlevel)</h1>
-<p>有时 ， 你需要重新调整某条轴上各级别的顺序，或根据指定级别上的值对数据进行排序</p>
-<pre><code class="language-python"># swaplevel接受两个级别编号或名称
-frame.swaplevel('key1','key2')
-</code></pre>
-<p>sortlevel 交换级别时， 常常会用到</p>
-<pre><code class="language-python">frame.sortlevel(1)
-</code></pre>
-<h1 id="根据级别汇总统计dfsumlevle">根据级别汇总统计(df.sum(levle=))</h1>
-<p>许多对DataFrame和Series的描述和汇总统计都有一个level选项， 它用于指定在某条轴 上求和的级别。</p>
-<pre><code class="language-python">frame.sum(level='key2')
-</code></pre>
-<h1 id="使用dataframe的列set_index-reset_index">使用DataFrame的列（set_index, reset_index）</h1>
-<p>人们经常想要将DataFrame的一个或多个列当做行索引来用，或者将行索引变成DataFrame的列</p>
-<pre><code class="language-python">df.set_index(['c', 'd'])
-# 默认列会被移动到index
-df.set_index(['c', 'd'], drop=False) # 保留
-
-df.reset_index()  # 恢复所有
-df.reset_index(['c', 'd'])  # 恢复指定
-</code></pre>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[Windows同步MacOS鼠标滚轮自然]]></title>
         <id>https://dong1iu.github.io/post/windows-tong-bu-macos-shu-biao-gun-lun-zi-ran/</id>
@@ -524,18 +28,6 @@ df.reset_index(['c', 'd'])  # 恢复指定
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Mac OS 时间机器全力备份]]></title>
-        <id>https://dong1iu.github.io/post/mac-os-shi-jian-ji-qi-quan-li-bei-fen/</id>
-        <link href="https://dong1iu.github.io/post/mac-os-shi-jian-ji-qi-quan-li-bei-fen/">
-        </link>
-        <updated>2021-06-08T05:03:46.000Z</updated>
-        <content type="html"><![CDATA[<p>全力备份</p>
-<p><code>sudo sysctl debug.lowpri_throttle_enabled=0</code></p>
-<p>静默备份</p>
-<p><code>sudo sysctl debug.lowpri_throttle_enabled=1</code></p>
-]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[mac windows双系统的时间同步]]></title>
         <id>https://dong1iu.github.io/post/mac-windows-shuang-xi-tong-de-shi-jian-tong-bu/</id>
         <link href="https://dong1iu.github.io/post/mac-windows-shuang-xi-tong-de-shi-jian-tong-bu/">
@@ -548,25 +40,6 @@ df.reset_index(['c', 'd'])  # 恢复指定
 <p><strong>Windows 与 Mac缺省看待系统硬件时间的方式是不一样的</strong>：<br>
 Windows把系统硬件时间当作本地时间(local time)，即操作系统中显示的时间跟BIOS中显示的时间是一样的。</p>
 <p>Mac把硬件时间当作 UTC，操作系统中显示的时间是硬件时间经过换算得来的，比如说北京时间是GMT+8，则系统中显示时间是硬件时间+8这样，当PC中同时有多系统共存时，就出现了问题。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Ubuntu 1804 定时任务和开机自启]]></title>
-        <id>https://dong1iu.github.io/post/ubuntu-1804-ding-shi-ren-wu-he-kai-ji-zi-qi/</id>
-        <link href="https://dong1iu.github.io/post/ubuntu-1804-ding-shi-ren-wu-he-kai-ji-zi-qi/">
-        </link>
-        <updated>2021-06-08T04:50:28.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="定时重启">定时重启</h1>
-<p>编辑计划任务文件</p>
-<pre><code class="language-bash">crontab -e
-</code></pre>
-<p>添加以下内容并保存</p>
-<pre><code class="language-bash"># 定时在每天凌晨4点半重启
-30 4 * * * root /sbin/reboot
-</code></pre>
-<h1 id="服务开机自启">服务开机自启</h1>
-<pre><code class="language-bash">systemctl enable xxx.service
-</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -734,46 +207,599 @@ lsmod | grep bbr
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[mac安装MySQL]]></title>
-        <id>https://dong1iu.github.io/post/mac-an-zhuang-mysql/</id>
-        <link href="https://dong1iu.github.io/post/mac-an-zhuang-mysql/">
+        <title type="html"><![CDATA[感知机PLA]]></title>
+        <id>https://dong1iu.github.io/post/gan-zhi-ji-pla/</id>
+        <link href="https://dong1iu.github.io/post/gan-zhi-ji-pla/">
         </link>
-        <updated>2021-06-07T15:03:59.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="一-下载mysql">一、下载MySQL</h1>
-<p><a href="https://dev.mysql.com/downloads/mysql/">官网地址</a></p>
-<p>下载macOS版本的dmg文件</p>
-<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623078467775.png" alt="" loading="lazy"></figure>
-<p>一路下一步，同意</p>
-<p>设置密码</p>
-<h1 id="二-修改环境变量">二、修改环境变量</h1>
-<p>修改配置文件</p>
-<pre><code class="language-bash">sudo vim ~/.bash_profile
-</code></pre>
-<p>在配置文件中添加以下内容</p>
-<pre><code class="language-bash"># mysql
-export PATH=$PATH:/usr/local/mysql/bin
+        <updated>2021-06-07T10:47:35.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="pla-感知机">PLA 感知机</h1>
+<h1 id="一-the-learning-problem">一、The Learning Problem</h1>
+<p>本质</p>
+<ol>
+<li>存在某种现在的模式去学习（so performance measure can be improved）</li>
+<li>不能被简单定义（so ML is needed）</li>
+<li>there is data about the pattern</li>
+</ol>
+<h1 id="二-perceptron-learning-algorithmpla">二、Perceptron Learning Algorithm（PLA）</h1>
+<p>图示<br>
+<img src="https://dong1iu.github.io/post-images/1623062895684.png" alt="" loading="lazy"></p>
+<h2 id="一线形可分">（一）线形可分</h2>
+<p>图总第一个为线性可分，经典的PLA只能处理完全线性可分的类型。<br>
+<img src="https://dong1iu.github.io/post-images/1623062905822.png" alt="" loading="lazy"></p>
+<h2 id="二感知机算法图解">（二）感知机算法图解</h2>
+<p>图解<br>
+<img src="https://dong1iu.github.io/post-images/1623062913237.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623062919845.png" alt="" loading="lazy"></figure>
+<h2 id="三如何选择g">（三）如何选择g</h2>
+<p>迭代w<br>
+<img src="https://dong1iu.github.io/post-images/1623062935084.png" alt="" loading="lazy"></p>
+<p>从某些初始值开始，一步步迭代到损失最小</p>
+<h2 id="四迭代更新">（四）迭代更新</h2>
+<p>图示<br>
+<img src="https://dong1iu.github.io/post-images/1623062941847.png" alt="" loading="lazy"></p>
+<p>误分类 → <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>i</mi><mi>g</mi><mi>n</mi><mo>(</mo><msubsup><mi>w</mi><mi>t</mi><mi>T</mi></msubsup><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><mo>)</mo><mi mathvariant="normal">≠</mi><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">sign(w_t^Tx_{n(t)})\neq{y_{n(t)}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1965309999999998em;vertical-align:-0.3551999999999999em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4530000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></span> → 更新步 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>w</mi><mi>t</mi></msub><mo>+</mo><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">w_{t+1}=w_t+y_{n(t)}x_{n(t)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p>证明<br>
+<img src="https://dong1iu.github.io/post-images/1623062950108.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623062957694.png" alt="" loading="lazy"></figure>
+<p>w的更新意味着分类超平面的移动</p>
+<h2 id="五-收敛性证明">（五）、收敛性证明</h2>
+<p>我们已经知道更新w向量方法，但是，这样的更新方法是否收敛？</p>
+<p>证明过程</p>
+<ol>
+<li>
+<p>假设线形可分的数据集<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">D</mi></mrow><annotation encoding="application/x-tex">\mathcal{D}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">D</span></span></span></span></span>能被向量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>完美划分</p>
+<p>因此<br>
+<img src="https://dong1iu.github.io/post-images/1623062968114.png" alt="" loading="lazy"></p>
+<p>从而<br>
+<img src="https://dong1iu.github.io/post-images/1623062976143.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>更新<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>意味着发生了错误，也就是<br>
+<img src="https://dong1iu.github.io/post-images/1623062983717.png" alt="" loading="lazy"></p>
+<p>从而<br>
+<img src="https://dong1iu.github.io/post-images/1623062989593.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>证明<br>
+<img src="https://dong1iu.github.io/post-images/1623062996830.png" alt="" loading="lazy"></p>
+<p>证明过程<br>
+<img src="https://dong1iu.github.io/post-images/1623063003431.png" alt="" loading="lazy"></p>
+</li>
+</ol>
+<p>收敛性的说明</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mi>θ</mi><mo>(</mo><mi>T</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>T</mi></msub></mrow><mrow><mo>∥</mo><msub><mi>w</mi><mi>f</mi></msub><mo>∥</mo><mo>⋅</mo><mo>∥</mo><msub><mi>w</mi><mi>T</mi></msub><mo>∥</mo></mrow></mfrac><mo>≥</mo><msqrt><mi>T</mi></msqrt><mo>⋅</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>t</mi><mo>=</mo><mi>ρ</mi><mi mathvariant="normal">/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">cos\theta(T) = \frac{w_f^Tw_T}{\lVert w_f \lVert \cdot \lVert w_T \lVert} \geq \sqrt{T}\cdot constant=\rho/R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.798865em;vertical-align:-0.5480799999999999em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.250785em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">∥</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29011428571428566em;"><span></span></span></span></span></span></span><span class="mopen mtight">∥</span><span class="mord mtight">⋅</span><span class="mopen mtight">∥</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span><span class="mopen mtight">∥</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.60742em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9190928571428572em;"><span style="top:-2.214em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.42488571428571426em;"><span></span></span></span></span></span></span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.5480799999999999em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.11333499999999996em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9266650000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span><span style="top:-2.886665em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
+-10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
+-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
+35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
+-221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
+s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
+s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.11333499999999996em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">ρ</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span><br>
+<img src="https://dong1iu.github.io/post-images/1623063013335.png" alt="" loading="lazy"></p>
+<ol>
+<li>线性可分告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>在增长</li>
+<li>错误修正的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的模长存在上界</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的增长一部分依赖<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">cos(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>的增长<br>
+<img src="https://dong1iu.github.io/post-images/1623063021508.png" alt="" loading="lazy"></li>
+</ol>
+<h1 id="三-其他pla">三、其他PLA</h1>
+<p>Pocket PLA:非线性可分数据的感知器<br>
+<img src="https://dong1iu.github.io/post-images/1623063030248.png" alt="" loading="lazy"></p>
+<p>优点：可以对近似线形可分的数据集进行处理</p>
+<p>缺点：计算量大，每次都要计算所有的点</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Numpy]]></title>
+        <id>https://dong1iu.github.io/post/numpy/</id>
+        <link href="https://dong1iu.github.io/post/numpy/">
+        </link>
+        <updated>2021-06-07T04:04:09.000Z</updated>
+        <content type="html"><![CDATA[<p>NumPy（Numerical Python的简称）是Python数值计算最重要的基础包。⼤多数提供科学计算的包都是⽤NumPy的数组作为构建基础。</p>
+<h1 id="介绍">介绍</h1>
+<p>NumPy之于数值计算特别重要的原因之⼀，是因为它可以⾼效处理⼤数组的数据。这是因为：</p>
+<p>NumPy是在⼀个连续的内存块中存储数据，独⽴于其他Python内置对象。NumPy的C语⾔编写的算法库可以操作内存，⽽不必进⾏类型检查或其它前期⼯作。⽐起Python的内置序列，NumPy数组使⽤的内存更少。<br>
+NumPy可以在整个数组上执⾏复杂的计算，⽽不需要Python的for循环。</p>
+<p><strong>总而言之，numpy比list快，而且内存使用更少。</strong></p>
+<h1 id="一-ndarray">一、 ndarray</h1>
+<ol>
+<li>
+<p>**创建ndarray （**ones zeros empty ）</p>
+<pre><code class="language-python">data1 = [6, 7.5, 8, 0, 1]
+arr1 = np.array(data1)
+# array([ 6. ,  7.5,  8. ,  0. ,  1. ])
 
-alias mysql='/usr/local/mysql/bin/mysql'
-alias mysqladmin='/usr/local/mysql/bin/mysqladmin'
+data2 = [[1, 2, 3, 4], [5, 6, 7, 8]]
+arr2 = np.array(data2)
+# array([[1, 2, 3, 4],
+#         5, 6, 7, 8]])
 </code></pre>
-<p>检查文件是否生效</p>
-<pre><code class="language-bash">source ~/.bash_profile
+<p>除非特别说明，np.array会尝试为新建的这个数组推断出⼀个较为合适的数据类型。数据类型保存在⼀个特殊的dtype对象中。</p>
+<pre><code class="language-python">In [27]: arr1.dtype
+Out[27]: dtype('float64')
 </code></pre>
-<h1 id="三-测试数据库">三、测试数据库</h1>
-<p>查看MySQL版本</p>
-<pre><code class="language-bash">mysql -V
+<p><strong>使用其他函数创建数组</strong></p>
+<p>ones zeros empty</p>
+<pre><code class="language-python">zeros和ones分别可以创建指定⻓度或形状的全0或全1数组。
+# zeros
+In [29]: np.zeros(10)
+Out[29]: array([ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.])
+In [30]: np.zeros((3, 6))
+
 </code></pre>
-<p>连接数据库</p>
-<pre><code class="language-bash">mysql -u root -p
+<p>注意：用np.empty()创建0数组是不安全的，它返回的都是⼀些未初始化的垃圾值。即可能是float和int混杂的数组。</p>
+<p>arrange</p>
+<pre><code class="language-python">In [32]: np.arange(15)
+Out[32]: array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14])
 </code></pre>
-<p>退出连接的数据库</p>
-<pre><code class="language-mysql">exit
+</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623039515523.png" alt="" loading="lazy"></figure>
+<ol start="2">
+<li>
+<p><strong>ndarray的数据类型 （<strong>astype</strong>）</strong></p>
+<p>为ndarray<strong>指定数据类型</strong></p>
+<pre><code class="language-python">arr1 = np.array([1, 2, 3], dtype=np.float64)
 </code></pre>
-<h1 id="四-管理服务">四、管理服务</h1>
-<p>管理服务</p>
-<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623078989184.png" alt="" loading="lazy"></figure>
-<p>设置开机启动和关闭服务</p>
-<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623079019588.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623039534839.png" alt="" loading="lazy"></figure>
+<p><strong>转换dtype</strong></p>
+<pre><code class="language-python">float_arr = arr.astype(np.float64)
+</code></pre>
+<p>如果某字符串数组表示的全是数字，也可以⽤astype将其转换为数值形式</p>
+<pre><code class="language-python">In [44]: numeric_strings = np.array(['1.25', '-9.6', '42'], dtype=np.string)
+In [45]: numeric_strings.astype(float
+</code></pre>
+<p>如果转换过程因为某种原因⽽失败了（⽐如某个不能被转换为float64的字符串），就会引发⼀个ValueError</p>
+<p>可以引用别的数组的属性来修改你想要的属性</p>
+<pre><code class="language-python">In [48]: int_array.astype(calibers.dtype)
+</code></pre>
+</li>
+<li>
+<p><strong>NumPy数组的运算</strong></p>
+<p>数组很重要，因为它使你不⽤编写循环即可对数据执⾏批量运算。NumPy⽤户称其为⽮量化（vectorization）。⼤⼩相等的数组之间的任何算术运算都会将运算应⽤到元素级</p>
+<pre><code class="language-python">arr * arr
+arr - arr
+</code></pre>
+<p>数组与标量的算术运算会将标量值传播到各个元素</p>
+<pre><code class="language-python">In [55]: 1 / arr
+In [56]: arr ** 0.5
+</code></pre>
+<p>⼤⼩相同的数组之间的⽐较会⽣成布尔值数组</p>
+<pre><code class="language-python">In [59]: arr2 &gt; arr
+Out[59]:
+array([[False,  True, False],
+			[ True, False,  True]], dtype=bool)
+</code></pre>
+</li>
+<li>
+<p><strong>⼴播（broadcasting）</strong></p>
+<p>不同⼤⼩的数组之间的运算叫做⼴播（broadcasting）</p>
+</li>
+<li>
+<p><strong>基本的索引和切⽚</strong></p>
+<p><strong>一维数组</strong></p>
+<pre><code class="language-python">In [63]: arr[5:8]
+Out[63]: array([5, 6, 7])
+</code></pre>
+<p>当你将⼀个标量值赋值给⼀个切⽚时（如arr[5:8]=12），该值会⾃动传播，而且这张赋值是会直接改变原数列的。</p>
+<p><strong>⾼维度数组</strong></p>
+<p>对于⾼维度数组，能做的事情更多。在⼀个⼆维数组中，各索引位置上的元素不再是标量⽽是⼀维数组。</p>
+<pre><code class="language-python">In [72]: arr2d = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+In [73]: arr2d[2]
+Out[73]: array([7, 8, 9])
+</code></pre>
+<p>可以传⼊⼀个以逗号隔开的索引列表来选取单个元素。下⾯两种⽅式是等价的：</p>
+<pre><code class="language-python">In [74]: arr2d[0][2] 
+Out[74]: 3
+In [75]: arr2d[0, 2] 
+Out[75]: 3
+</code></pre>
+<p>在2×2×3数组arr3d中：arr3d[0]是⼀个2×3数组：</p>
+<pre><code class="language-python">In [76]: arr3d = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+In [77]: arr3d
+Out[77]: 
+array([[[ 1,  2,  3],
+			[ 4,  5,  6]],
+			[[ 7,  8,  9],
+			[10, 11, 12]]])
+In [78]: arr3d[0] 
+Out[78]: 
+array([[1, 2, 3],
+			[4, 5, 6]])
+</code></pre>
+<p>标量值和数组都可以被赋值给arr3d[0]：标志值会广播</p>
+<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623039560105.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p><strong>切片索引</strong></p>
+<p>一维和列表差不多</p>
+<pre><code class="language-python">In [89]: arr[1:6]
+Out[89]: array([ 1,  2,  3,  4, 64])
+</code></pre>
+<p>对于之前的⼆维数组arr2d，其切⽚⽅式稍显不同：</p>
+<pre><code class="language-python"># 只输入一个参数时，优先axis0切片
+In [92]: arr2d[:2, 1:] 
+Out[92]: 
+array([[2, 3],
+			[5, 6]])
+</code></pre>
+<p>通过将整数索引和切⽚混合，可以得到低维度的切⽚，例如arr2d[1, :2]和arr2d[:2, 2]。</p>
+<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623039570171.png" alt="" loading="lazy"></figure>
+<p>⾃然，对切⽚表达式的赋值操作也会被扩散到整个选区：</p>
+</li>
+<li>
+<p><strong>布尔型索引</strong></p>
+<pre><code class="language-python">In [100]: names
+Out[100]: 
+array(['Bob', 'Joe', 'Will', 'Bob', 'Will', 'Joe', 'Joe'],
+
+In [101]: data 
+Out[101]: array(7X4)
+
+In [103]: data[names == 'Bob']
+Out[103]: 
+array([[ 0.0929,  0.2817,  0.769 ,  1.2464],
+			[ 1.669 , -0.4386, -0.5397,  0.477 ]])
+</code></pre>
+<p>布尔型数组的⻓度必须跟被索引的轴⻓度⼀致。此外，还可以将布尔型数组跟切⽚、整数（或整数序列）混合使⽤：</p>
+<pre><code class="language-python">In [104]: data[names == 'Bob', 2:]
+</code></pre>
+<p>要选择除&quot;Bob&quot;以外的其他值，既可以使⽤不等于符号（!=），也可以通过<sub>对条件进⾏否定，</sub>操作符⽤来反转条件很好⽤：</p>
+<pre><code class="language-python">In [106]: names != 'Bob'
+In [107]: data[~(names == 'Bob')]
+</code></pre>
+<p>选取这三个名字中的两个需要组合应⽤多个布尔条件，使⽤&amp;（和） |（或）之类的布尔算术运算符即可：</p>
+<pre><code class="language-python">In [110]: mask = (names == 'Bob') | (names == 'Will')
+</code></pre>
+<p>通过布尔型索引选取数组中的数据，将总是创建数据的副本，即使返回⼀模⼀样的数组也是如此。</p>
+<p>通过布尔型数组设置值是⼀种经常⽤到的⼿段。</p>
+<p>将data中的所有负值都设置为0</p>
+<pre><code class="language-python">In [113]: data[data &lt; 0] = 0
+</code></pre>
+</li>
+<li>
+<p><strong>花式索引</strong></p>
+<p>花式索引（Fancy indexing）是⼀个NumPy术语，它指的是利⽤整数数组进⾏索引。</p>
+<p>为了以特定顺序选取⾏⼦集，只需传⼊⼀个⽤于指定顺序的整数列表或ndarray即可：</p>
+<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623039580571.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://dong1iu.github.io/post-images/1623039586105.png" alt="" loading="lazy"></figure>
+<p>这段代码确实达到我们的要求了！使⽤负数索引将会从末尾开始选取⾏：</p>
+<pre><code class="language-python">In [121]: arr[[-3, -5, -7]]
+</code></pre>
+<p>⼀次传⼊多个索引数组会有⼀点特别。它返回的是⼀个⼀维数组，其中的元素对应各个索引元组：</p>
+<pre><code class="language-python">In [124]: arr[[1, 5, 7, 2], [0, 3, 1, 2]] 
+Out[124]: array([ 4, 23, 29, 10])
+# 最终选出的是元素(1,0)、(5,3)、(7,1)和(2,2)。⽆论数组是多少维的，花式索引总是⼀维的。
+</code></pre>
+<p>这个花式索引的⾏为可能会跟某些⽤户的预期不⼀样（包括我在内），选取矩阵的⾏列⼦集应该是矩形区域的形式才对。下⾯是得到该结果的⼀个办法：</p>
+<pre><code class="language-python">In [125]: arr[[1, 5, 7, 2]][:, [0, 3, 1, 2]] 
+Out[125]: 
+array([[ 4,  7,  5,  6],
+			[20, 23, 21, 22],
+			[28, 31, 29, 30],
+			[ 8, 11,  9, 10]])
+# 最终选出的是元素(1,0)、(1,3)、(1,1)和(1,2)
+# 最终选出的是元素(5,0)、(5,3)、(5,1)和(5,2)
+# ...
+</code></pre>
+</li>
+<li>
+<p><strong>数组转置和轴对换</strong></p>
+<p>转置是重塑的⼀种特殊形式，它返回的是源数据的视图（不会进⾏任何复制操作）。数组不仅有transpose⽅法，还有⼀个特殊的T属性：</p>
+<p>在进⾏矩阵计算时，经常需要⽤到该操作，⽐如利⽤np.dot计算矩阵内积：</p>
+<pre><code class="language-python"># arr 6X3 返回3X3
+In [131]: np.dot(arr.T, arr)
+</code></pre>
+<p>对于⾼维数组，transpose需要得到⼀个由轴编号组成的元组才能对这些轴进⾏转置（难）：</p>
+<pre><code class="language-python">In [134]: arr.transpose((1, 0, 2))
+# 第⼀个轴被换成了第⼆个，第⼆个轴被换成了第⼀个，最后⼀个轴不变。
+</code></pre>
+<p>简单的转置可以使⽤.T，它其实就是进⾏轴对换⽽已。</p>
+</li>
+</ol>
+<h1 id="二-通用函数快速的元素级数组函数">二、<strong>通⽤函数：快速的元素级数组函数</strong></h1>
+<ol>
+<li>
+<p><strong>简介</strong></p>
+<p>通⽤函数（即ufunc）是⼀种对ndarray中的数据执⾏元素级运算的函数。可以将其看做简单函数（接受⼀个或多个标量值，并产⽣⼀个或多个标量值）的⽮量化包装器。</p>
+</li>
+<li>
+<p><strong>一元</strong></p>
+<pre><code class="language-python"># array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+np.sqrt(arr)
+np.exp(arr)
+</code></pre>
+<p>另外⼀些（如add或maximum）接受2个数组（因此也叫⼆元（binary）ufunc），并返回⼀个结果数组：</p>
+</li>
+<li>
+<p><strong>二元</strong></p>
+<pre><code class="language-python">In [141]: x = np.random.randn(8) 
+In [142]: y = np.random.randn(8)
+
+In [145]: np.maximum(x, y)
+Out[145]: 
+array([ 0.8626,  1.0048,  1.3272,  0.6702,  0.853 ,  0.0222,  0.7584,-0.6605])
+</code></pre>
+<p>这⾥，numpy.maximum计算了x和y中元素级别最⼤的元素。</p>
+</li>
+<li>
+<p><strong>多返回值</strong></p>
+<p>虽然并不常⻅，但有些ufunc的确可以返回多个数组。modf就是⼀个例⼦，它是Python内置函数divmod的⽮量化版本，它会返回浮点数数组的⼩数和整数部分：</p>
+<pre><code class="language-python">In [148]: remainder, whole_part = np.modf(arr)
+</code></pre>
+</li>
+<li>
+<p><strong>ufunc详细表格</strong></p>
+<p>Ufuncs可以接受⼀个<strong>out</strong>可选参数，这样就能在数组原地进⾏操作：</p>
+<figure data-type="image" tabindex="7"><img src="https://dong1iu.github.io/post-images/1623039600020.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://dong1iu.github.io/post-images/1623039604252.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://dong1iu.github.io/post-images/1623039611235.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="https://dong1iu.github.io/post-images/1623039615617.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="https://dong1iu.github.io/post-images/1623039619902.png" alt="" loading="lazy"></figure>
+</li>
+</ol>
+<h1 id="三-利用数组进行数据处理">三、<strong>利⽤数组进⾏数据处理</strong></h1>
+<ol>
+<li>
+<p>INTRO</p>
+<p>计算函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msqrt><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">\sqrt{x^2+y^2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.24em;vertical-align:-0.2821659999999999em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9578340000000001em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span><span style="top:-2.917834em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119c34,79.3,68.167,
+158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120c340,-704.7,510.7,-1060.3,512,-1067
+c4.7,-7.3,11,-11,19,-11H40000v40H1012.3s-271.3,567,-271.3,567c-38.7,80.7,-84,
+175,-136,283c-52,108,-89.167,185.3,-111.5,232c-22.3,46.7,-33.8,70.3,-34.5,71
+c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1s-109,-253,-109,-253c-72.7,-168,-109.3,
+-252,-110,-252c-10.7,8,-22,16.7,-34,26c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26
+s76,-59,76,-59s76,-60,76,-60z M1001 80H40000v40H1012z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2821659999999999em;"><span></span></span></span></span></span></span></span></span></p>
+<pre><code class="language-python">In [158]: z = np.sqrt(xs ** 2 + ys ** 2)
+</code></pre>
+</li>
+<li>
+<p><strong>将条件逻辑表述为数组运算</strong><br>
+<strong>numpy.where</strong>函数是三元表达式x if condition else y的⽮量化版本。假设我们有⼀个布尔数组和两个值数组：</p>
+<pre><code class="language-python">In [165]: xarr = np.array([1.1, 1.2, 1.3, 1.4, 1.5])
+In [166]: yarr = np.array([2.1, 2.2, 2.3, 2.4, 2.5])
+In [167]: cond = np.array([True, False, True, True, False])
+</code></pre>
+<p>假设我们想要根据cond中的值选取xarr和yarr的值：当cond中的值为True时，选取xarr的值，否则从yarr中选取。列表推导式的写法应该如下所示：</p>
+<pre><code class="language-python">In [168]: result = [(x if c else y) for x, y, c in zip(xarr, yarr, cond)]
+</code></pre>
+<p>问题。第⼀，它对⼤数组的处理速度不是很快（因为所有⼯作都是由纯Python完成的）。第⼆，⽆法⽤于多维数组。若使⽤np.where，则可以将该功能写得⾮常简洁：</p>
+<pre><code class="language-python">In [170]: result = np.where(cond, xarr, yarr)
+In [171]: result
+Out[171]: array([ 1.1,  2.2,  1.3,  1.4,  2.5])
+</code></pre>
+<p>np.where的第⼆个和第三个参数不必是数组，它们都可以是标量值。在数据分析⼯作中，where通常⽤于根据另⼀个数组⽽产⽣⼀个新的数组。</p>
+<p>假设有⼀个由随机数据组成的矩阵，你希望将所有正值替换为2，将所有负值替换为－2。若利⽤np.where，则会⾮常简单</p>
+<pre><code> ```python
+ In [175]: np.where(arr &gt; 0, 2, -2)
+ ```
+</code></pre>
+</li>
+<li>
+<p><strong>数学统计方法</strong></p>
+<p>可以通过数组上的⼀组数学函数对整个数组或某个轴向的数据进⾏统计计算。sum、mean以及标准差std等聚合计算（aggregation，通常叫做约简（reduction））既可以当做数组的实例⽅法调⽤，也可以当做顶级NumPy函数使⽤。</p>
+<pre><code class="language-python">In [179]: arr.mean()
+In [180]: np.mean(arr)
+</code></pre>
+<p>mean和sum这类的函数可以接受⼀个axis选项参数，⽤于计算该轴向上的统计值，最终结果是⼀个少⼀维的数组：</p>
+<pre><code class="language-python">In [182]: arr.mean(axis=1)
+# 沿着axis 1的方向，即加总一行中的每一列
+Out[182]: array([ 1.022 ,  0.1875, -0.502 , -0.0881,  0.3611])
+</code></pre>
+<p>这⾥，arr.mean(1)是“计算⾏的平均值”，arr.sum(0)是“计算每列的和”。</p>
+<p>其他如cumsum和cumprod之类的⽅法则不聚合，⽽是产⽣⼀个由中间结果组成的数组：（累加和累乘）</p>
+</li>
+<li>
+<p><strong>基本数组统计方法</strong></p>
+<figure data-type="image" tabindex="12"><img src="https://dong1iu.github.io/post-images/1623039628752.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="13"><img src="https://dong1iu.github.io/post-images/1623039633485.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p><strong>用于布尔型数组的办法</strong></p>
+<p>在上⾯这些⽅法中，布尔值会被强制转换为1（True）和0（False）。因此，sum经常被⽤来对布尔型数组中的True值计数：</p>
+<pre><code class="language-python">(arr &gt; 0).sum()
+</code></pre>
+<p>另外还有两个⽅法any和all，它们对布尔型数组⾮常有⽤。any⽤于测试数组中是否存在⼀个或多个True，⽽all则检查数组中所有值是否都是True：</p>
+<pre><code class="language-python">In [192]: bools = np.array([False, False, True, False])
+In [193]: bools.any()
+Out[193]: True
+In [194]: bools.all()
+Out[194]: False
+</code></pre>
+<p>这两个⽅法也能⽤于⾮布尔型数组，所有⾮0元素将会被当做True。</p>
+</li>
+<li>
+<p><strong>排序</strong></p>
+<p>跟Python内置的列表类型⼀样，NumPy数组也可以通过sort⽅法<strong>就地</strong>排序：</p>
+<pre><code class="language-python">In [195]: arr = np.random.randn(6)
+In [196]: arr
+Out[196]: array([ 0.6095, -0.4938,  1.24  , -0.1357,  1.43  , -0.8469])
+In [197]: arr.sort()
+In [198]: arr
+Out[198]: array([-0.8469, -0.4938, -0.1357,  0.6095,  1.24  ,  1.43  ])
+</code></pre>
+<p>多维数组可以在任何⼀个轴向上进⾏排序，只需将轴编号传给sort即可：</p>
+<pre><code class="language-python"># 每行排序
+In [201]: arr.sort(1)
+</code></pre>
+<p><strong>顶级⽅法np.sort返回的是数组的已排序副本，⽽就地排序则会修改数组本身。</strong></p>
+<p><strong>计算数组分位数</strong>最简单的办法是对其进⾏排序，然后选取特定位置的值：</p>
+<pre><code class="language-python">In [205]: large_arr[int(0.05 * len(large_arr))] # 5% quantile Out[205]: -1.5311513550102103
+</code></pre>
+</li>
+<li>
+<p><strong>唯⼀化以及其它的集合逻辑</strong></p>
+<p>最常⽤的可能要数np.unique，⽤于找出数组中的唯⼀值并返回已排序的结果：</p>
+<pre><code class="language-python">np.unique(names)
+</code></pre>
+<p>函数np.in1d⽤于测试⼀个数组中的值在另⼀个数组中的成员资格，返回⼀个布尔型数组：</p>
+<pre><code class="language-python">In [211]: values = np.array([6, 0, 0, 3, 2, 5, 6])
+In [212]: np.in1d(values, [2, 3, 6])
+Out[212]: array([ True, False, False,  True,  True, False,  True], dtype=bool)
+</code></pre>
+<figure data-type="image" tabindex="14"><img src="https://dong1iu.github.io/post-images/1623039647900.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p><strong>线性代数</strong></p>
+<p>矩阵乘法x.dot(y)等价于np.dot(x, y)</p>
+<p>⼀个⼆维数组跟⼀个⼤⼩合适的⼀维数组的矩阵点积运算之后将会得到⼀个⼀维数组：</p>
+<pre><code class="language-python">In [223]: x = np.array([[1., 2., 3.], [4., 5., 6.]])
+In [229]: np.dot(x, np.ones(3)) 
+Out[229]: array([  6.,  15.])
+# 发生了自动转置
+</code></pre>
+<p>@符（类似Python 3.5）也可以⽤作中缀运算符，进⾏矩阵乘法：</p>
+<pre><code class="language-python">In [230]: x @ np.ones(3) 
+Out[230]: array([  6.,  15.])
+</code></pre>
+<p>numpy.linalg中有⼀组标准的矩阵分解运算以及诸如求逆和⾏列式之类的东⻄。</p>
+<figure data-type="image" tabindex="15"><img src="https://dong1iu.github.io/post-images/1623039655233.png" alt="" loading="lazy"></figure>
+</li>
+<li>
+<p><strong>伪随机数⽣成</strong></p>
+<p>numpy.random模块对Python内置的random进⾏了补充，增加了⼀些⽤于⾼效⽣成多种概率分布的样本值的函数。</p>
+<p>你可以⽤normal来得到⼀个标准正态分布的4×4样本数组：</p>
+<pre><code class="language-python">In [238]: samples = np.random.normal(size=(4, 4))
+</code></pre>
+<p>我们说这些都是伪随机数，是因为它们都是通过算法基于随机数⽣成器种⼦，在确定性的条件下⽣成的。你可以⽤NumPy的np.random.seed更改随机数⽣成种⼦：</p>
+<pre><code class="language-python">In [244]: np.random.seed(1234)
+</code></pre>
+<p>numpy.random的数据⽣成函数使⽤了全局的随机种⼦。要避免全局状态，你可以使⽤numpy.random.RandomState，创建⼀个与其它隔离的随机数⽣成器：</p>
+<pre><code class="language-python">In [245]: rng = np.random.RandomState(1234)
+In [246]: rng.randn(10)
+</code></pre>
+</li>
+</ol>
+<figure data-type="image" tabindex="16"><img src="https://dong1iu.github.io/post-images/1623039661898.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="17"><img src="https://dong1iu.github.io/post-images/1623039665949.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[在 Pandas DataFrame 中使用比较列表的问题]]></title>
+        <id>https://dong1iu.github.io/post/zai-pandas-dataframe-zhong-shi-yong-bi-jiao-lie-biao-de-wen-ti/</id>
+        <link href="https://dong1iu.github.io/post/zai-pandas-dataframe-zhong-shi-yong-bi-jiao-lie-biao-de-wen-ti/">
+        </link>
+        <updated>2021-06-01T08:21:50.000Z</updated>
+        <content type="html"><![CDATA[<p>如果你经常尝试在DataFrame中存放列表并对列表进行过取等，你会发现结果这和你预想的不同</p>
+<pre><code class="language-python">df = pandas.DataFrame([[1,2,3,[4,5]],[6,7,8,[9,10]]], columns=['a','b','c','d'])
+&gt;&gt;&gt; df
+   a  b  c        d
+0  1  2  3   [4, 5]
+1  6  7  8  [9, 10]
+</code></pre>
+<p>当你用d构建过滤器的时候</p>
+<pre><code class="language-python">&gt;&gt;&gt; df['d'] == [4,5]
+0    False
+1    False
+Name: d, dtype: bool
+</code></pre>
+<p><strong>造成这种现象的原因是，DataFrame中存储的列表不可哈希（散列）</strong><br>
+如果你想正确的构建过滤器，你可以用一下方式</p>
+<pre><code class="language-python">df.loc[:, 'd'].map(lambda x:x==[4,5])
+</code></pre>
+<p>这种方式调用匿名函数逐个比较，而不是使用哈希表比较，自然不会造成之前的错误</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MAC终端代理]]></title>
+        <id>https://dong1iu.github.io/post/mac-zhong-duan-dai-li/</id>
+        <link href="https://dong1iu.github.io/post/mac-zhong-duan-dai-li/">
+        </link>
+        <updated>2021-05-28T07:00:16.000Z</updated>
+        <content type="html"><![CDATA[<p>MAC下终端走代理的有多种方法</p>
+<ol>
+<li>临时代理</li>
+</ol>
+<p><code>export http_proxy='http://localhost:8001'</code></p>
+<ol start="2">
+<li>永久代理</li>
+</ol>
+<p>修改环境变量<br>
+<code>vim ~/.zshrc</code></p>
+<pre><code class="language-bash"># 添加以下内容
+# proxy 
+export http_proxy='http://localhost:8001'
+export https_proxy='http://localhost:8001'
+</code></pre>
+<ol start="3">
+<li>灵活开启</li>
+</ol>
+<p>修改环境变量<br>
+<code>vim ~/.zshrc</code></p>
+<pre><code># proxy
+alias proxy='export all_proxy=http://127.0.0.1:8001'  # 可在网络设置中查看
+alias unproxy='unset all_proxy'
+</code></pre>
+<p>需要启用代理时，在终端输入<code>proxy</code>，关闭代理时，输入<code>unproxy</code>。</p>
+<blockquote>
+<p>检测是否成功代理</p>
+</blockquote>
+<p><code>curl cip.cc</code></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MAC下为所有人安装anaconda3]]></title>
+        <id>https://dong1iu.github.io/post/mac-xia-wei-suo-you-ren-an-zhuang-anaconda3/</id>
+        <link href="https://dong1iu.github.io/post/mac-xia-wei-suo-you-ren-an-zhuang-anaconda3/">
+        </link>
+        <updated>2021-05-28T03:10:54.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="下载安装包">下载安装包</h2>
+<ol>
+<li>在<a href="https://repo.anaconda.com/archive/">官网档案</a>下载</li>
+<li>在<a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">清华镜像源</a>下载</li>
+<li>直接下载<a href="https://repo.anaconda.com/archive/Anaconda3-2021.05-MacOSX-x86_64.pkg">2021年5月 Python3.8版本</a></li>
+</ol>
+<h2 id="安装anaconda3">安装anaconda3</h2>
+<p>安装过程中，选择为所有人安装</p>
+<h2 id="添加环境变量">添加环境变量</h2>
+<ol>
+<li>确认anaconda3的安装位置，一般在<code>/opt/anaconda3/bin</code></li>
+<li>添加环境变量</li>
+</ol>
+<p><code>vim ~/.zshrc</code></p>
+<pre><code class="language-bash"> export PATH=&quot;/opt/anaconda3/bin:$PATH&quot;
+</code></pre>
+<p><code>source ~/.zshrc</code></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Ubuntu防火墙管理]]></title>
+        <id>https://dong1iu.github.io/post/ubuntu-fang-huo-qiang-guan-li/</id>
+        <link href="https://dong1iu.github.io/post/ubuntu-fang-huo-qiang-guan-li/">
+        </link>
+        <updated>2021-05-28T02:25:01.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>系统版本: ubuntu18.04</p>
+</blockquote>
+<h2 id="查看防火墙当前状态">查看防火墙当前状态</h2>
+<p><code>sudo ufw status</code></p>
+<h2 id="开启防火墙">开启防火墙</h2>
+<blockquote>
+<p>开启时请以前打开22端口的权限，否则无法ssh到机器</p>
+</blockquote>
+<p><code>sudo ufw enable</code></p>
+<h2 id="ufw启用关闭重载">ufw启用/关闭/重载</h2>
+<p><code>ufw enable/disable/reload</code></p>
+<h2 id="允许外部访问80端口">允许外部访问80端口</h2>
+<p><code>sudo ufw allow 80</code></p>
+<h2 id="禁止外部访问80端口">禁止外部访问80端口</h2>
+<p><code>sudo ufw delete allow 80</code></p>
+<h2 id="允许此ip访问所有的本机端口">允许此IP访问所有的本机端口</h2>
+<p><code>sudo ufw allow from 192.168.1.1</code></p>
+<h2 id="禁止外部访问smtp服务">禁止外部访问smtp服务</h2>
+<p><code>sudo ufw deny smtp</code></p>
+<h2 id="安装ufw">安装ufw</h2>
+<p><code>sudo apt-get install ufw</code></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mac OS 时间机器全力备份]]></title>
+        <id>https://dong1iu.github.io/post/mac-os-shi-jian-ji-qi-quan-li-bei-fen/</id>
+        <link href="https://dong1iu.github.io/post/mac-os-shi-jian-ji-qi-quan-li-bei-fen/">
+        </link>
+        <updated>2021-05-26T05:03:46.000Z</updated>
+        <content type="html"><![CDATA[<p>全力备份</p>
+<p><code>sudo sysctl debug.lowpri_throttle_enabled=0</code></p>
+<p>静默备份</p>
+<p><code>sudo sysctl debug.lowpri_throttle_enabled=1</code></p>
 ]]></content>
     </entry>
 </feed>
