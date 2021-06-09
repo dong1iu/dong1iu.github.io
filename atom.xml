@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://dong1iu.github.io</id>
     <title>动动栋栋</title>
-    <updated>2021-06-09T09:00:59.971Z</updated>
+    <updated>2021-06-09T09:25:15.383Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://dong1iu.github.io"/>
     <link rel="self" href="https://dong1iu.github.io/atom.xml"/>
@@ -19,252 +19,302 @@
         <content type="html"><![CDATA[<h1 id="什么是cohort分析">什么是Cohort分析</h1>
 <p>Cohort Analysis 可以翻译成 群体分析 或 分组分析，其实是一种通过细分来研究数据的方法。如下表就是一个从每日新增维度细分的 Cohort Analysis 表格。<br>
 <img src="https://dong1iu.github.io/post-images/1623229217530.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[配置V2Ray+ws+tls]]></title>
-        <id>https://dong1iu.github.io/post/pei-zhi-v2raywstls/</id>
-        <link href="https://dong1iu.github.io/post/pei-zhi-v2raywstls/">
-        </link>
-        <updated>2021-06-07T15:33:10.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>写在最前面</strong></p>
-<p><strong>关于V2Ray的文章有很多，本来不提供任何一键脚本，基于官网提供的教程一步一步手动配置，因此本文的目的在于交流和记录自己配置的过程本身。希望大家愉快的借助上网工具好好学习，不要参与政治事件，关你什么事呢？</strong></p>
-<h1 id="一-购买vps">一、购买VPS</h1>
-<p>作者不提供任何购买链接，只是提醒大家不要贪图便宜购买非常廉价的服务器。便宜的服务器容易被封IP，也容易跑路，人工客服的质量也不行，建议大家尽量选择大厂的服务，不要贪小便宜，不然后期简直是折磨自己。另外，建议大家多购置几个备用，被封了你才知道难受！！！</p>
-<h1 id="二-连接到vps">二、连接到VPS</h1>
-<p>连接的方式很多，Windows下你可以使用常见的<a href="https://www.netsarang.com/en/xshell-download/">XShell个人版</a>和<a href="https://mobaxterm.mobatek.net/download.html">mobaxterm家庭版</a>，MacOS下你可以使用<a href="https://electerm.github.io/electerm/">electerm</a>。他们的使用方法大同小异，这里我展示如何使用electerm连接到你的服务器。</p>
-<p>打开书签，添加你的连接配置</p>
-<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623080999671.png" alt="" loading="lazy"></figure>
-<p>输入你的服务器的IP，你的登录名字（一般默认为root）和密码</p>
-<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623081008544.png" alt="" loading="lazy"></figure>
-<p>测试连接，如果成功，点击保存并连接</p>
-<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623081016451.png" alt="" loading="lazy"></figure>
-<p>其他的客户端操作请大家移步其他博客，已经有还多帖子介绍，就不重复造轮子了。</p>
-<h1 id="三-安装v2ray">三、安装V2Ray</h1>
-<p>使用官方的安装脚本安装V2Ray</p>
-<pre><code class="language-bash">bash &lt;(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
-</code></pre>
-<blockquote>
-<p>新版和旧版的文件结构是不同的<br>
-在旧版中配置文件位于：/etc/v2ray/config.json<br>
-在新版中位于：/usr/local/etc/v2ray/config.json<br>
-日志文件一般推荐在/var/log/v2ray/access.log和/var/log/v2ray/error.log</p>
-</blockquote>
-<p>V2Ray常用命令</p>
-<pre><code class="language-bash">v2ray [-version] [-test] [-config=config.json] [-format=json]
-# test可以用来测试一个config.json是否编写正确
-
-v2ctl uuid 
-# 生成新的uuid
-</code></pre>
-<p>注意V2Ray对时间有严格的要求，客户端和服务器的时差不能超过2分钟，注意矫正服务器的时间。</p>
-<p>查看时间</p>
-<pre><code class="language-bash">date -R
-</code></pre>
-<p>修改时间</p>
-<pre><code class="language-bash">date -s &quot;2000-01-01 00:00:00&quot;
-</code></pre>
-<h1 id="三-安装常用的小工具">三、安装常用的小工具</h1>
-<pre><code class="language-bash">apt-get install vim
-apt-get install curl
-apt-get install htop
-
-#  如果无法安装
-sudo apt upgrade
-</code></pre>
-<h1 id="四-安装ufw">四、安装ufw</h1>
-<pre><code class="language-bash">sudo apt-get install ufw
-</code></pre>
-<p>开放80端口和443端口</p>
-<pre><code class="language-bash">ufw allow 80
-ufw allow 443
-ufw reload
-</code></pre>
-<blockquote>
-<p>注意ubuntu默认没有开启ufw，开启时请以前打开22端口的权限，否则无法ssh到机器</p>
-</blockquote>
-<h1 id="五-安装caddy">五、安装Caddy</h1>
-<p>不同机器的安装方式不同，这里我只提供Ubuntu18.04的安装方法，其他的机器的安装请参考Caddy官网的文档</p>
-<pre><code class="language-bash"># 逐条运行
-echo &quot;deb [trusted=yes] https://apt.fury.io/caddy/ /&quot; \
-    | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
-sudo apt update
-sudo apt install caddy
-</code></pre>
-<h1 id="六-配置caddy">六、配置Caddy</h1>
-<p>配置模板</p>
-<p>修改Caddy配置文件</p>
-<pre><code class="language-bash">vim /etc/caddy/Caddyflie
-</code></pre>
-<p>修改配置为以下内容</p>
-<pre><code class="language-json">mydomain.me { 
-    log {
-        output file /var/log/caddy/caddy.log
-    }
-    tls {
-        protocols tls1.2 tls1.3
-        ciphers TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
-        curves x25519
-    }
-    @v2ray_websocket {
-        path /ray 
-        header Connection *Upgrade*
-        header Upgrade websocket
-    }
-    reverse_proxy @v2ray_websocket localhost:10000
-}
-</code></pre>
-<ul>
-<li><em>mydomain.me</em> → 你的域名 需要将你的域名解析到服务器</li>
-<li><em>path /ray</em> → 路径，需要在v2ray和caddy的配置文件中保持一致</li>
-<li><em>localhost:10000</em> → 转发到端口 需要和v2ray中监听本地的端口一致</li>
-</ul>
-<h1 id="七-配置v2ray">七、配置V2Ray</h1>
-<pre><code class="language-bash">vim /usr/local/etc/v2ray/config.json
-</code></pre>
-<p>修改配置为以下，并替换关键内容（uuid和端口，和caddy中反向代理的端口保持一致）</p>
-<pre><code class="language-json">{
-  &quot;inbounds&quot;: [
-    {
-      &quot;port&quot;: 10000,
-      &quot;listen&quot;:&quot;127.0.0.1&quot;,//只监听 127.0.0.1，避免除本机外的机器探测到开放了 10000 端口
-      &quot;protocol&quot;: &quot;vmess&quot;,
-      &quot;settings&quot;: {
-        &quot;clients&quot;: [
-          {
-            &quot;id&quot;: &quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;,
-            &quot;alterId&quot;: 64
-          }
-        ]
-      },
-      &quot;streamSettings&quot;: {
-        &quot;network&quot;: &quot;ws&quot;,
-        &quot;wsSettings&quot;: {
-        &quot;path&quot;: &quot;/ray&quot;
+<h1 id="如何实现cohort分析">如何实现Cohort分析</h1>
+<p>分组先分维度，再分粒度<br>
+维度：你观察的用户分类，举例而言，注册账号的平台、设备、注册时间、性别等<br>
+粒度：直白的说就是观察的间隔，比如以月、周、天、12小时等</p>
+<h1 id="python实现cohort分析">python实现cohort分析</h1>
+<h2 id="读取数据">读取数据</h2>
+<ol>
+<li>如果你的数据在数据库中，可以直接使用SQL查询</li>
+<li>如果你的数据是冷数据，存放在文件中，可以用python直接读取，根据格式的不同使用不同的包，比如<code>pd.read_csv()</code></li>
+</ol>
+<h2 id="预处理数据">预处理数据</h2>
+<p>根据既定的规则，处理数据。使用Pandas自带的函数等，例如map, apply, filter, 布尔索引等<br>
+根据你的粒度，处理不同的生成新的时间列，可以命名为回访事件时间</p>
+<h2 id="分组">分组</h2>
+<p>使用<code>df.groupby(by=[...])</code>函数分组，和数据库中的group by异曲同工，不同的是，在Python中你可以轻易的进行数据透视，但是在SQL中相对比较复杂。当公司有稳健的数据库系统时，推荐使用SQL和Python结合的方式，即GROUPBY的工作由性能强大的数据库完成，数据透视由Python完成。</p>
+<h2 id="数据透视">数据透视</h2>
+<p>经过分组，我们等到的形如以下的结果</p>
+<table>
+<thead>
+<tr>
+<th>注册</th>
+<th>注册时间</th>
+<th>活跃</th>
+<th>活跃时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>2020-01-01</td>
+<td>A</td>
+<td>2020-01-01</td>
+</tr>
+<tr>
+<td>B</td>
+<td>2020-01-01</td>
+<td>B</td>
+<td>2020-01-01</td>
+</tr>
+<tr>
+<td>C</td>
+<td>2020-01-01</td>
+<td>C</td>
+<td>2020-01-01</td>
+</tr>
+<tr>
+<td>D</td>
+<td>2020-01-01</td>
+<td>D</td>
+<td>2020-01-01</td>
+</tr>
+<tr>
+<td>A</td>
+<td>2020-01-01</td>
+<td>A</td>
+<td>2020-01-02</td>
+</tr>
+<tr>
+<td>C</td>
+<td>2020-01-01</td>
+<td>C</td>
+<td>2020-01-02</td>
+</tr>
+<tr>
+<td>D</td>
+<td>2020-01-01</td>
+<td>D</td>
+<td>2020-01-02</td>
+</tr>
+<tr>
+<td>B</td>
+<td>2020-01-01</td>
+<td>B</td>
+<td>2020-01-03</td>
+</tr>
+<tr>
+<td>D</td>
+<td>2020-01-01</td>
+<td>D</td>
+<td>2020-01-03</td>
+</tr>
+</tbody>
+</table>
+<p>我们要完成的即一个数据透视工作，使用<code>pd.pivot_table()</code>完成</p>
+<h1 id="代码参考">代码参考</h1>
+<p>这里只给出主函数，因为函数的功能非常复杂，所以我们不细讲，只作为一个参考提供给大家</p>
+<pre><code class="language-python">def gcohort(df, group_names, ncolumn='n', orient='倒三角', pre_filter=None, 
+    init_event=None, init_agg={}, init_name=None,
+    recall_event=None, recall_agg={}, recall_apply={},
+    final_func=None, final_args=None):
+    &quot;&quot;&quot;
+    分群/对偶分析
+    示例
+        1.留存分析
+            group_names = ['af_channel', 'country_code']
+            trans_map = {'callback_time':'日期', 'af_channel':'渠道', 'country_code':'国家码'}
+            
+            gcohort(df, group_names, ncolumns='n', orient='倒三角', \
+                init_agg={'agg_column':'device_id', 'agg_method':'nunique'},\
+                init_name='激活', \
+                recall_agg={'agg_column':'device_id', 'agg_method':'nunique'}, \
+                final_func=lambda x: x.rename(columns=trans_map))
+        2. LTV计算
+            # event_value_sum函数负责把event_value中的花费提取并加总，两个后处理函数分别负责补洞和累加和除
+            ltv = gcohort(ddwwy, [], 'n', orient='倒三角', \
+                init_agg={'agg_column':'device_id', 'agg_method':'nunique'}, \
+                init_name='激活', \
+                recall_event='af_purchase', \
+                recall_apply={'agg_func': event_value_sum, &quot;agg_args&quot;: {}}, \
+                final_func=[
+                    {&quot;func&quot;: fill_gcohort, &quot;kargs&quot;: {&quot;group_names&quot;: [], &quot;interval&quot;: '12h', &quot;orient&quot;: &quot;倒三角&quot;, &quot;time_col&quot;: &quot;时间&quot;}},  # 补洞
+                    {&quot;func&quot;:ltv_cumsum_new, &quot;kargs&quot;: {&quot;time_col&quot;: &quot;时间&quot;, &quot;div_col&quot;:&quot;激活&quot;}},  # 累计LTV
+                    ])
+        3. 广告点击
+            ltv = gcohort(ddwwy, [], 'n', orient='倒三角', \
+                init_agg={'agg_column':'device_id', 'agg_method':'nunique'}, \
+                init_name='激活', \
+                recall_event='af_ad_click', \
+                recall_agg={'agg_column':'device_id', 'agg_method':'count'}, \
+                final_func=[
+                    {&quot;func&quot;: fill_gcohort, &quot;kargs&quot;: {&quot;group_names&quot;: [], &quot;interval&quot;: '12h', &quot;orient&quot;: &quot;倒三角&quot;, &quot;time_col&quot;: &quot;时间&quot;}},  # 补洞
+                    ])
+        
+    ----------
+    Parameters
+    ----------
+    df : DataFrame.
+        输入的源日志文件
+    group_names : list.
+        不包含时间和ncolumn的分组项
+    ncolumn : str.
+        时间差 取决于你分析表格的时间间隔列名字
+    orient : str
+        可选 ['正三角', '倒三角']
+        orient决定回访事件分析是 是分群分析还是对偶分析
+        
+    pre_filter : func or list
+        自定义的预处理函数 -&gt; 建议在此处对激活日期筛选
+    init_evnet : str, list, func, DataFrame.
+        可接受 [初始事件名, 初始事件字符串列表, 函数, 计算好的初始事件表]
+    init_agg : dict
+        init_event的聚合参数，需构造以下字典
+        {
+            &quot;agg_column&quot;: str. 聚合的列名,
+            &quot;agg_method&quot;: str or func | 内置的字符串或自定义方法, 
         }
-      }
-    }
-  ],
-  &quot;outbounds&quot;: [
-    {
-      &quot;protocol&quot;: &quot;freedom&quot;,
-      &quot;settings&quot;: {}
-    }
-  ]
-}
-</code></pre>
-<h1 id="八-将你的域名解析到服务器">八、将你的域名解析到服务器</h1>
-<p>推荐到<a href="namesilo.com">namesilo</a>（收费）和<a href="freenom.com">freenom</a>（免费）购买域名</p>
-<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623083243877.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623083484619.png" alt="" loading="lazy"></figure>
-<h1 id="九-重启v2ray和caddy">九、重启V2ray和Caddy</h1>
-<pre><code class="language-bash">systemctl restart v2ray
-systemctl restart caddy
-</code></pre>
-<h1 id="十-开起bbr加速你的网络">十、开起BBR，加速你的网络</h1>
-<p>Ubuntu 1804下启用BBR非常简单，这也是我使用该系统的原因，并且该系统的文档很容易搜到，推荐给新手使用</p>
-<pre><code class="language-bash"># 因为ubuntu18.04 的内核满足bbr的要求所以ubuntu开启bbr比较简单
-# 修改系统变量
-echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf
-echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf
+        注意：此参数只在init不是DataFrame类型时有效，即未输入计算好的初始事件表
+    init_name : str. default is None
+        聚合后初始事件列名
+        
+    recall_event : str, list or func. default is None
+        召回事件
+        当其为字符或字符串组成的列表时，从df中过滤事件 
+    recall_agg : dict. default is {}
+        召回事件的聚合参数 需构造以下字典
+        列表的
+            {
+                &quot;agg_column&quot;: str. 聚合列名,
+                &quot;agg_method&quot;: str or func. 聚合方法 支持agg内置的字符选项如 count sum nunique max等 也支持自定义func, 
+                &quot;pivot_agg_method&quot;: str or func. 数据透视表的聚合方式 支持aggfunc内置字符如 sum first 也支持自定义func,
+            }
+        
+    recall_apply : dict. default is {}
+        召回事件的另一种聚合参数 需构造以下字典
+            {
+                &quot;agg_func&quot;: str. 聚合方法,
+                &quot;agg_args&quot;: dict. 聚合方法的参数字典 (args), 
+                &quot;pivot_agg_method&quot;: str or func. 数据透视表的聚合方式 支持aggfunc内置字符如 sum first 也支持自定义func,
+            }
 
-# 保存生效
-sysctl -p
-
-# 查看BBR是否启动 lsmod命令用于显示已经加载到内核中的模块的状态信息。
-sysctl net.ipv4.tcp_available_congestion_control
-
-lsmod | grep bbr
+        recall = recall_df.groupby(k,...).agg({recall_agg[0], recall_agg[1]})
+    final_func : func or list
+        函数 字典 函数组成的列表 字典组成的列表 函数和字典混合组成的列表
+        后处理函数或后处理函数列表
+        例如
+            1. 函数
+                func = lambda x:x
+            2. 字典
+                {
+                    &quot;func&quot;: add
+                    &quot;kargs&quot;: {&quot;arg1&quot;: &quot;value1&quot;, &quot;arg2&quot;: &quot;value2&quot;}
+                }
+            3. 函数组成的列表
+                [lambda x:x, lambda x:x, lambda x:x]
+            ...
+    &quot;&quot;&quot;
+    # 资格审查
+    if 'init_time' not in df.columns and 'callback_time' not in df.columns:
+        print('源文件必须包含init_time和callback_time')
+    
+    # 源日志预处理 =========
+    if callable(pre_filter):
+        df = pre_filter(df)
+    elif isinstance(pre_filter, list):
+        for pf in pre_filter:
+            df = pf(df)
+    
+    # 时间列判断
+    # 初始事件时间 init_time, callback_time 此   这两个时间的粒度可以是月 周 天 小时等
+    if orient == '正三角':
+        time_col = 'callback_time'
+        print('==对偶分析==')
+    elif orient == '倒三角':
+        time_col = 'init_time'
+        print('==gcohort分析==')
+    else:
+        print(f'不可选的orient{orient}')
+        return 
+    
+    # 初始事件 =============
+    print('==处理初始事件==')
+    # 初始事件准备
+    init = None
+    if init_event is None:
+        init_df = df  # event为空时 默认具体
+    elif isinstance(init_event, DataFrame):
+        init = init_event  # 可接受计算好的初始事件表, 需要注意是输入的init_event必须和recall矩阵拥有相同的粒度和时间格式 否则表连接会错误
+    elif isinstance(init_event, str):
+        init_df = df[df.event_name==init_event]
+    elif isinstance(init_event, list):
+        init_df = df[df.event_name.isin(init_event)]
+    elif callable(init_event):
+        init_df = init_event(df)
+    else:
+        print(f'不支持的初始事件（init_event）参数：{init_event}')
+        return
+    # NOTE：对于激活事件 不建议在gcohort函数中聚合 
+    #       因为源日志中的激活事件可能不齐全
+    
+    init_k = group_names + ['init_time']
+    # 初始事件聚合
+    if init is None:
+        init = init_df.groupby(init_k, observed=True)\
+            .agg({init_agg['agg_column']: init_agg['agg_method']})\
+            .reset_index()\
+            .rename(columns={init_agg['agg_column']:init_name})
+    init = init.rename(columns={'init_time':'时间'})
+    
+    
+    # 召回事件 =============
+    print('==处理召回事件==')
+    
+    if recall_event is None:
+        recall_df = df
+    elif isinstance(recall_event, str):
+        recall_df = df[df.event_name==recall_event]
+    elif isinstance(recall_event, list):
+        recall_df = df[df.event_name.isin(recall_event)]
+    elif callable(recall_event):
+        recall_df = recall_event(df)
+    
+    # 召回事件聚合
+    if (recall_agg and recall_apply) or (not recall_agg and not recall_apply):
+        print('recall_agg和recall_apply只可选其一')
+        return
+    
+    pindex = group_names + [time_col]
+    recall_k = pindex + [ncolumn]
+    
+    if recall_agg:
+        aggfunc = recall_agg['pivot_agg_method'] if recall_agg.get('pivot_agg_method') else 'sum'
+        recall = recall_df.groupby(recall_k, observed=True)\
+            .agg({recall_agg['agg_column']:recall_agg['agg_method']})\
+            .pivot_table(index=pindex, columns=ncolumn, values=recall_agg['agg_column'], aggfunc=aggfunc)\
+            .reset_index()
+    else:
+        aggfunc = recall_apply['pivot_agg_method'] if recall_apply.get('pivot_agg_method') else 'sum'
+        recall = recall_df.groupby(recall_k, observed=True) \
+            .apply(recall_apply['agg_func'], recall_apply['agg_args']) \
+            .reset_index() \
+            .pivot_table(index=pindex, columns=ncolumn, values=0, aggfunc=aggfunc) \
+            .reset_index()
+            # values=0因为apply聚合后默认列名为0
+    recall = recall.rename(columns={time_col: '时间'})
+    
+    # 连接初始表和召回表 =================================
+    ans = init.merge(recall, on=group_names+['时间'], how='outer')
+                
+    # 后处理 ===============
+    if callable(final_func):
+        ans = final_func(ans)
+    elif isinstance(final_func, dict):
+        func = final_func.get(&quot;func&quot;)
+        kargs = final_func.get(&quot;kargs&quot;)
+        ans = func(ans, **kargs)
+    elif isinstance(final_func, list):
+        for afunc in final_func:
+            if callable(afunc):
+                ans = afunc(ans)
+            if isinstance(afunc, dict):
+                func = afunc.get(&quot;func&quot;)
+                kargs = afunc.get(&quot;kargs&quot;)
+                ans = func(ans, **kargs)
+    # 补洞交由后处理函数函数 或 对返回的ans处理
+    return ans
 </code></pre>
-<h1 id="十一-使用客户端连接">十一、使用客户端连接</h1>
-<ul>
-<li>Windows：推荐V2rayN</li>
-<li>安卓：推荐V2rayNG</li>
-<li>IOS：推荐Kitsunebi</li>
-<li>Mac：推荐V2rayX</li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[感知机PLA]]></title>
-        <id>https://dong1iu.github.io/post/gan-zhi-ji-pla/</id>
-        <link href="https://dong1iu.github.io/post/gan-zhi-ji-pla/">
-        </link>
-        <updated>2021-06-07T10:47:35.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="pla-感知机">PLA 感知机</h1>
-<h1 id="一-the-learning-problem">一、The Learning Problem</h1>
-<p>本质</p>
-<ol>
-<li>存在某种现在的模式去学习（so performance measure can be improved）</li>
-<li>不能被简单定义（so ML is needed）</li>
-<li>there is data about the pattern</li>
-</ol>
-<h1 id="二-perceptron-learning-algorithmpla">二、Perceptron Learning Algorithm（PLA）</h1>
-<p>图示<br>
-<img src="https://dong1iu.github.io/post-images/1623062895684.png" alt="" loading="lazy"></p>
-<h2 id="一线形可分">（一）线形可分</h2>
-<p>图总第一个为线性可分，经典的PLA只能处理完全线性可分的类型。<br>
-<img src="https://dong1iu.github.io/post-images/1623062905822.png" alt="" loading="lazy"></p>
-<h2 id="二感知机算法图解">（二）感知机算法图解</h2>
-<p>图解<br>
-<img src="https://dong1iu.github.io/post-images/1623062913237.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623062919845.png" alt="" loading="lazy"></figure>
-<h2 id="三如何选择g">（三）如何选择g</h2>
-<p>迭代w<br>
-<img src="https://dong1iu.github.io/post-images/1623062935084.png" alt="" loading="lazy"></p>
-<p>从某些初始值开始，一步步迭代到损失最小</p>
-<h2 id="四迭代更新">（四）迭代更新</h2>
-<p>图示<br>
-<img src="https://dong1iu.github.io/post-images/1623062941847.png" alt="" loading="lazy"></p>
-<p>误分类 → <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>i</mi><mi>g</mi><mi>n</mi><mo>(</mo><msubsup><mi>w</mi><mi>t</mi><mi>T</mi></msubsup><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><mo>)</mo><mi mathvariant="normal">≠</mi><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">sign(w_t^Tx_{n(t)})\neq{y_{n(t)}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1965309999999998em;vertical-align:-0.3551999999999999em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4530000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></span> → 更新步 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>w</mi><mi>t</mi></msub><mo>+</mo><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">w_{t+1}=w_t+y_{n(t)}x_{n(t)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></p>
-<p>证明<br>
-<img src="https://dong1iu.github.io/post-images/1623062950108.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623062957694.png" alt="" loading="lazy"></figure>
-<p>w的更新意味着分类超平面的移动</p>
-<h2 id="五-收敛性证明">（五）、收敛性证明</h2>
-<p>我们已经知道更新w向量方法，但是，这样的更新方法是否收敛？</p>
-<p>证明过程</p>
-<ol>
-<li>
-<p>假设线形可分的数据集<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">D</mi></mrow><annotation encoding="application/x-tex">\mathcal{D}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">D</span></span></span></span></span>能被向量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>完美划分</p>
-<p>因此<br>
-<img src="https://dong1iu.github.io/post-images/1623062968114.png" alt="" loading="lazy"></p>
-<p>从而<br>
-<img src="https://dong1iu.github.io/post-images/1623062976143.png" alt="" loading="lazy"></p>
-</li>
-<li>
-<p>更新<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>意味着发生了错误，也就是<br>
-<img src="https://dong1iu.github.io/post-images/1623062983717.png" alt="" loading="lazy"></p>
-<p>从而<br>
-<img src="https://dong1iu.github.io/post-images/1623062989593.png" alt="" loading="lazy"></p>
-</li>
-<li>
-<p>证明<br>
-<img src="https://dong1iu.github.io/post-images/1623062996830.png" alt="" loading="lazy"></p>
-<p>证明过程<br>
-<img src="https://dong1iu.github.io/post-images/1623063003431.png" alt="" loading="lazy"></p>
-</li>
-</ol>
-<p>收敛性的说明</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mi>θ</mi><mo>(</mo><mi>T</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>T</mi></msub></mrow><mrow><mo>∥</mo><msub><mi>w</mi><mi>f</mi></msub><mo>∥</mo><mo>⋅</mo><mo>∥</mo><msub><mi>w</mi><mi>T</mi></msub><mo>∥</mo></mrow></mfrac><mo>≥</mo><msqrt><mi>T</mi></msqrt><mo>⋅</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>t</mi><mo>=</mo><mi>ρ</mi><mi mathvariant="normal">/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">cos\theta(T) = \frac{w_f^Tw_T}{\lVert w_f \lVert \cdot \lVert w_T \lVert} \geq \sqrt{T}\cdot constant=\rho/R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.798865em;vertical-align:-0.5480799999999999em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.250785em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">∥</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29011428571428566em;"><span></span></span></span></span></span></span><span class="mopen mtight">∥</span><span class="mord mtight">⋅</span><span class="mopen mtight">∥</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span><span class="mopen mtight">∥</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.60742em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9190928571428572em;"><span style="top:-2.214em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.42488571428571426em;"><span></span></span></span></span></span></span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.5480799999999999em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.11333499999999996em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9266650000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span><span style="top:-2.886665em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
--10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
--50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
-35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
--221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
-s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
-s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.11333499999999996em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">ρ</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span><br>
-<img src="https://dong1iu.github.io/post-images/1623063013335.png" alt="" loading="lazy"></p>
-<ol>
-<li>线性可分告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>在增长</li>
-<li>错误修正的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的模长存在上界</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的增长一部分依赖<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">cos(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>的增长<br>
-<img src="https://dong1iu.github.io/post-images/1623063021508.png" alt="" loading="lazy"></li>
-</ol>
-<h1 id="三-其他pla">三、其他PLA</h1>
-<p>Pocket PLA:非线性可分数据的感知器<br>
-<img src="https://dong1iu.github.io/post-images/1623063030248.png" alt="" loading="lazy"></p>
-<p>优点：可以对近似线形可分的数据集进行处理</p>
-<p>缺点：计算量大，每次都要计算所有的点</p>
 ]]></content>
     </entry>
     <entry>
@@ -291,43 +341,6 @@ Name: d, dtype: bool
 <pre><code class="language-python">df.loc[:, 'd'].map(lambda x:x==[4,5])
 </code></pre>
 <p>这种方式调用匿名函数逐个比较，而不是使用哈希表比较，自然不会造成之前的错误</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MAC终端代理]]></title>
-        <id>https://dong1iu.github.io/post/mac-zhong-duan-dai-li/</id>
-        <link href="https://dong1iu.github.io/post/mac-zhong-duan-dai-li/">
-        </link>
-        <updated>2021-05-28T07:00:16.000Z</updated>
-        <content type="html"><![CDATA[<p>MAC下终端走代理的有多种方法</p>
-<ol>
-<li>临时代理</li>
-</ol>
-<p><code>export http_proxy='http://localhost:8001'</code></p>
-<ol start="2">
-<li>永久代理</li>
-</ol>
-<p>修改环境变量<br>
-<code>vim ~/.zshrc</code></p>
-<pre><code class="language-bash"># 添加以下内容
-# proxy 
-export http_proxy='http://localhost:8001'
-export https_proxy='http://localhost:8001'
-</code></pre>
-<ol start="3">
-<li>灵活开启</li>
-</ol>
-<p>修改环境变量<br>
-<code>vim ~/.zshrc</code></p>
-<pre><code># proxy
-alias proxy='export all_proxy=http://127.0.0.1:8001'  # 可在网络设置中查看
-alias unproxy='unset all_proxy'
-</code></pre>
-<p>需要启用代理时，在终端输入<code>proxy</code>，关闭代理时，输入<code>unproxy</code>。</p>
-<blockquote>
-<p>检测是否成功代理</p>
-</blockquote>
-<p><code>curl cip.cc</code></p>
 ]]></content>
     </entry>
     <entry>
@@ -575,6 +588,43 @@ pd.qcut(data, [o, 0.1, o.s, 0.9, 1.))
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[MAC终端代理]]></title>
+        <id>https://dong1iu.github.io/post/mac-zhong-duan-dai-li/</id>
+        <link href="https://dong1iu.github.io/post/mac-zhong-duan-dai-li/">
+        </link>
+        <updated>2021-05-19T07:00:16.000Z</updated>
+        <content type="html"><![CDATA[<p>MAC下终端走代理的有多种方法</p>
+<ol>
+<li>临时代理</li>
+</ol>
+<p><code>export http_proxy='http://localhost:8001'</code></p>
+<ol start="2">
+<li>永久代理</li>
+</ol>
+<p>修改环境变量<br>
+<code>vim ~/.zshrc</code></p>
+<pre><code class="language-bash"># 添加以下内容
+# proxy 
+export http_proxy='http://localhost:8001'
+export https_proxy='http://localhost:8001'
+</code></pre>
+<ol start="3">
+<li>灵活开启</li>
+</ol>
+<p>修改环境变量<br>
+<code>vim ~/.zshrc</code></p>
+<pre><code># proxy
+alias proxy='export all_proxy=http://127.0.0.1:8001'  # 可在网络设置中查看
+alias unproxy='unset all_proxy'
+</code></pre>
+<p>需要启用代理时，在终端输入<code>proxy</code>，关闭代理时，输入<code>unproxy</code>。</p>
+<blockquote>
+<p>检测是否成功代理</p>
+</blockquote>
+<p><code>curl cip.cc</code></p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Windows同步MacOS鼠标滚轮自然]]></title>
         <id>https://dong1iu.github.io/post/windows-tong-bu-macos-shu-biao-gun-lun-zi-ran/</id>
         <link href="https://dong1iu.github.io/post/windows-tong-bu-macos-shu-biao-gun-lun-zi-ran/">
@@ -604,6 +654,252 @@ pd.qcut(data, [o, 0.1, o.s, 0.9, 1.))
 <p><strong>Windows 与 Mac缺省看待系统硬件时间的方式是不一样的</strong>：<br>
 Windows把系统硬件时间当作本地时间(local time)，即操作系统中显示的时间跟BIOS中显示的时间是一样的。</p>
 <p>Mac把硬件时间当作 UTC，操作系统中显示的时间是硬件时间经过换算得来的，比如说北京时间是GMT+8，则系统中显示时间是硬件时间+8这样，当PC中同时有多系统共存时，就出现了问题。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[感知机PLA]]></title>
+        <id>https://dong1iu.github.io/post/gan-zhi-ji-pla/</id>
+        <link href="https://dong1iu.github.io/post/gan-zhi-ji-pla/">
+        </link>
+        <updated>2021-05-11T10:47:35.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="pla-感知机">PLA 感知机</h1>
+<h1 id="一-the-learning-problem">一、The Learning Problem</h1>
+<p>本质</p>
+<ol>
+<li>存在某种现在的模式去学习（so performance measure can be improved）</li>
+<li>不能被简单定义（so ML is needed）</li>
+<li>there is data about the pattern</li>
+</ol>
+<h1 id="二-perceptron-learning-algorithmpla">二、Perceptron Learning Algorithm（PLA）</h1>
+<p>图示<br>
+<img src="https://dong1iu.github.io/post-images/1623062895684.png" alt="" loading="lazy"></p>
+<h2 id="一线形可分">（一）线形可分</h2>
+<p>图总第一个为线性可分，经典的PLA只能处理完全线性可分的类型。<br>
+<img src="https://dong1iu.github.io/post-images/1623062905822.png" alt="" loading="lazy"></p>
+<h2 id="二感知机算法图解">（二）感知机算法图解</h2>
+<p>图解<br>
+<img src="https://dong1iu.github.io/post-images/1623062913237.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623062919845.png" alt="" loading="lazy"></figure>
+<h2 id="三如何选择g">（三）如何选择g</h2>
+<p>迭代w<br>
+<img src="https://dong1iu.github.io/post-images/1623062935084.png" alt="" loading="lazy"></p>
+<p>从某些初始值开始，一步步迭代到损失最小</p>
+<h2 id="四迭代更新">（四）迭代更新</h2>
+<p>图示<br>
+<img src="https://dong1iu.github.io/post-images/1623062941847.png" alt="" loading="lazy"></p>
+<p>误分类 → <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>i</mi><mi>g</mi><mi>n</mi><mo>(</mo><msubsup><mi>w</mi><mi>t</mi><mi>T</mi></msubsup><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><mo>)</mo><mi mathvariant="normal">≠</mi><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">sign(w_t^Tx_{n(t)})\neq{y_{n(t)}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1965309999999998em;vertical-align:-0.3551999999999999em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4530000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></span> → 更新步 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>w</mi><mi>t</mi></msub><mo>+</mo><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">w_{t+1}=w_t+y_{n(t)}x_{n(t)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></p>
+<p>证明<br>
+<img src="https://dong1iu.github.io/post-images/1623062950108.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623062957694.png" alt="" loading="lazy"></figure>
+<p>w的更新意味着分类超平面的移动</p>
+<h2 id="五-收敛性证明">（五）、收敛性证明</h2>
+<p>我们已经知道更新w向量方法，但是，这样的更新方法是否收敛？</p>
+<p>证明过程</p>
+<ol>
+<li>
+<p>假设线形可分的数据集<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">D</mi></mrow><annotation encoding="application/x-tex">\mathcal{D}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">D</span></span></span></span></span>能被向量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>完美划分</p>
+<p>因此<br>
+<img src="https://dong1iu.github.io/post-images/1623062968114.png" alt="" loading="lazy"></p>
+<p>从而<br>
+<img src="https://dong1iu.github.io/post-images/1623062976143.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>更新<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>意味着发生了错误，也就是<br>
+<img src="https://dong1iu.github.io/post-images/1623062983717.png" alt="" loading="lazy"></p>
+<p>从而<br>
+<img src="https://dong1iu.github.io/post-images/1623062989593.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>证明<br>
+<img src="https://dong1iu.github.io/post-images/1623062996830.png" alt="" loading="lazy"></p>
+<p>证明过程<br>
+<img src="https://dong1iu.github.io/post-images/1623063003431.png" alt="" loading="lazy"></p>
+</li>
+</ol>
+<p>收敛性的说明</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mi>θ</mi><mo>(</mo><mi>T</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>T</mi></msub></mrow><mrow><mo>∥</mo><msub><mi>w</mi><mi>f</mi></msub><mo>∥</mo><mo>⋅</mo><mo>∥</mo><msub><mi>w</mi><mi>T</mi></msub><mo>∥</mo></mrow></mfrac><mo>≥</mo><msqrt><mi>T</mi></msqrt><mo>⋅</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>t</mi><mo>=</mo><mi>ρ</mi><mi mathvariant="normal">/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">cos\theta(T) = \frac{w_f^Tw_T}{\lVert w_f \lVert \cdot \lVert w_T \lVert} \geq \sqrt{T}\cdot constant=\rho/R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.798865em;vertical-align:-0.5480799999999999em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.250785em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">∥</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29011428571428566em;"><span></span></span></span></span></span></span><span class="mopen mtight">∥</span><span class="mord mtight">⋅</span><span class="mopen mtight">∥</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span><span class="mopen mtight">∥</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.60742em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9190928571428572em;"><span style="top:-2.214em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.42488571428571426em;"><span></span></span></span></span></span></span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.5480799999999999em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.11333499999999996em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9266650000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span><span style="top:-2.886665em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
+-10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
+-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
+35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
+-221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
+s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
+s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.11333499999999996em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">ρ</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span><br>
+<img src="https://dong1iu.github.io/post-images/1623063013335.png" alt="" loading="lazy"></p>
+<ol>
+<li>线性可分告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>在增长</li>
+<li>错误修正的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的模长存在上界</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的增长一部分依赖<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">cos(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>的增长<br>
+<img src="https://dong1iu.github.io/post-images/1623063021508.png" alt="" loading="lazy"></li>
+</ol>
+<h1 id="三-其他pla">三、其他PLA</h1>
+<p>Pocket PLA:非线性可分数据的感知器<br>
+<img src="https://dong1iu.github.io/post-images/1623063030248.png" alt="" loading="lazy"></p>
+<p>优点：可以对近似线形可分的数据集进行处理</p>
+<p>缺点：计算量大，每次都要计算所有的点</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[配置V2Ray+ws+tls]]></title>
+        <id>https://dong1iu.github.io/post/pei-zhi-v2raywstls/</id>
+        <link href="https://dong1iu.github.io/post/pei-zhi-v2raywstls/">
+        </link>
+        <updated>2021-05-10T15:33:10.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>写在最前面</strong></p>
+<p><strong>关于V2Ray的文章有很多，本来不提供任何一键脚本，基于官网提供的教程一步一步手动配置，因此本文的目的在于交流和记录自己配置的过程本身。希望大家愉快的借助上网工具好好学习，不要参与政治事件，关你什么事呢？</strong></p>
+<h1 id="一-购买vps">一、购买VPS</h1>
+<p>作者不提供任何购买链接，只是提醒大家不要贪图便宜购买非常廉价的服务器。便宜的服务器容易被封IP，也容易跑路，人工客服的质量也不行，建议大家尽量选择大厂的服务，不要贪小便宜，不然后期简直是折磨自己。另外，建议大家多购置几个备用，被封了你才知道难受！！！</p>
+<h1 id="二-连接到vps">二、连接到VPS</h1>
+<p>连接的方式很多，Windows下你可以使用常见的<a href="https://www.netsarang.com/en/xshell-download/">XShell个人版</a>和<a href="https://mobaxterm.mobatek.net/download.html">mobaxterm家庭版</a>，MacOS下你可以使用<a href="https://electerm.github.io/electerm/">electerm</a>。他们的使用方法大同小异，这里我展示如何使用electerm连接到你的服务器。</p>
+<p>打开书签，添加你的连接配置</p>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623080999671.png" alt="" loading="lazy"></figure>
+<p>输入你的服务器的IP，你的登录名字（一般默认为root）和密码</p>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623081008544.png" alt="" loading="lazy"></figure>
+<p>测试连接，如果成功，点击保存并连接</p>
+<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623081016451.png" alt="" loading="lazy"></figure>
+<p>其他的客户端操作请大家移步其他博客，已经有还多帖子介绍，就不重复造轮子了。</p>
+<h1 id="三-安装v2ray">三、安装V2Ray</h1>
+<p>使用官方的安装脚本安装V2Ray</p>
+<pre><code class="language-bash">bash &lt;(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+</code></pre>
+<blockquote>
+<p>新版和旧版的文件结构是不同的<br>
+在旧版中配置文件位于：/etc/v2ray/config.json<br>
+在新版中位于：/usr/local/etc/v2ray/config.json<br>
+日志文件一般推荐在/var/log/v2ray/access.log和/var/log/v2ray/error.log</p>
+</blockquote>
+<p>V2Ray常用命令</p>
+<pre><code class="language-bash">v2ray [-version] [-test] [-config=config.json] [-format=json]
+# test可以用来测试一个config.json是否编写正确
+
+v2ctl uuid 
+# 生成新的uuid
+</code></pre>
+<p>注意V2Ray对时间有严格的要求，客户端和服务器的时差不能超过2分钟，注意矫正服务器的时间。</p>
+<p>查看时间</p>
+<pre><code class="language-bash">date -R
+</code></pre>
+<p>修改时间</p>
+<pre><code class="language-bash">date -s &quot;2000-01-01 00:00:00&quot;
+</code></pre>
+<h1 id="三-安装常用的小工具">三、安装常用的小工具</h1>
+<pre><code class="language-bash">apt-get install vim
+apt-get install curl
+apt-get install htop
+
+#  如果无法安装
+sudo apt upgrade
+</code></pre>
+<h1 id="四-安装ufw">四、安装ufw</h1>
+<pre><code class="language-bash">sudo apt-get install ufw
+</code></pre>
+<p>开放80端口和443端口</p>
+<pre><code class="language-bash">ufw allow 80
+ufw allow 443
+ufw reload
+</code></pre>
+<blockquote>
+<p>注意ubuntu默认没有开启ufw，开启时请以前打开22端口的权限，否则无法ssh到机器</p>
+</blockquote>
+<h1 id="五-安装caddy">五、安装Caddy</h1>
+<p>不同机器的安装方式不同，这里我只提供Ubuntu18.04的安装方法，其他的机器的安装请参考Caddy官网的文档</p>
+<pre><code class="language-bash"># 逐条运行
+echo &quot;deb [trusted=yes] https://apt.fury.io/caddy/ /&quot; \
+    | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
+sudo apt update
+sudo apt install caddy
+</code></pre>
+<h1 id="六-配置caddy">六、配置Caddy</h1>
+<p>配置模板</p>
+<p>修改Caddy配置文件</p>
+<pre><code class="language-bash">vim /etc/caddy/Caddyflie
+</code></pre>
+<p>修改配置为以下内容</p>
+<pre><code class="language-json">mydomain.me { 
+    log {
+        output file /var/log/caddy/caddy.log
+    }
+    tls {
+        protocols tls1.2 tls1.3
+        ciphers TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+        curves x25519
+    }
+    @v2ray_websocket {
+        path /ray 
+        header Connection *Upgrade*
+        header Upgrade websocket
+    }
+    reverse_proxy @v2ray_websocket localhost:10000
+}
+</code></pre>
+<ul>
+<li><em>mydomain.me</em> → 你的域名 需要将你的域名解析到服务器</li>
+<li><em>path /ray</em> → 路径，需要在v2ray和caddy的配置文件中保持一致</li>
+<li><em>localhost:10000</em> → 转发到端口 需要和v2ray中监听本地的端口一致</li>
+</ul>
+<h1 id="七-配置v2ray">七、配置V2Ray</h1>
+<pre><code class="language-bash">vim /usr/local/etc/v2ray/config.json
+</code></pre>
+<p>修改配置为以下，并替换关键内容（uuid和端口，和caddy中反向代理的端口保持一致）</p>
+<pre><code class="language-json">{
+  &quot;inbounds&quot;: [
+    {
+      &quot;port&quot;: 10000,
+      &quot;listen&quot;:&quot;127.0.0.1&quot;,//只监听 127.0.0.1，避免除本机外的机器探测到开放了 10000 端口
+      &quot;protocol&quot;: &quot;vmess&quot;,
+      &quot;settings&quot;: {
+        &quot;clients&quot;: [
+          {
+            &quot;id&quot;: &quot;b831381d-6324-4d53-ad4f-8cda48b30811&quot;,
+            &quot;alterId&quot;: 64
+          }
+        ]
+      },
+      &quot;streamSettings&quot;: {
+        &quot;network&quot;: &quot;ws&quot;,
+        &quot;wsSettings&quot;: {
+        &quot;path&quot;: &quot;/ray&quot;
+        }
+      }
+    }
+  ],
+  &quot;outbounds&quot;: [
+    {
+      &quot;protocol&quot;: &quot;freedom&quot;,
+      &quot;settings&quot;: {}
+    }
+  ]
+}
+</code></pre>
+<h1 id="八-将你的域名解析到服务器">八、将你的域名解析到服务器</h1>
+<p>推荐到<a href="namesilo.com">namesilo</a>（收费）和<a href="freenom.com">freenom</a>（免费）购买域名</p>
+<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623083243877.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623083484619.png" alt="" loading="lazy"></figure>
+<h1 id="九-重启v2ray和caddy">九、重启V2ray和Caddy</h1>
+<pre><code class="language-bash">systemctl restart v2ray
+systemctl restart caddy
+</code></pre>
+<h1 id="十-开起bbr加速你的网络">十、开起BBR，加速你的网络</h1>
+<p>Ubuntu 1804下启用BBR非常简单，这也是我使用该系统的原因，并且该系统的文档很容易搜到，推荐给新手使用</p>
+<pre><code class="language-bash"># 因为ubuntu18.04 的内核满足bbr的要求所以ubuntu开启bbr比较简单
+# 修改系统变量
+echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf
+echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf
+
+# 保存生效
+sysctl -p
+
+# 查看BBR是否启动 lsmod命令用于显示已经加载到内核中的模块的状态信息。
+sysctl net.ipv4.tcp_available_congestion_control
+
+lsmod | grep bbr
+</code></pre>
+<h1 id="十一-使用客户端连接">十一、使用客户端连接</h1>
+<ul>
+<li>Windows：推荐V2rayN</li>
+<li>安卓：推荐V2rayNG</li>
+<li>IOS：推荐Kitsunebi</li>
+<li>Mac：推荐V2rayX</li>
+</ul>
 ]]></content>
     </entry>
 </feed>

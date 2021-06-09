@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>留存分析——Cohort分析 | 动动栋栋</title>
-<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623229256628">
+<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623230708388">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="留存分析——Cohort分析 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
@@ -14,8 +14,9 @@
     <meta name="description" content="什么是Cohort分析
 Cohort Analysis 可以翻译成 群体分析 或 分组分析，其实是一种通过细分来研究数据的方法。如下表就是一个从每日新增维度细分的 Cohort Analysis 表格。
 
-..." />
-    <meta name="keywords" content="" />
+如何实现Cohort分析
+分组先分..." />
+    <meta name="keywords" content="python" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -24,7 +25,7 @@ Cohort Analysis 可以翻译成 群体分析 或 分组分析，其实是一种�
       <div class="main-content">
         <div class="site-header">
   <a href="https://dong1iu.github.io">
-  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623229256628" alt="">
+  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623230708388" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -84,8 +85,12 @@ Cohort Analysis 可以翻译成 群体分析 或 分组分析，其实是一种�
                 2021-06-09
               </span>
               <span>
-                1 min read
+                9 min read
               </span>
+              
+                <a href="https://dong1iu.github.io/tag/EDcNg_R0it/" class="post-tag">
+                  # python
+                </a>
               
             </div>
             
@@ -94,11 +99,317 @@ Cohort Analysis 可以翻译成 群体分析 或 分组分析，其实是一种�
                 <h1 id="什么是cohort分析">什么是Cohort分析</h1>
 <p>Cohort Analysis 可以翻译成 群体分析 或 分组分析，其实是一种通过细分来研究数据的方法。如下表就是一个从每日新增维度细分的 Cohort Analysis 表格。<br>
 <img src="https://dong1iu.github.io/post-images/1623229217530.png" alt="" loading="lazy"></p>
+<h1 id="如何实现cohort分析">如何实现Cohort分析</h1>
+<p>分组先分维度，再分粒度<br>
+维度：你观察的用户分类，举例而言，注册账号的平台、设备、注册时间、性别等<br>
+粒度：直白的说就是观察的间隔，比如以月、周、天、12小时等</p>
+<h1 id="python实现cohort分析">python实现cohort分析</h1>
+<h2 id="读取数据">读取数据</h2>
+<ol>
+<li>如果你的数据在数据库中，可以直接使用SQL查询</li>
+<li>如果你的数据是冷数据，存放在文件中，可以用python直接读取，根据格式的不同使用不同的包，比如<code>pd.read_csv()</code></li>
+</ol>
+<h2 id="预处理数据">预处理数据</h2>
+<p>根据既定的规则，处理数据。使用Pandas自带的函数等，例如map, apply, filter, 布尔索引等<br>
+根据你的粒度，处理不同的生成新的时间列，可以命名为回访事件时间</p>
+<h2 id="分组">分组</h2>
+<p>使用<code>df.groupby(by=[...])</code>函数分组，和数据库中的group by异曲同工，不同的是，在Python中你可以轻易的进行数据透视，但是在SQL中相对比较复杂。当公司有稳健的数据库系统时，推荐使用SQL和Python结合的方式，即GROUPBY的工作由性能强大的数据库完成，数据透视由Python完成。</p>
+<h2 id="数据透视">数据透视</h2>
+<p>经过分组，我们等到的形如以下的结果</p>
+<table>
+<thead>
+<tr>
+<th>注册</th>
+<th>注册时间</th>
+<th>活跃</th>
+<th>活跃时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>2020-01-01</td>
+<td>A</td>
+<td>2020-01-01</td>
+</tr>
+<tr>
+<td>B</td>
+<td>2020-01-01</td>
+<td>B</td>
+<td>2020-01-01</td>
+</tr>
+<tr>
+<td>C</td>
+<td>2020-01-01</td>
+<td>C</td>
+<td>2020-01-01</td>
+</tr>
+<tr>
+<td>D</td>
+<td>2020-01-01</td>
+<td>D</td>
+<td>2020-01-01</td>
+</tr>
+<tr>
+<td>A</td>
+<td>2020-01-01</td>
+<td>A</td>
+<td>2020-01-02</td>
+</tr>
+<tr>
+<td>C</td>
+<td>2020-01-01</td>
+<td>C</td>
+<td>2020-01-02</td>
+</tr>
+<tr>
+<td>D</td>
+<td>2020-01-01</td>
+<td>D</td>
+<td>2020-01-02</td>
+</tr>
+<tr>
+<td>B</td>
+<td>2020-01-01</td>
+<td>B</td>
+<td>2020-01-03</td>
+</tr>
+<tr>
+<td>D</td>
+<td>2020-01-01</td>
+<td>D</td>
+<td>2020-01-03</td>
+</tr>
+</tbody>
+</table>
+<p>我们要完成的即一个数据透视工作，使用<code>pd.pivot_table()</code>完成</p>
+<h1 id="代码参考">代码参考</h1>
+<p>这里只给出主函数，因为函数的功能非常复杂，所以我们不细讲，只作为一个参考提供给大家</p>
+<pre><code class="language-python">def gcohort(df, group_names, ncolumn='n', orient='倒三角', pre_filter=None, 
+    init_event=None, init_agg={}, init_name=None,
+    recall_event=None, recall_agg={}, recall_apply={},
+    final_func=None, final_args=None):
+    &quot;&quot;&quot;
+    分群/对偶分析
+    示例
+        1.留存分析
+            group_names = ['af_channel', 'country_code']
+            trans_map = {'callback_time':'日期', 'af_channel':'渠道', 'country_code':'国家码'}
+            
+            gcohort(df, group_names, ncolumns='n', orient='倒三角', \
+                init_agg={'agg_column':'device_id', 'agg_method':'nunique'},\
+                init_name='激活', \
+                recall_agg={'agg_column':'device_id', 'agg_method':'nunique'}, \
+                final_func=lambda x: x.rename(columns=trans_map))
+        2. LTV计算
+            # event_value_sum函数负责把event_value中的花费提取并加总，两个后处理函数分别负责补洞和累加和除
+            ltv = gcohort(ddwwy, [], 'n', orient='倒三角', \
+                init_agg={'agg_column':'device_id', 'agg_method':'nunique'}, \
+                init_name='激活', \
+                recall_event='af_purchase', \
+                recall_apply={'agg_func': event_value_sum, &quot;agg_args&quot;: {}}, \
+                final_func=[
+                    {&quot;func&quot;: fill_gcohort, &quot;kargs&quot;: {&quot;group_names&quot;: [], &quot;interval&quot;: '12h', &quot;orient&quot;: &quot;倒三角&quot;, &quot;time_col&quot;: &quot;时间&quot;}},  # 补洞
+                    {&quot;func&quot;:ltv_cumsum_new, &quot;kargs&quot;: {&quot;time_col&quot;: &quot;时间&quot;, &quot;div_col&quot;:&quot;激活&quot;}},  # 累计LTV
+                    ])
+        3. 广告点击
+            ltv = gcohort(ddwwy, [], 'n', orient='倒三角', \
+                init_agg={'agg_column':'device_id', 'agg_method':'nunique'}, \
+                init_name='激活', \
+                recall_event='af_ad_click', \
+                recall_agg={'agg_column':'device_id', 'agg_method':'count'}, \
+                final_func=[
+                    {&quot;func&quot;: fill_gcohort, &quot;kargs&quot;: {&quot;group_names&quot;: [], &quot;interval&quot;: '12h', &quot;orient&quot;: &quot;倒三角&quot;, &quot;time_col&quot;: &quot;时间&quot;}},  # 补洞
+                    ])
+        
+    ----------
+    Parameters
+    ----------
+    df : DataFrame.
+        输入的源日志文件
+    group_names : list.
+        不包含时间和ncolumn的分组项
+    ncolumn : str.
+        时间差 取决于你分析表格的时间间隔列名字
+    orient : str
+        可选 ['正三角', '倒三角']
+        orient决定回访事件分析是 是分群分析还是对偶分析
+        
+    pre_filter : func or list
+        自定义的预处理函数 -&gt; 建议在此处对激活日期筛选
+    init_evnet : str, list, func, DataFrame.
+        可接受 [初始事件名, 初始事件字符串列表, 函数, 计算好的初始事件表]
+    init_agg : dict
+        init_event的聚合参数，需构造以下字典
+        {
+            &quot;agg_column&quot;: str. 聚合的列名,
+            &quot;agg_method&quot;: str or func | 内置的字符串或自定义方法, 
+        }
+        注意：此参数只在init不是DataFrame类型时有效，即未输入计算好的初始事件表
+    init_name : str. default is None
+        聚合后初始事件列名
+        
+    recall_event : str, list or func. default is None
+        召回事件
+        当其为字符或字符串组成的列表时，从df中过滤事件 
+    recall_agg : dict. default is {}
+        召回事件的聚合参数 需构造以下字典
+        列表的
+            {
+                &quot;agg_column&quot;: str. 聚合列名,
+                &quot;agg_method&quot;: str or func. 聚合方法 支持agg内置的字符选项如 count sum nunique max等 也支持自定义func, 
+                &quot;pivot_agg_method&quot;: str or func. 数据透视表的聚合方式 支持aggfunc内置字符如 sum first 也支持自定义func,
+            }
+        
+    recall_apply : dict. default is {}
+        召回事件的另一种聚合参数 需构造以下字典
+            {
+                &quot;agg_func&quot;: str. 聚合方法,
+                &quot;agg_args&quot;: dict. 聚合方法的参数字典 (args), 
+                &quot;pivot_agg_method&quot;: str or func. 数据透视表的聚合方式 支持aggfunc内置字符如 sum first 也支持自定义func,
+            }
+
+        recall = recall_df.groupby(k,...).agg({recall_agg[0], recall_agg[1]})
+    final_func : func or list
+        函数 字典 函数组成的列表 字典组成的列表 函数和字典混合组成的列表
+        后处理函数或后处理函数列表
+        例如
+            1. 函数
+                func = lambda x:x
+            2. 字典
+                {
+                    &quot;func&quot;: add
+                    &quot;kargs&quot;: {&quot;arg1&quot;: &quot;value1&quot;, &quot;arg2&quot;: &quot;value2&quot;}
+                }
+            3. 函数组成的列表
+                [lambda x:x, lambda x:x, lambda x:x]
+            ...
+    &quot;&quot;&quot;
+    # 资格审查
+    if 'init_time' not in df.columns and 'callback_time' not in df.columns:
+        print('源文件必须包含init_time和callback_time')
+    
+    # 源日志预处理 =========
+    if callable(pre_filter):
+        df = pre_filter(df)
+    elif isinstance(pre_filter, list):
+        for pf in pre_filter:
+            df = pf(df)
+    
+    # 时间列判断
+    # 初始事件时间 init_time, callback_time 此   这两个时间的粒度可以是月 周 天 小时等
+    if orient == '正三角':
+        time_col = 'callback_time'
+        print('==对偶分析==')
+    elif orient == '倒三角':
+        time_col = 'init_time'
+        print('==gcohort分析==')
+    else:
+        print(f'不可选的orient{orient}')
+        return 
+    
+    # 初始事件 =============
+    print('==处理初始事件==')
+    # 初始事件准备
+    init = None
+    if init_event is None:
+        init_df = df  # event为空时 默认具体
+    elif isinstance(init_event, DataFrame):
+        init = init_event  # 可接受计算好的初始事件表, 需要注意是输入的init_event必须和recall矩阵拥有相同的粒度和时间格式 否则表连接会错误
+    elif isinstance(init_event, str):
+        init_df = df[df.event_name==init_event]
+    elif isinstance(init_event, list):
+        init_df = df[df.event_name.isin(init_event)]
+    elif callable(init_event):
+        init_df = init_event(df)
+    else:
+        print(f'不支持的初始事件（init_event）参数：{init_event}')
+        return
+    # NOTE：对于激活事件 不建议在gcohort函数中聚合 
+    #       因为源日志中的激活事件可能不齐全
+    
+    init_k = group_names + ['init_time']
+    # 初始事件聚合
+    if init is None:
+        init = init_df.groupby(init_k, observed=True)\
+            .agg({init_agg['agg_column']: init_agg['agg_method']})\
+            .reset_index()\
+            .rename(columns={init_agg['agg_column']:init_name})
+    init = init.rename(columns={'init_time':'时间'})
+    
+    
+    # 召回事件 =============
+    print('==处理召回事件==')
+    
+    if recall_event is None:
+        recall_df = df
+    elif isinstance(recall_event, str):
+        recall_df = df[df.event_name==recall_event]
+    elif isinstance(recall_event, list):
+        recall_df = df[df.event_name.isin(recall_event)]
+    elif callable(recall_event):
+        recall_df = recall_event(df)
+    
+    # 召回事件聚合
+    if (recall_agg and recall_apply) or (not recall_agg and not recall_apply):
+        print('recall_agg和recall_apply只可选其一')
+        return
+    
+    pindex = group_names + [time_col]
+    recall_k = pindex + [ncolumn]
+    
+    if recall_agg:
+        aggfunc = recall_agg['pivot_agg_method'] if recall_agg.get('pivot_agg_method') else 'sum'
+        recall = recall_df.groupby(recall_k, observed=True)\
+            .agg({recall_agg['agg_column']:recall_agg['agg_method']})\
+            .pivot_table(index=pindex, columns=ncolumn, values=recall_agg['agg_column'], aggfunc=aggfunc)\
+            .reset_index()
+    else:
+        aggfunc = recall_apply['pivot_agg_method'] if recall_apply.get('pivot_agg_method') else 'sum'
+        recall = recall_df.groupby(recall_k, observed=True) \
+            .apply(recall_apply['agg_func'], recall_apply['agg_args']) \
+            .reset_index() \
+            .pivot_table(index=pindex, columns=ncolumn, values=0, aggfunc=aggfunc) \
+            .reset_index()
+            # values=0因为apply聚合后默认列名为0
+    recall = recall.rename(columns={time_col: '时间'})
+    
+    # 连接初始表和召回表 =================================
+    ans = init.merge(recall, on=group_names+['时间'], how='outer')
+                
+    # 后处理 ===============
+    if callable(final_func):
+        ans = final_func(ans)
+    elif isinstance(final_func, dict):
+        func = final_func.get(&quot;func&quot;)
+        kargs = final_func.get(&quot;kargs&quot;)
+        ans = func(ans, **kargs)
+    elif isinstance(final_func, list):
+        for afunc in final_func:
+            if callable(afunc):
+                ans = afunc(ans)
+            if isinstance(afunc, dict):
+                func = afunc.get(&quot;func&quot;)
+                kargs = afunc.get(&quot;kargs&quot;)
+                ans = func(ans, **kargs)
+    # 补洞交由后处理函数函数 或 对返回的ans处理
+    return ans
+</code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
 <li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFcohort%E5%88%86%E6%9E%90">什么是Cohort分析</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0cohort%E5%88%86%E6%9E%90">如何实现Cohort分析</a></li>
+<li><a href="#python%E5%AE%9E%E7%8E%B0cohort%E5%88%86%E6%9E%90">python实现cohort分析</a>
+<ul>
+<li><a href="#%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE">读取数据</a></li>
+<li><a href="#%E9%A2%84%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE">预处理数据</a></li>
+<li><a href="#%E5%88%86%E7%BB%84">分组</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%80%8F%E8%A7%86">数据透视</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BB%A3%E7%A0%81%E5%8F%82%E8%80%83">代码参考</a></li>
 </ul>
 
               </div>
@@ -109,9 +420,9 @@ Cohort Analysis 可以翻译成 群体分析 或 分组分析，其实是一种�
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://dong1iu.github.io/post/pei-zhi-v2raywstls/">
+            <a href="https://dong1iu.github.io/post/zai-pandas-dataframe-zhong-shi-yong-bi-jiao-lie-biao-de-wen-ti/">
               <h3 class="post-title">
-                配置V2Ray+ws+tls
+                在 Pandas DataFrame 中使用比较列表的问题
               </h3>
             </a>
           </div>
