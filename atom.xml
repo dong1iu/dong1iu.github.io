@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>http://localhost:4000</id>
     <title>动动栋栋</title>
-    <updated>2021-06-15T08:48:03.360Z</updated>
+    <updated>2021-06-15T09:08:18.832Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="http://localhost:4000"/>
     <link rel="self" href="http://localhost:4000/atom.xml"/>
@@ -11,12 +11,286 @@
     <icon>http://localhost:4000/favicon.ico</icon>
     <rights>All rights reserved 2021, 动动栋栋</rights>
     <entry>
-        <title type="html"><![CDATA[Git测试]]></title>
-        <id>http://localhost:4000/post/git-ce-shi/</id>
-        <link href="http://localhost:4000/post/git-ce-shi/">
+        <title type="html"><![CDATA[git教程]]></title>
+        <id>http://localhost:4000/post/git-jiao-cheng/</id>
+        <link href="http://localhost:4000/post/git-jiao-cheng/">
         </link>
-        <updated>2021-06-15T08:46:35.000Z</updated>
-        <content type="html"><![CDATA[<p>这是一个git测试</p>
+        <updated>2021-06-15T08:58:40.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="安装git">安装GIT</h1>
+<ol>
+<li>安装homebrew</li>
+<li>安装xcode</li>
+</ol>
+<h1 id="基础配置">基础配置</h1>
+<p><code>git config —-global user.name &quot;Your name&quot;</code></p>
+<p><code>git config -—global user.email &quot;yourEmail@example.com&quot;</code></p>
+<p>查看设置是否成功</p>
+<p><code>git config user.name</code></p>
+<p>基本操作</p>
+<p><code>add</code>、<code>commit</code></p>
+<p>添加</p>
+<p><code>git add &lt;file&gt;</code></p>
+<p>提交</p>
+<p><code>git commit -m &lt;message&gt;</code></p>
+<h1 id="时光机">时光机</h1>
+<p><code>git status</code></p>
+<p>查看现在仓库的状态，会返回现在仓库哪些文件改动过和其他的信息</p>
+<p><code>git diff</code></p>
+<p>看得是**<code>工作区</code>**该文件与版本库中<code>当前分支</code>上该文件之间的差异</p>
+<blockquote>
+<p>严格地说，不一定，还可能是缓存区和仓库的区别，但在此处，我们简单的理解为上诉情况。</p>
+</blockquote>
+<ul>
+<li>
+<p>如何看懂<code>diff</code>的结果</p>
+<pre><code class="language-bash">diff –-git a/f1 b/f1
+index 8f86bb9..d74049c 100644
+- a/f1
++++ b/f1
+@@ -1,7 +1,7 @@  
+code
+code
+code
+-code
++code
+code
+code
+code
+</code></pre>
+<ol>
+<li><strong>第一行表示结果为git格式的diff</strong><code>diff --git a/f1 b/f1</code> 进行比较的是,a版本的f1(即变动前)和b版本的f1(即变动后)。</li>
+<li><strong>第二行表示两个版本的git哈希值和最后的六位数字是对象的模式</strong><code>index 7a67204..8213f76 100644</code> index区域的7a67204对象,与工作目录区域的8213f76对象进行比较。<code>100</code>代表普通文件，<code>644</code>代表文件具有的权限（同linux文件权限）</li>
+<li><strong>第三四行表示进行比较的两个文件</strong><code>a/f1+++ b/f1</code> &quot;-“表示变动前的版本，”+++&quot;表示变动后的版本。</li>
+<li><strong>第五行表示代码变动的位置用两个@作为起首和结束</strong><code>@@ -1,7 +1,7 @@</code> &quot;-1,7″分成三个部分：减号表示第一个文件(即f1)，&quot;1″表示第1行，“7″表示连续7行。 合在一起，就表示下面是第一个文件从第1行开始的连续7行。 同样的，”+1,7″表示变动后，成为第二个文件从第1行开始的连续7行。</li>
+<li><strong>第三部分是变动的具体内容</strong><code>code</code> 变动的行，上下文各显示3行。将两个文件上下文合并显示在一起。 每一行最前面的标志位：“-”代表第一个文件删除的行用红色表示，“+”表示第二个文件新增的行用绿色表示，无标志表示该行无变动。</li>
+</ol>
+</li>
+</ul>
+<p>提交修改的步骤</p>
+<p>提交修改的步骤和添加文件的步骤是一样的</p>
+<ol>
+<li><code>git add modified_file_name</code></li>
+<li><code>git commit -m &quot;comment&quot;</code></li>
+</ol>
+<h2 id="版本回退">版本回退</h2>
+<h3 id="查看过去的版本">查看过去的版本</h3>
+<p><code>git log -n 3 --pretty=oneline</code></p>
+<p><code>-n 3</code> → 查看过去的三个版本</p>
+<p><code>--pretty=oneline</code> → 美化结果为一行</p>
+<p>如果希望以图的形式展示分支结构</p>
+<p><code>--graph</code></p>
+<ul>
+<li>
+<p>结果</p>
+<pre><code class="language-bash"># 美化的
+# commit_id ... comment
+9cda832cca9f6c1cf77eae5afa42e3b5d7af3580 (HEAD -&gt; master) add version 3
+272ad41ad60b17bd6e00506da5166953dcfc4ede add version 2
+e245982e0e475d8a2c84209adaff560b7e42eadb add version 1
+
+# 不美化的
+commit 272ad41ad60b17bd6e00506da5166953dcfc4ede
+Author: dong1iu &lt;dong1iu@qq.com&gt;
+Date:   Sun Jun 13 13:51:24 2021 +0800
+
+    add version 2
+
+commit e245982e0e475d8a2c84209adaff560b7e42eadb
+Author: dong1iu &lt;dong1iu@qq.com&gt;
+Date:   Sun Jun 13 13:50:51 2021 +0800
+
+    add version 1
+dong1iu@IMAC-dong1iu gittest % git log -n 1
+commit 9cda832cca9f6c1cf77eae5afa42e3b5d7af3580 (HEAD -&gt; master)
+Author: dong1iu &lt;dong1iu@qq.com&gt;
+Date:   Sun Jun 13 13:52:11 2021 +0800
+</code></pre>
+</li>
+</ul>
+<h3 id="回到过去的版本">回到过去的版本</h3>
+<p><code>git reset --hard HEAD^</code></p>
+<p><code>HEAD</code>指向的版本就是当前版本</p>
+<h2 id="工作区-暂存区和库">工作区、暂存区和库</h2>
+<p>⭐网络上很多博客关于这一部分的讲述都是不清晰的，我整理了廖雪峰git教程下网友的评论，以下是我认为正确的内容</p>
+<h3 id="逻辑结构">逻辑结构</h3>
+<ol>
+<li>工作区（woking directory）</li>
+<li>版本库
+<ol>
+<li>暂存区（stage or index）</li>
+<li>库（head）</li>
+</ol>
+</li>
+</ol>
+<h3 id="添加过程">添加过程</h3>
+<p><strong>注意：</strong><code>git</code>的任务是完成版本管理，所以在底层其实就是移动数据。</p>
+<p>初始化完成后，三个区域都是空的</p>
+<p>在编辑一个新的<code>readme.md</code>文件(v1)后，工作区会出现一个新的<code>untracked</code>文件，此时你<code>add</code>到缓存区，然后修改<code>readme.md</code>文件(v2)。到现在为止，你的工作区和缓存区很明显是不同的，指令<code>git diff</code>就是比较你的工作区和缓存区的不同。</p>
+<p>现在，你在不add的情况下，直接将没有重新<code>add</code>的缓存区<code>commit</code>到你的库(<code>head</code>)，自然你的库中应该是保存的你第一次编辑的<code>readme.md</code>文件(v1)。注意，此时你的缓存区不是&quot;清空&quot;的状态，而是和<code>commit</code>前保持一样的状态，区别是你的缓存区和head的状态一致，所以<code>git status</code>提示你的<code>nothing to commit, working tree clean</code></p>
+<p>那么如何比较你的工作区和库呢？答案是<code>git diff HEAD -- filename</code></p>
+<h3 id="总结">总结</h3>
+<p>比较工作区和缓存区 → <code>git diff</code></p>
+<p>比较工作区和库 → <code>git diff HEAD -- filename</code></p>
+<p>比较缓存区和库 → <code>git diff -cached</code></p>
+<p>比较不同库版本 →<code>git diff 243550a 24bc01b</code> →<code>git diff commit_id1 commit_id2</code></p>
+<p><code>git add</code>的<strong>逆</strong>操作 → <code>git checkout -- filename</code></p>
+<p>注意：</p>
+<ol>
+<li><code>git add</code>本质是把暂存区的数据同步为工作区的数据，而checkout是将工作区的数据同步为stage中的数据。</li>
+<li><code>--</code>不能少，<em><strong>有空格</strong></em>，不然命令会出错，变成了“切换到另一个分支”的命令，</li>
+<li><code>git checkout --filename</code>在新版<code>git</code>中现在被<code>git restore</code>替代</li>
+<li>原来的<code>git reset HEAD</code> 可以使用 <code>git restore --staged</code> 代替</li>
+<li>原来的<code>git checkout branchName</code> 可以用 <code>git switch branchName</code> 代替。</li>
+</ol>
+<p>撤销<code>add</code> → <code>git restore --staged &lt;file&gt;...</code></p>
+<p><code>unstage</code>操作，取消add操作</p>
+<h2 id="删除文件">删除文件</h2>
+<p>在工作区删除文件</p>
+<p><code>rm filename</code></p>
+<p>从库中删除文件</p>
+<p><code>git rm filename</code></p>
+<p><code>git commit -m &quot;delete filename&quot;</code></p>
+<p>恢复被删除的文件</p>
+<p><code>git restore filename</code>或<code>git checkout -- filename</code></p>
+<p>原理上来说，缓存区的文件和版本库的文件是一致的，所以你可以从缓存区恢复你的文件。</p>
+<h1 id="远程仓库">远程仓库</h1>
+<h2 id="如何连接到你的远程仓库">如何连接到你的远程仓库</h2>
+<ol>
+<li>
+<p>注册你的github账号</p>
+</li>
+<li>
+<p>创建SSH key</p>
+<p><code>ssh-keygen -t rsa -C &quot;youremial@example.com&quot;</code></p>
+<p>一般在<code>用户主目录/.ssh</code>下，里面有<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件，前者是私钥，后者是公钥。</p>
+<p><em><strong>注意：千万不要丢失自己的私钥！！！</strong></em></p>
+</li>
+<li>
+<p>添加公钥到github账号</p>
+<p>Account settings → SSH and CPG keys → new ssh key</p>
+</li>
+</ol>
+<h2 id="添加远程库">添加远程库</h2>
+<h3 id="创建新的仓库">创建新的仓库</h3>
+<p>在github仓库主页上 new repository</p>
+<h3 id="关联本地仓库">关联本地仓库</h3>
+<p><code>git remote add origin git@github.com:dong1iu/learngit.git</code></p>
+<p>远程库的名字就是<code>origin</code></p>
+<h3 id="推送">推送</h3>
+<p><code>git push -u origin master</code></p>
+<p>第一次时使用<code>-u</code>代表关联，把本地库的内容推送到远程，用<code>git push</code>命令，实际上是把当前分支master推送到远程。以后可以简单是使用<code>git push origin master</code></p>
+<p>notes: <code>-f</code>参数可以强制推送</p>
+<h3 id="删除远程库连接">删除远程库连接</h3>
+<p><code>git remote -v</code> → 查看远程库信息</p>
+<p><code>git remote rm origin</code> → 删除本地仓库<strong>连接远程仓库</strong>（比如github上的learngit仓库）<strong>的连接。</strong></p>
+<p>注意：</p>
+<p><code>git push origin -d dev</code> → 删除远程数据库上的分支</p>
+<h3 id="如何理解origin">如何理解Origin</h3>
+<p>origin其实只是一个别名，按照我的理解，他是代表你本地仓库到远程仓库这个连接的名字。因为你push的时候需要知道你push到哪儿去了，所以你要指名这个连接，而完整的连接名太长，也不方便记忆和理解，所以使用origin来作为别称。另外，你从github上clone代码的时候，github会自动的把这个连接称为origin。</p>
+<h2 id="从远程库克隆">从远程库克隆</h2>
+<p><code>git clone git@github.com:dong1iu/gitskills.git</code></p>
+<h1 id="分支管理">分支管理</h1>
+<p>首先我们要明白git分支的工作原理</p>
+<p>请参看廖雪峰分支管理</p>
+<p>一开始的时候，<code>master</code>分支是一条线，Git用<code>master</code>指向最新的提交，再用<code>HEAD</code>指向<code>master</code>，就能确定当前分支，以及当前分支的提交点</p>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1623747851195.png" alt="" loading="lazy"></figure>
+<p>每次提交，<code>master</code>分支都会向前移动一步，这样，随着你不断提交，<code>master</code>分支的线也越来越长。</p>
+<p>当我们创建新的分支，例如<code>dev</code>时，Git新建了一个指针叫<code>dev</code>，指向<code>master</code>相同的提交，再把<code>HEAD</code>指向<code>dev</code>，就表示当前分支在<code>dev</code>上</p>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1623747861961.png" alt="" loading="lazy"></figure>
+<p>你看，Git创建一个分支很快，因为除了增加一个<code>dev</code>指针，改改<code>HEAD</code>的指向，工作区的文件都没有任何变化！</p>
+<p>不过，从现在开始，对工作区的修改和提交就是针对<code>dev</code>分支了，比如新提交一次后，<code>dev</code>指针往前移动一步，而<code>master</code>指针不变：</p>
+<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1623747871215.png" alt="" loading="lazy"></figure>
+<p>假如我们在<code>dev</code>上的工作完成了，就可以把<code>dev</code>合并到<code>master</code>上。Git怎么合并呢？最简单的方法，就是直接把<code>master</code>指向<code>dev</code>的当前提交，就完成了合并：</p>
+<figure data-type="image" tabindex="4"><img src="http://localhost:4000/post-images/1623747879062.png" alt="" loading="lazy"></figure>
+<p>所以Git合并分支也很快！就改改指针，工作区内容也不变！</p>
+<p>合并完分支后，甚至可以删除<code>dev</code>分支。删除<code>dev</code>分支就是把<code>dev</code>指针给删掉，删掉后，我们就剩下了一条<code>master</code>分支：</p>
+<figure data-type="image" tabindex="5"><img src="http://localhost:4000/post-images/1623747887057.png" alt="" loading="lazy"></figure>
+<h2 id="创建和合并分支">创建和合并分支</h2>
+<p>创建分支</p>
+<p><code>git branch branchname</code></p>
+<p>切换分支</p>
+<p><code>git switch branchname</code></p>
+<p>注意：当你切换分支时，HEAD的位置会变化，也就是说，你在某个分支上做的变化，在另一个分支上是看不到的</p>
+<p>查看分支</p>
+<p><code>git branch</code></p>
+<pre><code class="language-sql">* dev
+  master
+</code></pre>
+<p>星号代表当前HEAD所在分支</p>
+<p>创建并切换分支</p>
+<p><code>git switch -c branchname</code></p>
+<p>合并某分支到当前分支</p>
+<p><code>git merge branchname</code></p>
+<p>删除分支</p>
+<p><code>git branch -d branchname</code></p>
+<p>删除远程上的分支</p>
+<p><code>git push origin -d dev</code></p>
+<h2 id="分支冲突">分支冲突</h2>
+<p>在分支<code>master</code>和分支<code>dev</code>中分别修改<code>readme.md</code>的最后一行然后add并commit，merge的时候会发生冲突</p>
+<p>此时处理的方式</p>
+<ol>
+<li>
+<p>放弃merge</p>
+<p><code>git merge --abort</code></p>
+</li>
+<li>
+<p>修改冲突的文件并提交</p>
+<ol>
+<li>
+<p><code>vim conflict_file</code></p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Creating a new branch is quick &amp; simple.
+=======
+Creating a new branch is quick AND simple.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; dev
+</code></pre>
+</li>
+<li>
+<p><code>git add conflict_file</code></p>
+</li>
+<li>
+<p><code>git commit -m &quot;merge conflict fixed&quot;</code></p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="分支策略">分支策略</h2>
+<p>默认的情况下，git的merge采用fast forward策略，这种策略比较快，但是在改模式下，删除分支后会失去信息，使用<code>--no-ff</code>参数禁用fast forward策略</p>
+<figure data-type="image" tabindex="6"><img src="http://localhost:4000/post-images/1623747897906.png" alt="" loading="lazy"></figure>
+<h1 id="标签管理">标签管理</h1>
+<h2 id="创建标签">创建标签</h2>
+<p>查看便签</p>
+<p><code>git tag</code></p>
+<p>添加便签</p>
+<p><code>git tag &lt;name&gt;</code></p>
+<p>给过去的<code>commit_id</code>添加标签</p>
+<p><code>git tag &lt;name&gt; &lt;commit_id&gt;</code></p>
+<p>查看已有的便签</p>
+<p><code>git tag</code></p>
+<p>查看标签信息</p>
+<p><code>git show &lt;tag&gt;</code></p>
+<p>其他说明</p>
+<ol>
+<li>用<code>-a</code>指定标签名，<code>-m</code>指定说明文字</li>
+<li>标签不是按时间顺序列出，而是按字母排序的</li>
+</ol>
+<h2 id="操作标签">操作标签</h2>
+<p>删除</p>
+<p><code>git tag -d v0.1</code></p>
+<p>推送某个标签</p>
+<p><code>git push origin v1.0</code></p>
+<h1 id="github">Github</h1>
+<h2 id="查看当前的远程库">查看当前的远程库</h2>
+<p>git remote -v</p>
+<h2 id="提取远程仓库">提取远程仓库</h2>
+<h3 id="从远程仓库下载新分支与数据">从远程仓库下载新分支与数据</h3>
+<p><code>git fetch</code></p>
+<h3 id="从远端仓库提取数据并尝试合并到当前分支">从远端仓库提取数据并尝试合并到当前分支</h3>
+<p><code>git merge</code></p>
+<h2 id="推送到远程仓库">推送到远程仓库</h2>
+<p><code>git push -u origin master</code></p>
+<h2 id="删除远程仓库中的分支">删除远程仓库中的分支</h2>
+<p><code>git push origin -d dev</code> → 删除远程数据库上的分支</p>
 ]]></content>
     </entry>
     <entry>

@@ -2,25 +2,29 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | 动动栋栋</title>
-<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623342937348">
+<title>MAC终端代理 | 动动栋栋</title>
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623746812139">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="MAC终端代理 | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
+    <meta name="description" content="MAC下终端走代理的有多种方法
 
-🏠 关于本站
-这是一个数据分析菜鸟的博客，会分享一些自己学到的东西和生活中有趣的内容。
-👨‍💻 博主是谁
-博主是某个财经211的在读硕士，和大家一起无限进步！
-😨 机器学习
-因为这学期的机..." />
-    <meta name="keywords" content="" />
+临时代理
+
+export http_proxy='http://localhost:8001'
+
+永久代理
+
+修改环境变量
+vim ~/.zshrc
+# 添加以下内容
+# proxy 
+export htt..." />
+    <meta name="keywords" content="mac" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -28,8 +32,8 @@
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://dong1iu.github.io">
-  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623342937348" alt="">
+  <a href="http://localhost:4000">
+  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623746812139" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -58,7 +62,7 @@
       
     
       
-        <a href="https://dong1iu.github.io/post/about" class="menu">
+        <a href="http://localhost:4000/post/about" class="menu">
           关于
         </a>
       
@@ -82,54 +86,80 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              MAC终端代理
             </h2>
             <div class="post-info">
               <span>
-                2020-01-01
+                2021-05-19
               </span>
               <span>
                 1 min read
               </span>
               
+                <a href="http://localhost:4000/tag/hRLgb8jBJ/" class="post-tag">
+                  # mac
+                </a>
+              
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+                <p>MAC下终端走代理的有多种方法</p>
+<ol>
+<li>临时代理</li>
+</ol>
+<p><code>export http_proxy='http://localhost:8001'</code></p>
+<ol start="2">
+<li>永久代理</li>
+</ol>
+<p>修改环境变量<br>
+<code>vim ~/.zshrc</code></p>
+<pre><code class="language-bash"># 添加以下内容
+# proxy 
+export http_proxy='http://localhost:8001'
+export https_proxy='http://localhost:8001'
+</code></pre>
+<ol start="3">
+<li>灵活开启</li>
+</ol>
+<p>修改环境变量<br>
+<code>vim ~/.zshrc</code></p>
+<pre><code># proxy
+alias proxy='export all_proxy=&quot;http://localhost:8001&quot;' # 可在网络设置中查看
+alias unproxy='unset all_proxy'
+</code></pre>
+<p>需要启用代理时，在终端输入<code>proxy</code>，关闭代理时，输入<code>unproxy</code>。</p>
+<blockquote>
+<p>检测是否成功代理</p>
 </blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<p>这是一个数据分析菜鸟的博客，会分享一些自己学到的东西和生活中有趣的内容。</p>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<p>博主是某个财经211的在读硕士，和大家一起无限进步！</p>
-<h2 id="机器学习">😨 机器学习</h2>
-<p>因为这学期的机器学习还没有上完，所以笔记还没有来得及整理。立个FLAG，一定在7月15前弄好！</p>
+<p><code>curl cip.cc</code></p>
+<p>或</p>
+<p><code>curl ip.gs</code></p>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">😨 机器学习</a></li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
         </div>
 
         
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="http://localhost:4000/post/windows-tong-bu-macos-shu-biao-gun-lun-zi-ran/">
+              <h3 class="post-title">
+                Windows同步MacOS鼠标滚轮自然
+              </h3>
+            </a>
+          </div>
+        
 
         
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
+  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>

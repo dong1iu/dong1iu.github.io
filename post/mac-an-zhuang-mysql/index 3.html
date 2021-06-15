@@ -2,18 +2,29 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>pip 使用代理 | 动动栋栋</title>
-<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623342937348">
+<title>mac安装MySQL | 动动栋栋</title>
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623746812139">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="pip 使用代理 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="mac安装MySQL | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="pip install package --proxy=http://127.0.0.1:port
-" />
-    <meta name="keywords" content="python" />
+    <meta name="description" content="一、下载MySQL
+官网地址
+下载macOS版本的dmg文件
+
+一路下一步，同意
+设置密码
+二、修改环境变量
+修改配置文件
+sudo vim ~/.bash_profile
+
+在配置文件中添加以下内容
+# mysql
+export PATH..." />
+    <meta name="keywords" content="数据库" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -21,8 +32,8 @@
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://dong1iu.github.io">
-  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623342937348" alt="">
+  <a href="http://localhost:4000">
+  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623746812139" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -51,7 +62,7 @@
       
     
       
-        <a href="https://dong1iu.github.io/post/about" class="menu">
+        <a href="http://localhost:4000/post/about" class="menu">
           关于
         </a>
       
@@ -75,29 +86,69 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              pip 使用代理
+              mac安装MySQL
             </h2>
             <div class="post-info">
               <span>
-                2021-05-02
+                2021-05-05
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="https://dong1iu.github.io/tag/EDcNg_R0it/" class="post-tag">
-                  # python
+                <a href="http://localhost:4000/tag/rAn7xDm86/" class="post-tag">
+                  # 数据库
                 </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p><code>pip install package --proxy=http://127.0.0.1:port</code></p>
+                <h1 id="一-下载mysql">一、下载MySQL</h1>
+<p><a href="https://dev.mysql.com/downloads/mysql/">官网地址</a></p>
+<p>下载macOS版本的dmg文件</p>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1623078467775.png" alt="" loading="lazy"></figure>
+<p>一路下一步，同意</p>
+<p>设置密码</p>
+<h1 id="二-修改环境变量">二、修改环境变量</h1>
+<p>修改配置文件</p>
+<pre><code class="language-bash">sudo vim ~/.bash_profile
+</code></pre>
+<p>在配置文件中添加以下内容</p>
+<pre><code class="language-bash"># mysql
+export PATH=$PATH:/usr/local/mysql/bin
+
+alias mysql='/usr/local/mysql/bin/mysql'
+alias mysqladmin='/usr/local/mysql/bin/mysqladmin'
+</code></pre>
+<p>检查文件是否生效</p>
+<pre><code class="language-bash">source ~/.bash_profile
+</code></pre>
+<h1 id="三-测试数据库">三、测试数据库</h1>
+<p>查看MySQL版本</p>
+<pre><code class="language-bash">mysql -V
+</code></pre>
+<p>连接数据库</p>
+<pre><code class="language-bash">mysql -u root -p
+</code></pre>
+<p>退出连接的数据库</p>
+<pre><code class="language-mysql">exit
+</code></pre>
+<h1 id="四-管理服务">四、管理服务</h1>
+<p>管理服务</p>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1623078989184.png" alt="" loading="lazy"></figure>
+<p>设置开机启动和关闭服务</p>
+<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1623079019588.png" alt="" loading="lazy"></figure>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li><a href="#%E4%B8%80-%E4%B8%8B%E8%BD%BDmysql">一、下载MySQL</a></li>
+<li><a href="#%E4%BA%8C-%E4%BF%AE%E6%94%B9%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">二、修改环境变量</a></li>
+<li><a href="#%E4%B8%89-%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%BA%93">三、测试数据库</a></li>
+<li><a href="#%E5%9B%9B-%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1">四、管理服务</a></li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -106,9 +157,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://dong1iu.github.io/post/mac-xia-wei-suo-you-ren-an-zhuang-anaconda3/">
+            <a href="http://localhost:4000/post/ubuntu-1804-ding-shi-ren-wu-he-kai-ji-zi-qi/">
               <h3 class="post-title">
-                MAC下为所有人安装anaconda3
+                Ubuntu 1804 定时任务和开机自启
               </h3>
             </a>
           </div>
@@ -118,7 +169,7 @@
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
+  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>

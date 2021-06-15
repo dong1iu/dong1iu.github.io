@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>感知机PLA | 动动栋栋</title>
-<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623342937348">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623746812139">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="感知机PLA | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="感知机PLA | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -26,8 +26,8 @@ there i..." />
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://dong1iu.github.io">
-  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623342937348" alt="">
+  <a href="http://localhost:4000">
+  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623746812139" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -56,7 +56,7 @@ there i..." />
       
     
       
-        <a href="https://dong1iu.github.io/post/about" class="menu">
+        <a href="http://localhost:4000/post/about" class="menu">
           关于
         </a>
       
@@ -90,7 +90,7 @@ there i..." />
                 2 min read
               </span>
               
-                <a href="https://dong1iu.github.io/tag/hvkiUGXsi/" class="post-tag">
+                <a href="http://localhost:4000/tag/hvkiUGXsi/" class="post-tag">
                   # 机器学习
                 </a>
               
@@ -108,25 +108,25 @@ there i..." />
 </ol>
 <h1 id="二-perceptron-learning-algorithmpla">二、Perceptron Learning Algorithm（PLA）</h1>
 <p>图示<br>
-<img src="https://dong1iu.github.io/post-images/1623062895684.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623062895684.png" alt="" loading="lazy"></p>
 <h2 id="一线形可分">（一）线形可分</h2>
 <p>图总第一个为线性可分，经典的PLA只能处理完全线性可分的类型。<br>
-<img src="https://dong1iu.github.io/post-images/1623062905822.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623062905822.png" alt="" loading="lazy"></p>
 <h2 id="二感知机算法图解">（二）感知机算法图解</h2>
 <p>图解<br>
-<img src="https://dong1iu.github.io/post-images/1623062913237.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623062919845.png" alt="" loading="lazy"></figure>
+<img src="http://localhost:4000/post-images/1623062913237.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1623062919845.png" alt="" loading="lazy"></figure>
 <h2 id="三如何选择g">（三）如何选择g</h2>
 <p>迭代w<br>
-<img src="https://dong1iu.github.io/post-images/1623062935084.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623062935084.png" alt="" loading="lazy"></p>
 <p>从某些初始值开始，一步步迭代到损失最小</p>
 <h2 id="四迭代更新">（四）迭代更新</h2>
 <p>图示<br>
-<img src="https://dong1iu.github.io/post-images/1623062941847.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623062941847.png" alt="" loading="lazy"></p>
 <p>误分类 → <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>i</mi><mi>g</mi><mi>n</mi><mo>(</mo><msubsup><mi>w</mi><mi>t</mi><mi>T</mi></msubsup><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><mo>)</mo><mi mathvariant="normal">≠</mi><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">sign(w_t^Tx_{n(t)})\neq{y_{n(t)}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1965309999999998em;vertical-align:-0.3551999999999999em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4530000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></span> → 更新步 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>w</mi><mi>t</mi></msub><mo>+</mo><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">w_{t+1}=w_t+y_{n(t)}x_{n(t)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></p>
 <p>证明<br>
-<img src="https://dong1iu.github.io/post-images/1623062950108.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623062957694.png" alt="" loading="lazy"></figure>
+<img src="http://localhost:4000/post-images/1623062950108.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1623062957694.png" alt="" loading="lazy"></figure>
 <p>w的更新意味着分类超平面的移动</p>
 <h2 id="五-收敛性证明">（五）、收敛性证明</h2>
 <p>我们已经知道更新w向量方法，但是，这样的更新方法是否收敛？</p>
@@ -135,21 +135,21 @@ there i..." />
 <li>
 <p>假设线形可分的数据集<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">D</mi></mrow><annotation encoding="application/x-tex">\mathcal{D}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">D</span></span></span></span></span>能被向量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>完美划分</p>
 <p>因此<br>
-<img src="https://dong1iu.github.io/post-images/1623062968114.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623062968114.png" alt="" loading="lazy"></p>
 <p>从而<br>
-<img src="https://dong1iu.github.io/post-images/1623062976143.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623062976143.png" alt="" loading="lazy"></p>
 </li>
 <li>
 <p>更新<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>意味着发生了错误，也就是<br>
-<img src="https://dong1iu.github.io/post-images/1623062983717.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623062983717.png" alt="" loading="lazy"></p>
 <p>从而<br>
-<img src="https://dong1iu.github.io/post-images/1623062989593.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623062989593.png" alt="" loading="lazy"></p>
 </li>
 <li>
 <p>证明<br>
-<img src="https://dong1iu.github.io/post-images/1623062996830.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623062996830.png" alt="" loading="lazy"></p>
 <p>证明过程<br>
-<img src="https://dong1iu.github.io/post-images/1623063003431.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623063003431.png" alt="" loading="lazy"></p>
 </li>
 </ol>
 <p>收敛性的说明</p>
@@ -160,16 +160,16 @@ there i..." />
 -221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
 s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
 s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.11333499999999996em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">ρ</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span><br>
-<img src="https://dong1iu.github.io/post-images/1623063013335.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623063013335.png" alt="" loading="lazy"></p>
 <ol>
 <li>线性可分告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>在增长</li>
 <li>错误修正的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的模长存在上界</li>
 <li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的增长一部分依赖<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">cos(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>的增长<br>
-<img src="https://dong1iu.github.io/post-images/1623063021508.png" alt="" loading="lazy"></li>
+<img src="http://localhost:4000/post-images/1623063021508.png" alt="" loading="lazy"></li>
 </ol>
 <h1 id="三-其他pla">三、其他PLA</h1>
 <p>Pocket PLA:非线性可分数据的感知器<br>
-<img src="https://dong1iu.github.io/post-images/1623063030248.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623063030248.png" alt="" loading="lazy"></p>
 <p>优点：可以对近似线形可分的数据集进行处理</p>
 <p>缺点：计算量大，每次都要计算所有的点</p>
 
@@ -198,7 +198,7 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://dong1iu.github.io/post/pei-zhi-v2raywstls/">
+            <a href="http://localhost:4000/post/pei-zhi-v2raywstls/">
               <h3 class="post-title">
                 配置V2Ray+ws+tls
               </h3>
@@ -210,7 +210,7 @@ s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class=
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
+  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>
