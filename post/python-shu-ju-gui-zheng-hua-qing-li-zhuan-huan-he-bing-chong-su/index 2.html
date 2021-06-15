@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python数据规整化：清理、转换、合并、重塑 | 动动栋栋</title>
-<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623746812139">
+<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623342937348">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Python数据规整化：清理、转换、合并、重塑 | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
+<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Python数据规整化：清理、转换、合并、重塑 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -25,8 +25,8 @@ pd.merge(df1, df2, left_on='key1', right_on='key2')
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="http://localhost:4000">
-  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623746812139" alt="">
+  <a href="https://dong1iu.github.io">
+  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623342937348" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -55,7 +55,7 @@ pd.merge(df1, df2, left_on='key1', right_on='key2')
       
     
       
-        <a href="http://localhost:4000/post/about" class="menu">
+        <a href="https://dong1iu.github.io/post/about" class="menu">
           关于
         </a>
       
@@ -89,7 +89,7 @@ pd.merge(df1, df2, left_on='key1', right_on='key2')
                 6 min read
               </span>
               
-                <a href="http://localhost:4000/tag/EDcNg_R0it/" class="post-tag">
+                <a href="https://dong1iu.github.io/tag/EDcNg_R0it/" class="post-tag">
                   # python
                 </a>
               
@@ -114,10 +114,10 @@ pd.merge(df1, df2, on='key', how='innner')
 <p>对重复列名的处理</p>
 <pre><code class="language-python">pd.merge(left, right, on='key', suffixes=('_left', '_right')
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1623227523966.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623227523966.png" alt="" loading="lazy"></figure>
 <p>完整参数<br>
-<img src="http://localhost:4000/post-images/1623227533897.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1623227537948.png" alt="" loading="lazy"></figure>
+<img src="https://dong1iu.github.io/post-images/1623227533897.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623227537948.png" alt="" loading="lazy"></figure>
 <h2 id="索引上的合并">索引上的合并</h2>
 <pre><code>如果连接键位于起索引中，可传入left_index=True或right_index=True(或都传)以说明索引应该被用作连接键
 
@@ -127,7 +127,7 @@ pd.merge(left, right, left_on='key', right_index=True)
 
 对于层次化索引， 比较复杂
 </code></pre>
-<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1623227546081.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623227546081.png" alt="" loading="lazy"></figure>
 <pre><code>必须以列表的形式指明用作合并键的多个列
 
 ```python
@@ -146,10 +146,10 @@ left.join(right, on='key', how='inner')
 <h2 id="concat">concat</h2>
 <p>可称为连接（concatenation）、绑定（binding）或堆叠（stacking）</p>
 <p>concatenation 用于合并原始Numpy数组<br>
-<img src="http://localhost:4000/post-images/1623227551979.png" alt="" loading="lazy"></p>
+<img src="https://dong1iu.github.io/post-images/1623227551979.png" alt="" loading="lazy"></p>
 <pre><code class="language-python">np.concatenate([arr, arr], axis=1)
 </code></pre>
-<figure data-type="image" tabindex="4"><img src="http://localhost:4000/post-images/1623227556829.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623227556829.png" alt="" loading="lazy"></figure>
 <p>对于pandas对象，带有标签的轴使你能够进一步推广数组的连接，所以concatenate的可用性就不高了</p>
 <p>使用CONCAT函数</p>
 <pre><code class="language-python"># 带标签
@@ -179,7 +179,7 @@ three  f  5
 <p>处理和分析工作无关的index</p>
 <pre><code class="language-python">pd.concat([df1, df2], ingore_indexx=True)
 </code></pre>
-<figure data-type="image" tabindex="5"><img src="http://localhost:4000/post-images/1623227564113.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623227564113.png" alt="" loading="lazy"></figure>
 <h2 id="合并重叠数据">合并重叠数据</h2>
 <p>使用np.where重叠</p>
 <pre><code class="language-python">np.where(pd.isnull(a), b, a)
@@ -191,28 +191,28 @@ three  f  5
 <p>重塑层次化索引</p>
 <p>stack和unstack方法分别将数据的列旋转为行、将数据的行旋转为列</p>
 <p>STACK方法<br>
-<img src="http://localhost:4000/post-images/1623227569712.png" alt="" loading="lazy"></p>
+<img src="https://dong1iu.github.io/post-images/1623227569712.png" alt="" loading="lazy"></p>
 <pre><code class="language-python">data.stack()
 </code></pre>
-<figure data-type="image" tabindex="6"><img src="http://localhost:4000/post-images/1623227574396.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://dong1iu.github.io/post-images/1623227574396.png" alt="" loading="lazy"></figure>
 <p>UNSTACK方法<br>
-<img src="http://localhost:4000/post-images/1623227579478.png" alt="" loading="lazy"></p>
+<img src="https://dong1iu.github.io/post-images/1623227579478.png" alt="" loading="lazy"></p>
 <p>默认情况unstack操作的是最内层（同stack）。可以传入级别的编号和名称</p>
 <pre><code class="language-python">result.unstack(0)
 result.unstack('state')
 </code></pre>
 <p>如果不是所有级别值都能在个分组中找到的话，这unstack操作会引入NAN，而stack()方法默认会过滤缺失值，所以两方法是可逆的</p>
 <h2 id="将长表转换为宽表">将长表转换为宽表</h2>
-<figure data-type="image" tabindex="7"><img src="http://localhost:4000/post-images/1623227586212.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://dong1iu.github.io/post-images/1623227586212.png" alt="" loading="lazy"></figure>
 <pre><code class="language-python">df.pivot('date', 'item', 'value')
 </code></pre>
 <p>前两个参数分别作为行列索引的列名，最后一个是填充DF数据列名的。<br>
-<img src="http://localhost:4000/post-images/1623227592594.png" alt="" loading="lazy"></p>
+<img src="https://dong1iu.github.io/post-images/1623227592594.png" alt="" loading="lazy"></p>
 <p>如果有两个需要参与重塑的数据列</p>
 <pre><code class="language-python">pivoted = df.pivo('date', 'item')
 # 忽略最后一个参数得到的DF就会带有层次化的列
 </code></pre>
-<figure data-type="image" tabindex="8"><img src="http://localhost:4000/post-images/1623227597553.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://dong1iu.github.io/post-images/1623227597553.png" alt="" loading="lazy"></figure>
 <p>注意pivot其实只是一个快捷方式：实质上用set_index创建层次化soyb，再用unstack重塑。</p>
 <h1 id="移除重复数据">移除重复数据</h1>
 <p>duplicated 方法 返回一个布尔型Series</p>
@@ -325,7 +325,7 @@ pd.qcut(data, [o, 0.1, o.s, 0.9, 1.))
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="http://localhost:4000/post/mac-zhong-duan-dai-li/">
+            <a href="https://dong1iu.github.io/post/mac-zhong-duan-dai-li/">
               <h3 class="post-title">
                 MAC终端代理
               </h3>
@@ -337,7 +337,7 @@ pd.qcut(data, [o, 0.1, o.s, 0.9, 1.))
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
+  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>

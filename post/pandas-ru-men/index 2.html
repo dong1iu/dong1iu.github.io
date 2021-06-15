@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Pandas入门 | 动动栋栋</title>
-<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623746812139">
+<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623342937348">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Pandas入门 | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
+<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Pandas入门 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -23,8 +23,8 @@ pandas的数据结构介绍
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="http://localhost:4000">
-  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623746812139" alt="">
+  <a href="https://dong1iu.github.io">
+  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623342937348" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -53,7 +53,7 @@ pandas的数据结构介绍
       
     
       
-        <a href="http://localhost:4000/post/about" class="menu">
+        <a href="https://dong1iu.github.io/post/about" class="menu">
           关于
         </a>
       
@@ -87,7 +87,7 @@ pandas的数据结构介绍
                 9 min read
               </span>
               
-                <a href="http://localhost:4000/tag/EDcNg_R0it/" class="post-tag">
+                <a href="https://dong1iu.github.io/tag/EDcNg_R0it/" class="post-tag">
                   # python
                 </a>
               
@@ -115,7 +115,7 @@ Out[7]: Int641ndex((o, 1, 2, 3])
 <h2 id="dataframe"><strong>DataFrame</strong></h2>
 <p>DataFrame是⼀个表格型的数据结构，它含有⼀组有序的列，每列可以是不同的值类型（数值、字符串、布尔值等）。DataFrame既有⾏索引也有列索引，它可以被看做由Series组成的字典（共⽤同⼀个索引）。</p>
 <p>创建DataFrame<br>
-<img src="http://localhost:4000/post-images/1623226377660.png" alt="" loading="lazy"></p>
+<img src="https://dong1iu.github.io/post-images/1623226377660.png" alt="" loading="lazy"></p>
 <p>最常用的一种是直接传入一个由等长列表或NumPy数组组成的字典</p>
 <p><strong>基本功能</strong></p>
 <h1 id="reindex-重新索引">reindex 重新索引</h1>
@@ -143,7 +143,7 @@ OUT[85]:
 <pre><code class="language-python">frame.reindex(columns=['a', 'b'])
 </code></pre>
 <p>同时对行和列进行重新索引 ， 而插值则只能桉行应用（即轴0)<br>
-<img src="http://localhost:4000/post-images/1623226387709.png" alt="" loading="lazy"></p>
+<img src="https://dong1iu.github.io/post-images/1623226387709.png" alt="" loading="lazy"></p>
 <h1 id="drop-丢弃指定轴上的项">drop 丢弃指定轴上的项</h1>
 <pre><code class="language-python"># 默认丢弃行index
 df.drop(['index1', 'index2']， axis=0)
@@ -204,7 +204,7 @@ df.sort_index(axis=1)
 <p>也可以根据原数据中出现的顺序给出排名</p>
 <pre><code class="language-python">ser1.rank(method='first')
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1623226396342.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623226396342.png" alt="" loading="lazy"></figure>
 <h1 id="带有重复值的轴索引is_unique">带有重复值的轴索引(is_unique）</h1>
 <p>index是可以重复的 ，虽然许多pandas函数都要求index唯一，如reindex</p>
 <p>查看是否唯一</p>
@@ -231,8 +231,8 @@ df.mean(axis=1, skipna=False)
 <pre><code class="language-python">df.describe()
 </code></pre>
 <p>常用汇总统计方法<br>
-<img src="http://localhost:4000/post-images/1623226403691.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1623226407708.png" alt="" loading="lazy"></figure>
+<img src="https://dong1iu.github.io/post-images/1623226403691.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623226407708.png" alt="" loading="lazy"></figure>
 <h1 id="相关系数和协方差corr-cov">相关系数和协方差(corr, cov)</h1>
 <p>数据准备</p>
 <pre><code class="language-python">import pandas.io.data as web  # 有错
@@ -274,7 +274,7 @@ df.corr()
 </code></pre>
 <h1 id="处理缺失数据dropna-fillna-isnull-notnull">处理缺失数据(dropna fillna isnull notnull)</h1>
 <p>NA处理方式<br>
-<img src="http://localhost:4000/post-images/1623226413841.png" alt="" loading="lazy"></p>
+<img src="https://dong1iu.github.io/post-images/1623226413841.png" alt="" loading="lazy"></p>
 <h1 id="滤除缺失数据dropna">滤除缺失数据(dropna)</h1>
 <p>简单丢弃 默认丢弃有缺失值的行</p>
 <pre><code class="language-python">data.dropna()
@@ -385,7 +385,7 @@ df.reset_index(['c', 'd'])  # 恢复指定
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="http://localhost:4000/post/mac-an-zhuang-mysql/">
+            <a href="https://dong1iu.github.io/post/mac-an-zhuang-mysql/">
               <h3 class="post-title">
                 mac安装MySQL
               </h3>
@@ -397,7 +397,7 @@ df.reset_index(['c', 'd'])  # 恢复指定
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
+  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>

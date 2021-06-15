@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Windows同步MacOS鼠标滚轮自然 | 动动栋栋</title>
-<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623342937348">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623746812139">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Windows同步MacOS鼠标滚轮自然 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Windows同步MacOS鼠标滚轮自然 | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -22,8 +22,8 @@
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://dong1iu.github.io">
-  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623342937348" alt="">
+  <a href="http://localhost:4000">
+  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623746812139" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -52,7 +52,7 @@
       
     
       
-        <a href="https://dong1iu.github.io/post/about" class="menu">
+        <a href="http://localhost:4000/post/about" class="menu">
           关于
         </a>
       
@@ -86,7 +86,7 @@
                 1 min read
               </span>
               
-                <a href="https://dong1iu.github.io/tag/hRLgb8jBJ/" class="post-tag">
+                <a href="http://localhost:4000/tag/hRLgb8jBJ/" class="post-tag">
                   # mac
                 </a>
               
@@ -97,11 +97,11 @@
                 <p>用习惯MAC系统偶尔要用用WINDOWS系统，或者由于各种原因总之时不时需要由MAC转向WIN系统或同时需要两个平台机器上倒腾来倒腾去的同学，一般来说最痛苦的就是鼠标滚轮方向不一致。</p>
 <h1 id="第一步">第一步：</h1>
 <p>计算机-右键-管理-系统工具-设备管理器-鼠标和其他指针设备-打开鼠标的属性-详细信息-属性-设备实例路径<br>
-<img src="https://dong1iu.github.io/post-images/1623228426720.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623228426720.png" alt="" loading="lazy"></p>
 <p>上面的值其实就是这个设置对应的注册表键值所在位置，我们要进行修改的时候也是根据这个来定位注册表的。</p>
 <p>第二步：</p>
 <p>点开始或者WIN键 R，输入：regedit 回车，然后就可以打开注册表编辑器了，然后按下面的描述定位注册表位置： HKEY_LOCAL_MACHINE \ SYSTEM - CurrentControlSet \ Enum \ ??? \ ??? \ ??? \ Device Parameters 找到 FlipFlopWheel字段 默认0，修改成1就变成了mac模式（简单来说就是改变了鼠标滚轮的方向）上面的???对应[设备实例路径]<br>
-<img src="https://dong1iu.github.io/post-images/1623228440883.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1623228440883.png" alt="" loading="lazy"></p>
 <p>最后呢，重新插一下鼠标</p>
 
               </div>
@@ -118,7 +118,7 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://dong1iu.github.io/post/mac-windows-shuang-xi-tong-de-shi-jian-tong-bu/">
+            <a href="http://localhost:4000/post/mac-windows-shuang-xi-tong-de-shi-jian-tong-bu/">
               <h3 class="post-title">
                 mac windows双系统的时间同步
               </h3>
@@ -130,7 +130,7 @@
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
+  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>

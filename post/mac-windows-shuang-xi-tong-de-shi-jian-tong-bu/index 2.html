@@ -2,18 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>pip 使用代理 | 动动栋栋</title>
-<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623746812139">
+<title>mac windows双系统的时间同步 | 动动栋栋</title>
+<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623342937348">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="pip 使用代理 | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
+<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="mac windows双系统的时间同步 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="pip install package --proxy=http://127.0.0.1:port
-" />
-    <meta name="keywords" content="python" />
+    <meta name="description" content="在windows管理员命令行中输入
+`Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD..." />
+    <meta name="keywords" content="mac" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -21,8 +21,8 @@
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="http://localhost:4000">
-  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623746812139" alt="">
+  <a href="https://dong1iu.github.io">
+  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623342937348" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -51,7 +51,7 @@
       
     
       
-        <a href="http://localhost:4000/post/about" class="menu">
+        <a href="https://dong1iu.github.io/post/about" class="menu">
           关于
         </a>
       
@@ -75,25 +75,31 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              pip 使用代理
+              mac windows双系统的时间同步
             </h2>
             <div class="post-info">
               <span>
-                2021-05-02
+                2021-05-19
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="http://localhost:4000/tag/EDcNg_R0it/" class="post-tag">
-                  # python
+                <a href="https://dong1iu.github.io/tag/hRLgb8jBJ/" class="post-tag">
+                  # mac
                 </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p><code>pip install package --proxy=http://127.0.0.1:port</code></p>
+                <p><strong>在windows管理员命令行中输入</strong></p>
+<pre><code class="language-cmd">`Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1`
+</code></pre>
+<p>原因</p>
+<p><strong>Windows 与 Mac缺省看待系统硬件时间的方式是不一样的</strong>：<br>
+Windows把系统硬件时间当作本地时间(local time)，即操作系统中显示的时间跟BIOS中显示的时间是一样的。</p>
+<p>Mac把硬件时间当作 UTC，操作系统中显示的时间是硬件时间经过换算得来的，比如说北京时间是GMT+8，则系统中显示时间是硬件时间+8这样，当PC中同时有多系统共存时，就出现了问题。</p>
 
               </div>
               <div class="toc-container">
@@ -106,9 +112,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="http://localhost:4000/post/mac-xia-wei-suo-you-ren-an-zhuang-anaconda3/">
+            <a href="https://dong1iu.github.io/post/gan-zhi-ji-pla/">
               <h3 class="post-title">
-                MAC下为所有人安装anaconda3
+                感知机PLA
               </h3>
             </a>
           </div>
@@ -118,7 +124,7 @@
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
+  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>

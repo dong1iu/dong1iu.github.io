@@ -2,17 +2,17 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>pip 使用代理 | 动动栋栋</title>
-<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623746812139">
+<title>在 Pandas DataFrame 中使用比较列表的问题 | 动动栋栋</title>
+<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623342937348">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="pip 使用代理 | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
+<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="在 Pandas DataFrame 中使用比较列表的问题 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="pip install package --proxy=http://127.0.0.1:port
-" />
+    <meta name="description" content="如果你经常尝试在DataFrame中存放列表并对列表进行过取等，你会发现结果这和你预想的不同
+df = pandas.DataFrame([[1,2,3,[4,5]],[6,7,8,[9,10]]], columns=['a','b','c..." />
     <meta name="keywords" content="python" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -21,8 +21,8 @@
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="http://localhost:4000">
-  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623746812139" alt="">
+  <a href="https://dong1iu.github.io">
+  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623342937348" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -51,7 +51,7 @@
       
     
       
-        <a href="http://localhost:4000/post/about" class="menu">
+        <a href="https://dong1iu.github.io/post/about" class="menu">
           关于
         </a>
       
@@ -75,17 +75,17 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              pip 使用代理
+              在 Pandas DataFrame 中使用比较列表的问题
             </h2>
             <div class="post-info">
               <span>
-                2021-05-02
+                2021-06-01
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="http://localhost:4000/tag/EDcNg_R0it/" class="post-tag">
+                <a href="https://dong1iu.github.io/tag/EDcNg_R0it/" class="post-tag">
                   # python
                 </a>
               
@@ -93,7 +93,24 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p><code>pip install package --proxy=http://127.0.0.1:port</code></p>
+                <p>如果你经常尝试在DataFrame中存放列表并对列表进行过取等，你会发现结果这和你预想的不同</p>
+<pre><code class="language-python">df = pandas.DataFrame([[1,2,3,[4,5]],[6,7,8,[9,10]]], columns=['a','b','c','d'])
+&gt;&gt;&gt; df
+   a  b  c        d
+0  1  2  3   [4, 5]
+1  6  7  8  [9, 10]
+</code></pre>
+<p>当你用d构建过滤器的时候</p>
+<pre><code class="language-python">&gt;&gt;&gt; df['d'] == [4,5]
+0    False
+1    False
+Name: d, dtype: bool
+</code></pre>
+<p><strong>造成这种现象的原因是，DataFrame中存储的列表不可哈希（散列）</strong><br>
+如果你想正确的构建过滤器，你可以用一下方式</p>
+<pre><code class="language-python">df.loc[:, 'd'].map(lambda x:x==[4,5])
+</code></pre>
+<p>这种方式调用匿名函数逐个比较，而不是使用哈希表比较，自然不会造成之前的错误</p>
 
               </div>
               <div class="toc-container">
@@ -106,9 +123,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="http://localhost:4000/post/mac-xia-wei-suo-you-ren-an-zhuang-anaconda3/">
+            <a href="https://dong1iu.github.io/post/ubuntu-fang-huo-qiang-guan-li/">
               <h3 class="post-title">
-                MAC下为所有人安装anaconda3
+                Ubuntu防火墙管理
               </h3>
             </a>
           </div>
@@ -118,7 +135,7 @@
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
+  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>

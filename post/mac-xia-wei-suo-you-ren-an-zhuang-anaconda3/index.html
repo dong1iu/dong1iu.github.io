@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MAC下为所有人安装anaconda3 | 动动栋栋</title>
-<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623342937348">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623746812139">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="MAC下为所有人安装anaconda3 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="MAC下为所有人安装anaconda3 | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -30,8 +30,8 @@
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://dong1iu.github.io">
-  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623342937348" alt="">
+  <a href="http://localhost:4000">
+  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623746812139" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -60,7 +60,7 @@
       
     
       
-        <a href="https://dong1iu.github.io/post/about" class="menu">
+        <a href="http://localhost:4000/post/about" class="menu">
           关于
         </a>
       
@@ -94,11 +94,11 @@
                 1 min read
               </span>
               
-                <a href="https://dong1iu.github.io/tag/hRLgb8jBJ/" class="post-tag">
+                <a href="http://localhost:4000/tag/hRLgb8jBJ/" class="post-tag">
                   # mac
                 </a>
               
-                <a href="https://dong1iu.github.io/tag/EDcNg_R0it/" class="post-tag">
+                <a href="http://localhost:4000/tag/EDcNg_R0it/" class="post-tag">
                   # python
                 </a>
               
@@ -123,6 +123,12 @@
 <pre><code class="language-bash"> export PATH=&quot;/opt/anaconda3/bin:$PATH&quot;
 </code></pre>
 <p><code>source ~/.zshrc</code></p>
+<h2 id="去除命令行中的base">去除命令行中的base</h2>
+<p><code>vim ~/.zshrc</code></p>
+<p>添加</p>
+<pre><code class="language-bash"># conda deactivate
+conda deactivate
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -132,6 +138,7 @@
 <li><a href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85">下载安装包</a></li>
 <li><a href="#%E5%AE%89%E8%A3%85anaconda3">安装anaconda3</a></li>
 <li><a href="#%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">添加环境变量</a></li>
+<li><a href="#%E5%8E%BB%E9%99%A4%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%AD%E7%9A%84base">去除命令行中的base</a></li>
 </ul>
 </li>
 </ul>
@@ -147,7 +154,7 @@
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
+  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>
