@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>git教程 | 动动栋栋</title>
-<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1623748565205">
+<link rel="shortcut icon" href="https://dong1iu.github.io/favicon.ico?v=1623748565271">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="git教程 | 动动栋栋 - Atom Feed" href="http://localhost:4000/atom.xml">
+<link rel="stylesheet" href="https://dong1iu.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="git教程 | 动动栋栋 - Atom Feed" href="https://dong1iu.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -27,8 +27,8 @@ git config -—global user.email &quot..." />
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="http://localhost:4000">
-  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1623748565205" alt="">
+  <a href="https://dong1iu.github.io">
+  <img class="avatar" src="https://dong1iu.github.io/images/avatar.png?v=1623748565271" alt="">
   </a>
   <h1 class="site-title">
     动动栋栋
@@ -57,7 +57,7 @@ git config -—global user.email &quot..." />
       
     
       
-        <a href="http://localhost:4000/post/about" class="menu">
+        <a href="https://dong1iu.github.io/post/about" class="menu">
           关于
         </a>
       
@@ -91,11 +91,11 @@ git config -—global user.email &quot..." />
                 11 min read
               </span>
               
-                <a href="http://localhost:4000/tag/uyPf3HxBE/" class="post-tag">
+                <a href="https://dong1iu.github.io/tag/uyPf3HxBE/" class="post-tag">
                   # Gridea
                 </a>
               
-                <a href="http://localhost:4000/tag/y-gZeyrDL/" class="post-tag">
+                <a href="https://dong1iu.github.io/tag/y-gZeyrDL/" class="post-tag">
                   # GIt
                 </a>
               
@@ -280,18 +280,18 @@ Date:   Sun Jun 13 13:52:11 2021 +0800
 <p>首先我们要明白git分支的工作原理</p>
 <p>请参看廖雪峰分支管理</p>
 <p>一开始的时候，<code>master</code>分支是一条线，Git用<code>master</code>指向最新的提交，再用<code>HEAD</code>指向<code>master</code>，就能确定当前分支，以及当前分支的提交点</p>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1623747851195.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623747851195.png" alt="" loading="lazy"></figure>
 <p>每次提交，<code>master</code>分支都会向前移动一步，这样，随着你不断提交，<code>master</code>分支的线也越来越长。</p>
 <p>当我们创建新的分支，例如<code>dev</code>时，Git新建了一个指针叫<code>dev</code>，指向<code>master</code>相同的提交，再把<code>HEAD</code>指向<code>dev</code>，就表示当前分支在<code>dev</code>上</p>
-<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1623747861961.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623747861961.png" alt="" loading="lazy"></figure>
 <p>你看，Git创建一个分支很快，因为除了增加一个<code>dev</code>指针，改改<code>HEAD</code>的指向，工作区的文件都没有任何变化！</p>
 <p>不过，从现在开始，对工作区的修改和提交就是针对<code>dev</code>分支了，比如新提交一次后，<code>dev</code>指针往前移动一步，而<code>master</code>指针不变：</p>
-<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1623747871215.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623747871215.png" alt="" loading="lazy"></figure>
 <p>假如我们在<code>dev</code>上的工作完成了，就可以把<code>dev</code>合并到<code>master</code>上。Git怎么合并呢？最简单的方法，就是直接把<code>master</code>指向<code>dev</code>的当前提交，就完成了合并：</p>
-<figure data-type="image" tabindex="4"><img src="http://localhost:4000/post-images/1623747879062.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623747879062.png" alt="" loading="lazy"></figure>
 <p>所以Git合并分支也很快！就改改指针，工作区内容也不变！</p>
 <p>合并完分支后，甚至可以删除<code>dev</code>分支。删除<code>dev</code>分支就是把<code>dev</code>指针给删掉，删掉后，我们就剩下了一条<code>master</code>分支：</p>
-<figure data-type="image" tabindex="5"><img src="http://localhost:4000/post-images/1623747887057.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623747887057.png" alt="" loading="lazy"></figure>
 <h2 id="创建和合并分支">创建和合并分支</h2>
 <p>创建分支</p>
 <p><code>git branch branchname</code></p>
@@ -343,7 +343,7 @@ Creating a new branch is quick AND simple.
 </ol>
 <h2 id="分支策略">分支策略</h2>
 <p>默认的情况下，git的merge采用fast forward策略，这种策略比较快，但是在改模式下，删除分支后会失去信息，使用<code>--no-ff</code>参数禁用fast forward策略</p>
-<figure data-type="image" tabindex="6"><img src="http://localhost:4000/post-images/1623747897906.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://dong1iu.github.io/post-images/1623747897906.png" alt="" loading="lazy"></figure>
 <h1 id="标签管理">标签管理</h1>
 <h2 id="创建标签">创建标签</h2>
 <p>查看便签</p>
@@ -453,7 +453,7 @@ Creating a new branch is quick AND simple.
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="http://localhost:4000/post/liu-cun-fen-xi-cohort-fen-xi/">
+            <a href="https://dong1iu.github.io/post/liu-cun-fen-xi-cohort-fen-xi/">
               <h3 class="post-title">
                 留存分析——Cohort分析
               </h3>
@@ -465,7 +465,7 @@ Creating a new branch is quick AND simple.
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
+  <a class="rss" href="https://dong1iu.github.io/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>
