@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://dong1iu.github.io</id>
     <title>动动栋栋</title>
-    <updated>2021-06-15T09:52:00.959Z</updated>
+    <updated>2021-06-17T02:41:48.501Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://dong1iu.github.io"/>
     <link rel="self" href="https://dong1iu.github.io/atom.xml"/>
@@ -10,6 +10,354 @@
     <logo>https://dong1iu.github.io/images/avatar.png</logo>
     <icon>https://dong1iu.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 动动栋栋</rights>
+    <entry>
+        <title type="html"><![CDATA[MySQL快速入门]]></title>
+        <id>https://dong1iu.github.io/post/mysql-kuai-su-ru-men/</id>
+        <link href="https://dong1iu.github.io/post/mysql-kuai-su-ru-men/">
+        </link>
+        <updated>2021-06-17T01:39:50.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="一-入门">一、入门</h1>
+<h2 id="一一些词汇">（一）一些词汇</h2>
+<p>schema 模式 → 关于数据库和表的布局及特性的信息</p>
+<p>datetype → 数据类型</p>
+<p>column</p>
+<p>row</p>
+<p>primary key → 主键作为唯一标识，不得重复，非空</p>
+<h2 id="二主键和sql语句">（二）主键和SQL语句</h2>
+<p>主键的习惯</p>
+<ol>
+<li>不更改主键列的值</li>
+<li>不重用主键的值</li>
+<li>不在主键中使用可能会更改的值</li>
+</ol>
+<p>什么是SQL</p>
+<p>SQL是数据库查询语言</p>
+<h1 id="二-数据库的基本操作">二、数据库的基本操作</h1>
+<h2 id="选择数据库">选择数据库</h2>
+<p>语句： <code>use db;</code></p>
+<p>返回值：无</p>
+<h2 id="查看有哪些数据库">查看有哪些数据库</h2>
+<p>语句：<code>show databases;</code></p>
+<p>返回值：返回可用数据库的一个列表</p>
+<h2 id="查看有哪些表">查看有哪些表</h2>
+<p>语句：<code>show tables;</code></p>
+<p>返回值：返回可用表的一个列表</p>
+<h2 id="其他常用的语句">其他常用的语句</h2>
+<ul>
+<li><code>SHOW STATUS</code>，用于显示广泛的服务器状态信息;</li>
+<li><code>SHOW CREATE DATABASE</code>和<code>SHOW CREATE TABLE</code>，分别用来显示创建特定数据库或表的MySQL语句;</li>
+<li><code>SHOW GRANTS</code>，用来显示授予用户(所有用户或特定用户)的安全权限;</li>
+<li><code>SHOW ERRORS</code>和<code>SHOW WARNINGS</code>，用来显示服务器错误或警告消息。</li>
+</ul>
+<h2 id="常见的关键词">常见的关键词</h2>
+<p><code>DISTINCT</code>：去重</p>
+<h1 id="三-排序">三、排序</h1>
+<h2 id="单排序">单排序</h2>
+<p><code>select * from student order by age;</code></p>
+<h2 id="多排序">多排序</h2>
+<p><code>select * from student order by age, major;</code></p>
+<h2 id="升序和将序">升序和将序</h2>
+<p><code>ORDER BY col1 DESC, col2</code></p>
+<p>默认升序ASC，DESC降序</p>
+<h2 id="注意">注意</h2>
+<p>order by 不能处理A和a的排序问题，这个问题取决于数据库系统本身的设置</p>
+<h1 id="四-数据过滤">四、数据过滤</h1>
+<h2 id="where子句">WHERE子句</h2>
+<p>常见操作符</p>
+<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623897403344.png" alt="" loading="lazy"></figure>
+<p>注意：</p>
+<ol>
+<li><strong>MySQL在执行匹配时默认不区分大小写</strong></li>
+<li><code>BETWEEN AND</code> 两边都是闭区间</li>
+<li>空值检查 → <code>IS NULL</code></li>
+</ol>
+<h2 id="操作符">操作符</h2>
+<p>AND 操作符</p>
+<p><code>WHERE ... AND WHERE ...</code></p>
+<p>OR 操作符</p>
+<p><code>WHERE ... OR WHERE ...</code></p>
+<p>IN操作符</p>
+<p><code>WHERE ... IN (1001, 1002)</code></p>
+<p><code>IN</code>和<code>OR</code>的区别</p>
+<p>其实<code>IN</code>操作符和<code>OR</code>完成的功能是一样的，但是<code>IN</code>操作符1.在语法上更简单、2.速度上更快、3.而且可以嵌套新的查询语句</p>
+<p>NOT操作符</p>
+<p>取反</p>
+<h1 id="五-通配符">五、通配符</h1>
+<h2 id="like操作符"><code>LIKE</code>操作符</h2>
+<p>两个名词：通配符(wildcard)和搜索模式(search pattern)</p>
+<p>search pattern一般由字面量和通配符组成</p>
+<h2 id="常用的通配符">常用的通配符</h2>
+<p><code>%</code> : 任意字符包括不匹配，<strong>但是注意%不能匹配NULL</strong></p>
+<p><code>_</code> : 一个字符</p>
+<h2 id="使用注意">使用注意</h2>
+<ol>
+<li>不要过度使用通配符，会导致查询的速度很慢</li>
+<li>尽量不要将通配符放在匹配模式的前面，同样会导致速度相对变慢</li>
+<li>注意不要错</li>
+</ol>
+<h1 id="六-正则表达式">六、正则表达式</h1>
+<p>MySQL的正则表达式是通用的</p>
+<h2 id="regexp关键字"><code>REGEXP</code>关键字</h2>
+<pre><code class="language-sql">
+SELECT * FROM student where item REGEXP '1000'
+</code></pre>
+<h2 id="or">OR</h2>
+<p><code>REGEXP '1000|2000'</code></p>
+<h2 id="转义">转义</h2>
+<p>匹配一些特殊字符时，要在前面加<code>\\</code>，因为<code>\本身</code>也是特殊字符</p>
+<p>比如匹配<code>.</code>，需要使用<code>\\.</code></p>
+<h2 id="空白字符">空白字符</h2>
+<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623897415622.png" alt="" loading="lazy"></figure>
+<h2 id="匹配字符类">匹配字符类</h2>
+<figure data-type="image" tabindex="3"><img src="https://dong1iu.github.io/post-images/1623897423942.png" alt="" loading="lazy"></figure>
+<h2 id="匹配多个实体">匹配多个实体</h2>
+<p>一个字符中可能有多个匹配的位置</p>
+<p><a href="https://www.notion.so/48c62af6d57241beb93e01eec2d89564">重复元字符</a></p>
+<h2 id="定位符">定位符</h2>
+<p><a href="https://www.notion.so/9af2cc31b7ae477795ae854bb0fbae22">定位符表</a></p>
+<p>例子</p>
+<pre><code class="language-sql">SELECT * FROM student WHERE major REGEXP '^math'
+</code></pre>
+<h1 id="七-计算字段">七、计算字段</h1>
+<h2 id="什么是计算字段">什么是计算字段</h2>
+<p>在<code>SELECT</code>语句查询时计算的字段称为计算字段</p>
+<p>字段（field）和列（column）是同一个意思</p>
+<p>注意</p>
+<p><strong>数据库服务器是知道<code>SELECT</code>语句中的字段是原生的字段，还是计算产生的字段</strong></p>
+<h2 id="拼接字段">拼接字段</h2>
+<p><code>Concat</code>函数</p>
+<p>语法：CONCAT(field1, field2, ...)</p>
+<p>RTrim函数</p>
+<p>语法：RTrim(field)</p>
+<p>含义：删除右边的空格</p>
+<p>使用别名</p>
+<p><code>AS</code>关键字</p>
+<h2 id="执行计算">执行计算</h2>
+<p><code>SELCET</code>时计算，如<code>SELECT order_id, price*amount AS expanded_price;</code></p>
+<p>SQL支持<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code></p>
+<h1 id="八-数据处理函数">八、数据处理函数</h1>
+<h2 id="文本处理函数">文本处理函数</h2>
+<p>RTrim()</p>
+<p>Upper()等</p>
+<figure data-type="image" tabindex="4"><img src="https://dong1iu.github.io/post-images/1623897466003.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://dong1iu.github.io/post-images/1623897473866.png" alt="" loading="lazy"></figure>
+<p>locate</p>
+<p>语法：<code>locate(substr,str)</code></p>
+<p>含义:返回子串 substr 在字符串 str 中第一次出现的位置</p>
+<h2 id="日期处理">日期处理</h2>
+<h3 id="1-日期格式">1. 日期格式</h3>
+<p><a href="https://www.notion.so/e9a4a6a862964a028b63d4afab4bcbd7">MySQL中的日期格式</a></p>
+<h3 id="2-时间处理">2. 时间处理</h3>
+<p><a href="https://www.notion.so/072bfdba88cf454caeef87114be5e6f0">时间处理函数</a></p>
+<h3 id="3间隔-interval">3.间隔 <code>INTERVAL</code></h3>
+<p>语法：<code>INTERVAL expr unit</code></p>
+<p>间隔值也用于各种时间函数，如<code>DATE_ADD</code>，<code>DATE_SUB</code>，<code>TIMESTAMPADD</code>和<code>TIMESTAMPDIFF</code></p>
+<p>常用的使用</p>
+<pre><code class="language-sql">set @dt=str_to_date('2021-6-10', '%Y-%m-%d');
+select @dt - interval 1 day; # 返回2021-6-9
+select @dt - interval 1 hour;
+select @dt - interval 1 second;
+
+# 复合
+select @dt - interval '1 00:00:00' DAY_SECOND; # 返回2021-6-9
+</code></pre>
+<ul>
+<li>
+<p>完整的表格</p>
+<p><a href="https://www.notion.so/99e78f03689843e1adfa606798ec5e14">interval可选unit</a></p>
+</li>
+</ul>
+<h3 id="4-标准化">4. 标准化</h3>
+<p><code>'2020-01-01 00:00:00'</code>→<code>'%Y-%m-%d %H:%i:%S'</code></p>
+<h1 id="九-汇总数据">九、汇总数据</h1>
+<h2 id="聚集函数">聚集函数</h2>
+<p><code>AVG()</code>、<code>MAX()</code>、<code>MIN()</code>、<code>COUNT()</code>、<code>SUM()</code></p>
+<h2 id="聚集不同的值">聚集不同的值</h2>
+<p><code>SELECT AVG(DISTINCT salary) FROM emp;</code></p>
+<h2 id="组合聚集数">组合聚集数</h2>
+<pre><code class="language-sql">
+SELECT COUNT(*) AS num_items,
+	MIN(prod_price) as price_min,
+	MAX(prod_price) as price_max
+FROM products
+</code></pre>
+<h1 id="十-分组">十、分组</h1>
+<h2 id="创建分组">创建分组</h2>
+<p>关键字<code>GROUP BY</code></p>
+<p>注意</p>
+<ol>
+<li><strong>除了聚集语句外</strong>，SELECT语句中的所有列必须出现在GROUP BY子句中</li>
+<li>如果<strong>分组列中具有NULL值</strong>，则NULL将作为一个分组返回。如果列 中有多行NULL值，它们将分为一组</li>
+<li><strong>GROUP BY子句必须出现在WHERE子句之后，ORDER BY子句之前</strong></li>
+</ol>
+<p>例子</p>
+<pre><code class="language-sql">SELECT
+	departmentId,
+	avg( salary ) 
+FROM
+	employee 
+GROUP BY
+	departmentId
+ORDER BY
+	departmentId;
+</code></pre>
+<h2 id="过滤数据">过滤数据</h2>
+<p>使用<code>HAVING</code>过滤分组</p>
+<p>例子</p>
+<pre><code class="language-sql">SELECT
+	departmentId,
+	avg( salary ) 
+FROM
+	employee 
+GROUP BY
+	departmentId 
+HAVING
+	avg( salary )&gt; 2000 
+ORDER BY
+	departmentId;
+</code></pre>
+<p><code>HAVING</code>和<code>WHERE</code>的区别</p>
+<p><code>Where</code> 是一个约束声明，使用Where来约束来自数据库的数据，<code>Where</code>是在结果返回之前起作用的，且<code>Where</code>中不能使用聚合函数。</p>
+<p><code>Having</code>是一个过滤声明，是在查询返回结果集以后对查询结果进行的过滤操作，在<code>Having</code>中可以使用聚合函数。</p>
+<p>在执行顺序上的不同</p>
+<p>要明白这一点，我们要明白SQL语句的执行顺序</p>
+<pre><code>(8)SELECT (9)DISTINCT (11)&lt;Top Num&gt; &lt;select list&gt;(1)FROM left_table&lt;join_type&gt; JOIN &lt;right_table&gt;(2) ON &lt;join_condition&gt;(4)WHERE &lt;where_condition&gt;(5)GROUP BY &gt; &lt;group_by_list&gt;(6)WITH &lt;CUBE | RollUP&gt;(7)HAVING &lt;having_condition&gt;(10)ORDER BY &lt;order_by_list&gt;
+</code></pre>
+<p>补充连接表时，ON效率比WHERE比WHERE高，因为ON根据条件筛选数据后再生成临时表，而where是在生成临时表后再根据字段过滤数据</p>
+<h1 id="十一-子查询">十一、子查询</h1>
+<p>在<code>SELECT</code>语句中，子查询总是从内向外处理</p>
+<h2 id="在where中使用子查询">在<code>where</code>中使用子查询</h2>
+<pre><code class="language-sql">SELECT
+	cust_id 
+FROM
+	orders 
+WHERE
+	order_num IN ( # 注意
+	SELECT # 子查询
+		order_num 
+	FROM
+		orderitems 
+WHERE
+	prod_id = 'TNT2')
+</code></pre>
+<p>列必须匹配 在WHERE子句中使用子查询(如这里所示)，应 该保证SELECT语句具有与WHERE子句中相同数目的列。<strong>通常， 子查询将返回单个列并且与单个列匹配</strong>，但如果需要也可以 使用多个列。</p>
+<h2 id="在from中使用子查询">在<code>from</code>中使用子查询</h2>
+<pre><code class="language-sql">select name, id
+from (
+	select * from student where age&gt;10
+) tmp;
+</code></pre>
+<h2 id="在select中的子查询作为计算字段的子查询">在<code>select</code>中的子查询，作为计算字段的子查询</h2>
+<p>该查询是在逻辑上最难理解，也是实际使用中比较少使用的</p>
+<p>例子</p>
+<pre><code class="language-sql"># 作为计算字段的子查询
+SELECT
+	cust_name,
+	cust_state,
+	(
+	SELECT
+		count(*) 
+	FROM
+		orders 
+	WHERE
+		orders.cust_id = customers.cust_id 
+	) AS orders 
+FROM
+	customers 
+ORDER BY
+	cust_name;
+</code></pre>
+<p>解释：因为子查询中的where依赖父查询的中的customers表，称为**相关子查询。**因此运行的时候，customer每取出一个新的cust_id，orders表就会按<code>where</code>约束得到一个新的汇总值。</p>
+<p>注意：</p>
+<p>使用作为计算字段的子查询是万不得已的选择，这样的查询方式在逻辑上不易理解，在排除错误时容易发生错误，而且计算的逻辑和SQL本身的逻辑违背</p>
+<h1 id="十二-联结表-join">十二、联结表 JOIN</h1>
+<p>主键和外键</p>
+<p>主键是唯一标识一张表中唯一元素的</p>
+<p>外键是引用其他表的某列，作为该表的某列的约束</p>
+<h2 id="联结">联结</h2>
+<p>注意联结本身不是物理存在而是数据库在查询时生成的临时表</p>
+<p>创建联结的两种方式</p>
+<ol>
+<li>
+<p>使用Where创建——sql92</p>
+<pre><code class="language-sql">//SQL92
+SELECT e.name, d,dname 
+FROM emp e, dept d 
+WHERE e.deptno = d.deptno and ...;
+</code></pre>
+</li>
+<li>
+<p>使用on创建——sql99</p>
+<pre><code class="language-sql">SELECTe.name, d,dname 
+FROM emp e join dept d 
+ON e.deptno = d.deptno 
+WHERE...;
+</code></pre>
+<p>多表联结时</p>
+<pre><code class="language-sql">SELECT e.ename, d.name, s.grade 
+from emp e 
+join dept d # ！！！
+on e.deptno = d.deptno 
+join salgrade s # ！！！
+on e.sal bewteen s.losal and s.hisal
+</code></pre>
+</li>
+</ol>
+<p>连接方式</p>
+<ol>
+<li>等值连接</li>
+<li>区间连接</li>
+</ol>
+<p>内连接、外连接和全连接</p>
+<p>解释：</p>
+<p>内连接：只保留满足约束的联结</p>
+<p>外连接：除了保留满足约束的部分，还会保留左（右）表中未在右（左）出现的行。</p>
+<p>全连接：保留左右表中所有的未匹配的行，补空值。<strong>不常用</strong></p>
+<p><strong>注意：区分内外连接的是 right和left关键词 不是inner和outer，可以缺省inner和outer</strong></p>
+<p>例子</p>
+<pre><code class="language-sql">SELECT e.name, d,dname 
+from emp e 
+left outer join dept d 
+on e.deptno = d.deptno
+</code></pre>
+<p>两种方式的区别：</p>
+<ol>
+<li><code>on</code>比<code>where</code>高效</li>
+<li><code>on</code>比<code>where</code>在结构上清晰</li>
+</ol>
+<p><strong>笛卡尔积</strong></p>
+<p>不使用约束时的结果</p>
+<h2 id="使用表别名">使用表别名</h2>
+<h2 id="使用不同类型的联结">使用不同类型的联结</h2>
+<h3 id="自联结">自联结</h3>
+<p><code>from</code>后两个相同的表<code>join</code></p>
+<pre><code class="language-sql">select e2.ename, e1.departmentId from 
+employee e1 join employee e2 
+on e1.departmentId = e2.departmentId
+where e1.ename ='p1';
+</code></pre>
+<h3 id="自然联结">自然联结</h3>
+<p>自然联结排除多次出现，使每个列只返回一次。系统不完成这项工作，由你自己完成它。</p>
+<p>这一 般是通过对表使用通配符(SELECT *)，对所有其他表的列使用明确的子 集来完成的。</p>
+<h1 id="十三-组合查询">十三、组合查询</h1>
+<h2 id="union关键字"><code>UNION</code>关键字</h2>
+<pre><code class="language-sql">(SELECT ...) # 查询1
+UNION
+(SELECT ...) # 查询2
+</code></pre>
+<p>规则</p>
+<ol>
+<li>由两个以上的<code>SELECT</code>子句组成</li>
+<li>UNION两端的查询必须包含相同的列、表达式或函数（顺序不需要相同，MySQL会自动对齐）</li>
+<li>数据类型必须兼容:类型不必完全相同。DBMS会自动隐式地转换格式</li>
+</ol>
+<h2 id="union-all关键字"><code>UNION ALL</code>关键字</h2>
+<p><code>UNION</code>会<strong>自动去重</strong>，加上<code>ALL</code>参数后不会自动去重</p>
+<p>注意：<code>UNION</code>和多子句<code>Where</code>在一般情况下是可以替换的，具体的效率需要具体问题具体分析，但是<code>UNION ALL</code>是不可以通过多子句<code>Where</code>完成的</p>
+<h2 id="union排序"><code>UNION</code>排序</h2>
+<p>放在所有子句的最后</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[git教程]]></title>
         <id>https://dong1iu.github.io/post/git-jiao-cheng/</id>
@@ -939,88 +1287,6 @@ alias unproxy='unset all_proxy'
 <p><strong>Windows 与 Mac缺省看待系统硬件时间的方式是不一样的</strong>：<br>
 Windows把系统硬件时间当作本地时间(local time)，即操作系统中显示的时间跟BIOS中显示的时间是一样的。</p>
 <p>Mac把硬件时间当作 UTC，操作系统中显示的时间是硬件时间经过换算得来的，比如说北京时间是GMT+8，则系统中显示时间是硬件时间+8这样，当PC中同时有多系统共存时，就出现了问题。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[感知机PLA]]></title>
-        <id>https://dong1iu.github.io/post/gan-zhi-ji-pla/</id>
-        <link href="https://dong1iu.github.io/post/gan-zhi-ji-pla/">
-        </link>
-        <updated>2021-05-11T10:47:35.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="pla-感知机">PLA 感知机</h1>
-<h1 id="一-the-learning-problem">一、The Learning Problem</h1>
-<p>本质</p>
-<ol>
-<li>存在某种现在的模式去学习（so performance measure can be improved）</li>
-<li>不能被简单定义（so ML is needed）</li>
-<li>there is data about the pattern</li>
-</ol>
-<h1 id="二-perceptron-learning-algorithmpla">二、Perceptron Learning Algorithm（PLA）</h1>
-<p>图示<br>
-<img src="https://dong1iu.github.io/post-images/1623062895684.png" alt="" loading="lazy"></p>
-<h2 id="一线形可分">（一）线形可分</h2>
-<p>图总第一个为线性可分，经典的PLA只能处理完全线性可分的类型。<br>
-<img src="https://dong1iu.github.io/post-images/1623062905822.png" alt="" loading="lazy"></p>
-<h2 id="二感知机算法图解">（二）感知机算法图解</h2>
-<p>图解<br>
-<img src="https://dong1iu.github.io/post-images/1623062913237.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="1"><img src="https://dong1iu.github.io/post-images/1623062919845.png" alt="" loading="lazy"></figure>
-<h2 id="三如何选择g">（三）如何选择g</h2>
-<p>迭代w<br>
-<img src="https://dong1iu.github.io/post-images/1623062935084.png" alt="" loading="lazy"></p>
-<p>从某些初始值开始，一步步迭代到损失最小</p>
-<h2 id="四迭代更新">（四）迭代更新</h2>
-<p>图示<br>
-<img src="https://dong1iu.github.io/post-images/1623062941847.png" alt="" loading="lazy"></p>
-<p>误分类 → <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>i</mi><mi>g</mi><mi>n</mi><mo>(</mo><msubsup><mi>w</mi><mi>t</mi><mi>T</mi></msubsup><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><mo>)</mo><mi mathvariant="normal">≠</mi><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">sign(w_t^Tx_{n(t)})\neq{y_{n(t)}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1965309999999998em;vertical-align:-0.3551999999999999em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4530000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></span> → 更新步 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mrow><mi>t</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>w</mi><mi>t</mi></msub><mo>+</mo><msub><mi>y</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub><msub><mi>x</mi><mrow><mi>n</mi><mo>(</mo><mi>t</mi><mo>)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">w_{t+1}=w_t+y_{n(t)}x_{n(t)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.301108em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">t</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.7857599999999999em;vertical-align:-0.3551999999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.34480000000000005em;"><span style="top:-2.5198em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">t</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3551999999999999em;"><span></span></span></span></span></span></span></span></span></span></p>
-<p>证明<br>
-<img src="https://dong1iu.github.io/post-images/1623062950108.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="2"><img src="https://dong1iu.github.io/post-images/1623062957694.png" alt="" loading="lazy"></figure>
-<p>w的更新意味着分类超平面的移动</p>
-<h2 id="五-收敛性证明">（五）、收敛性证明</h2>
-<p>我们已经知道更新w向量方法，但是，这样的更新方法是否收敛？</p>
-<p>证明过程</p>
-<ol>
-<li>
-<p>假设线形可分的数据集<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="script">D</mi></mrow><annotation encoding="application/x-tex">\mathcal{D}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord"><span class="mord mathcal" style="margin-right:0.02778em;">D</span></span></span></span></span>能被向量<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>完美划分</p>
-<p>因此<br>
-<img src="https://dong1iu.github.io/post-images/1623062968114.png" alt="" loading="lazy"></p>
-<p>从而<br>
-<img src="https://dong1iu.github.io/post-images/1623062976143.png" alt="" loading="lazy"></p>
-</li>
-<li>
-<p>更新<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>f</mi></msub></mrow><annotation encoding="application/x-tex">w_f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361079999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>意味着发生了错误，也就是<br>
-<img src="https://dong1iu.github.io/post-images/1623062983717.png" alt="" loading="lazy"></p>
-<p>从而<br>
-<img src="https://dong1iu.github.io/post-images/1623062989593.png" alt="" loading="lazy"></p>
-</li>
-<li>
-<p>证明<br>
-<img src="https://dong1iu.github.io/post-images/1623062996830.png" alt="" loading="lazy"></p>
-<p>证明过程<br>
-<img src="https://dong1iu.github.io/post-images/1623063003431.png" alt="" loading="lazy"></p>
-</li>
-</ol>
-<p>收敛性的说明</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mi>θ</mi><mo>(</mo><mi>T</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>T</mi></msub></mrow><mrow><mo>∥</mo><msub><mi>w</mi><mi>f</mi></msub><mo>∥</mo><mo>⋅</mo><mo>∥</mo><msub><mi>w</mi><mi>T</mi></msub><mo>∥</mo></mrow></mfrac><mo>≥</mo><msqrt><mi>T</mi></msqrt><mo>⋅</mo><mi>c</mi><mi>o</mi><mi>n</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>t</mi><mo>=</mo><mi>ρ</mi><mi mathvariant="normal">/</mi><mi>R</mi></mrow><annotation encoding="application/x-tex">cos\theta(T) = \frac{w_f^Tw_T}{\lVert w_f \lVert \cdot \lVert w_T \lVert} \geq \sqrt{T}\cdot constant=\rho/R</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.798865em;vertical-align:-0.5480799999999999em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.250785em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">∥</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3487714285714287em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.29011428571428566em;"><span></span></span></span></span></span></span><span class="mopen mtight">∥</span><span class="mord mtight">⋅</span><span class="mopen mtight">∥</span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span><span class="mopen mtight">∥</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.60742em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9190928571428572em;"><span style="top:-2.214em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.42488571428571426em;"><span></span></span></span></span></span></span><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3567071428571427em;margin-left:-0.02691em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.14329285714285717em;"><span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.5480799999999999em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.11333499999999996em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9266650000000001em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span><span style="top:-2.886665em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg width='400em' height='1.08em' viewBox='0 0 400000 1080' preserveAspectRatio='xMinYMin slice'><path d='M95,702c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,
--10,-9.5,-14c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54c44.2,-33.3,65.8,
--50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10s173,378,173,378c0.7,0,
-35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429c69,-144,104.5,-217.7,106.5,
--221c5.3,-9.3,12,-14,20,-14H400000v40H845.2724s-225.272,467,-225.272,467
-s-235,486,-235,486c-2.7,4.7,-9,7,-19,7c-6,0,-10,-1,-12,-3s-194,-422,-194,-422
-s-65,47,-65,47z M834 80H400000v40H845z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.11333499999999996em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">ρ</span><span class="mord">/</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span></span></span></span><br>
-<img src="https://dong1iu.github.io/post-images/1623063013335.png" alt="" loading="lazy"></p>
-<ol>
-<li>线性可分告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_t</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>在增长</li>
-<li>错误修正的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi></mrow><annotation encoding="application/x-tex">w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>告诉我们<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的模长存在上界</li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>w</mi><mi>f</mi><mi>T</mi></msubsup><msub><mi>w</mi><mi>T</mi></msub></mrow><annotation encoding="application/x-tex">w_f^Tw_T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2605469999999999em;vertical-align:-0.4192159999999999em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-2.4168920000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.10764em;">f</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4192159999999999em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>的增长一部分依赖<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">cos(\theta)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span><span class="mclose">)</span></span></span></span>的增长<br>
-<img src="https://dong1iu.github.io/post-images/1623063021508.png" alt="" loading="lazy"></li>
-</ol>
-<h1 id="三-其他pla">三、其他PLA</h1>
-<p>Pocket PLA:非线性可分数据的感知器<br>
-<img src="https://dong1iu.github.io/post-images/1623063030248.png" alt="" loading="lazy"></p>
-<p>优点：可以对近似线形可分的数据集进行处理</p>
-<p>缺点：计算量大，每次都要计算所有的点</p>
 ]]></content>
     </entry>
 </feed>
